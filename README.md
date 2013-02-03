@@ -1,7 +1,7 @@
 # Advanced Custom Fields v4.0 Beta
 
 Welcome to the beta repository for Advanced Custom Fields v4.0.
-This repository will be temporarily available for beta testing, issue reporting and bug fixing. Once the v4.0 plugin is ready, this repository will be removed and all code will be available on the WWordPress.org website as per usual.
+This repository will be temporarily available for beta testing, issue reporting and bug fixing. Once the v4.0 plugin is ready, this repository will be removed and all code will be available on the WordPress.org website as per usual.
 
 
 -----------------------
@@ -9,19 +9,19 @@ This repository will be temporarily available for beta testing, issue reporting 
 ### Overview
 
 Since the recent change of WP's terms and conditions regarding hosting of plugins, the ACF plugin has undergone some BIG changes to adhere to the new rules.
-The problem is that ACF includes the 'Premium' code insid ethe free hosted plugin. This is now not allowed and I have had to take out the 'Add-on' code and create seperate plugins for each of the 4 add-ons.
+The problem is that ACF includes the 'Premium' code inside the free hosted plugin. All 'Add-on' code has been taken out of the core plugin, and replaced with seperate plugins for each of the 4 add-ons.
 
-During this proccess, the entire plugin has been re written to use actions and filters instead of nested class structures. Hopefuly, we will see some Performance increases from both PHp and SQL becuase of this!
+During this proccess, the entire plugin has been re written to use actions and filters instead of nested class structures. Hopefuly, as a result, we will see some Performance increases from both PHP and SQL!
 
 
 ### Where are the Add-ons?
 
-The addons are currently not available for download. However, over the next few days, I will create a page on the ACF website where you can enter your activation code / login to your account and download the addon files.
+The add-ons are currently not available for download, however, over the next few days a new page will appear on the ACF website where you can enter your activation code / login to your account and download the add-on files.
 
-Each add-on is now a plugin which will pull updates from the ACF website. Each plugin has also been writen to allow for theme inclusion! Meaning, you don't need to install the plugin, you can simply include it in your functions.php file. Doing this however, will prevent any plugin updates.
+Each add-on is now a plugin which will pull updates from the ACF website. Each plugin has also been writen to allow for theme inclusion! Meaning, you don't need to install the plugin, you can simply include it in your functions.php file. Doing this, however, will prevent any plugin updates.
 
 
-### Participate Testing
+### Participate in Testing
 
 If you have the time, please participate in this beta testing. The more developers we can get, the quicker this new version can be released!
 Please report all issues related to this beta version here on github, not on the ACF support forum.
@@ -40,10 +40,10 @@ Please report all issues related to this beta version here on github, not on the
 
 
 ### Known Issues
-* Any previously registered custom fields will not work. register_field is no longer a function.
-* No Add-ons are included in the plugin - these will be released seperatly soon
-* Export page is not available
-* Add-ons page is not available
+* Any previously registered custom fields will not work. register_field() is no longer a function.
+* No add-ons are included in the plugin - these will be released seperatly soon
+* Export page is not yet available
+* Add-ons page is not yet available
 
 
 ### Things to be improved
