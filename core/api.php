@@ -87,6 +87,66 @@ function get_field_references( $post_id )
 
 
 /*
+*  acf_filter_post_id()
+*
+*  A helper function to filter the post_id variable.
+*
+*  @type	function
+*  @since	3.6
+*  @date	29/01/13
+*
+*  @param	$post_id
+*
+*  @return	$post_id
+*/
+
+function acf_filter_post_id( $post_id )
+{
+	// global
+	global $post; 
+	 
+	
+	// set post_id to global
+	if( !$post_id )
+	{
+		$post_id = $post->ID;
+	}
+	
+	
+	// allow for option == options
+	if( $post_id == "option" )
+	{
+		$post_id = "options";
+	}
+	
+	
+	/*
+	*  Override for preview
+	*  
+	*  If the $_GET['preview_id'] is set, then the user wants to see the preview data.
+	*  There is also the case of previewing a page with post_id = 1, but using get_field
+	*  to load data from another post_id.
+	*  In this case, we need to make sure that the autosave revision is actually related
+	*  to the $post_id variable. If they match, then the autosave data will be used, otherwise, 
+	*  the user wants to load data from a completely different post_id
+	*/
+	
+	if( isset($_GET['preview_id']) )
+	{
+		$autosave = wp_get_post_autosave( $_GET['preview_id'] );
+		if( $autosave->post_parent == $post_id )
+		{
+			$post_id = $autosave->ID;
+		}
+	}
+	
+	
+	// return
+	return $post_id;
+}
+
+
+/*
 *  get_field_reference()
 *
 *  This function will find the $field_key that is related to the $field_name.
@@ -142,6 +202,94 @@ function get_field_reference( $field_name, $post_id )
 
 
 /*
+*  get_field_objects()
+*
+*  This function will return an array containing all the custom field objects for a specific post_id.
+*  The function is not very elegant and wastes a lot of PHP memory / SQL queries if you are not using all the fields / values.
+*
+*  @type	function
+*  @since	3.6
+*  @date	29/01/13
+*
+*  @param	$post_id - the post_id of which the value is saved against
+*
+*  @return	$return - an array containin the field groups
+*/
+
+function get_field_objects( $post_id = false )
+{
+	// global
+	global $wpdb;
+	
+	
+	// filter post_id
+	$post_id = acf_filter_post_id( $post_id );
+
+
+	// vars
+	$field_key = '';
+	$value = array();
+	
+	
+	// get field_names
+	if( is_numeric($post_id) )
+	{
+		$keys = $wpdb->get_col($wpdb->prepare(
+			"SELECT meta_value FROM $wpdb->postmeta WHERE post_id = %d and meta_key LIKE %s AND meta_value LIKE %s",
+			$post_id,
+			'\_%',
+			'field\_%'
+		));
+	}
+	elseif( strpos($post_id, 'user_') !== false )
+	{
+		$user_id = str_replace('user_', '', $post_id);
+		
+		$keys = $wpdb->get_col($wpdb->prepare(
+			"SELECT meta_value FROM $wpdb->usermeta WHERE user_id = %d and meta_key LIKE %s AND meta_value LIKE %s",
+			$user_id,
+			'\_%',
+			'field\_%'
+		));
+	}
+	else
+	{
+		$keys = $wpdb->get_col($wpdb->prepare(
+			"SELECT option_name FROM $wpdb->options WHERE option_name LIKE %s",
+			'\_' . $post_id . '\_%' 
+		));
+	}
+
+
+	if( is_array($keys) )
+	{
+		foreach( $keys as $key )
+		{
+			$field = get_field_object( $key, $post_id );
+			
+			if( !is_array($field) )
+			{
+				continue;
+			}
+			
+			$value[ $field['name'] ] = $field;
+		}
+ 	}
+ 	
+ 	
+	// no value
+	if( empty($value) )
+	{
+		return false;
+	}
+	
+	
+	// return
+	return $value;
+}
+
+
+/*
 *  get_fields()
 *
 *  This function will return an array containing all the custom field values for a specific post_id.
@@ -153,79 +301,22 @@ function get_field_reference( $field_name, $post_id )
 *
 *  @param	$post_id - the post_id of which the value is saved against
 *
-*  @return	$return - a string containing the field_key
+*  @return	$return - an array containin the field values
 */
 
 function get_fields( $post_id = false )
 {
-	// vars
-	global $post, $wpdb;
+	$fields = get_field_objects( $post_id );
 	
-	
-	// set post_id to global
-	if( !$post_id )
+	if( is_array($fields) )
 	{
-		$post_id = $post->ID;
-	}
-	
-	
-	// allow for option == options
-	if( $post_id == "option" )
-	{
-		$post_id = "options";
-	}
-	
-	
-	// vars
-	$field_key = '';
-	$value = array();
-	
-	
-	// get field_names
-	if( is_numeric($post_id) )
-	{
-		$keys = $wpdb->get_col($wpdb->prepare(
-			"SELECT meta_key FROM $wpdb->postmeta WHERE post_id = %d and meta_key NOT LIKE %s",
-			$post_id,
-			'\_%'
-		));
-	}
-	elseif( strpos($post_id, 'user_') !== false )
-	{
-		$user_id = str_replace('user_', '', $post_id);
-		
-		$keys = $wpdb->get_col($wpdb->prepare(
-			"SELECT meta_key FROM $wpdb->usermeta WHERE user_id = %d and meta_key NOT LIKE %s",
-			$user_id,
-			'\_%'
-		));
-	}
-	else
-	{
-		$keys = $wpdb->get_col($wpdb->prepare(
-			"SELECT option_name FROM $wpdb->options WHERE option_name LIKE %s",
-			$post_id . '\_%'
-		));
-	}
-
-
-	if($keys)
-	{
-		foreach($keys as $key)
+		foreach( $fields as $k => $field )
 		{
-			$value[ $key ] = get_field( $key, $post_id );
+			$fields[ $k ] = $field['value'];
 		}
- 	}
- 	
- 	
-	// no value
-	if( empty($value) )
-	{
-		return false;
 	}
 	
-	return $value;
-	
+	return $fields;	
 }
 
 
@@ -248,7 +339,11 @@ function get_fields( $post_id = false )
 */
  
 function get_field( $field_key, $post_id = false, $format_value = true ) 
-{ 
+{
+	// filter post_id
+	$post_id = acf_filter_post_id( $post_id );
+	
+	
 	// vars
 	$return = false;
 	$options = array(
@@ -286,6 +381,10 @@ function get_field( $field_key, $post_id = false, $format_value = true )
 
 function get_field_object( $field_key, $post_id = false, $options = array() )
 {
+	// filter post_id
+	$post_id = acf_filter_post_id( $post_id );
+	
+	
 	// defaults for options
 	$defaults = array(
 		'load_value'	=>	true,
@@ -293,47 +392,6 @@ function get_field_object( $field_key, $post_id = false, $options = array() )
 	);
 	
 	$options = array_merge($defaults, $options);
-	
-	
-	
-	// global
-	global $post, $acf; 
-	 
-	
-	// set post_id to global
-	if( !$post_id )
-	{
-		$post_id = $post->ID;
-	}
-	
-	
-	// allow for option == options
-	if( $post_id == "option" )
-	{
-		$post_id = "options";
-	}
-	
-	
-	/*
-	*  Override for preview
-	*  
-	*  If the $_GET['preview_id'] is set, then the user wants to see the preview data.
-	*  There is also the case of previewing a page with post_id = 1, but using get_field
-	*  to load data from another post_id.
-	*  In this case, we need to make sure that the autosave revision is actually related
-	*  to the $post_id variable. If they match, then the autosave data will be used, otherwise, 
-	*  the user wants to load data from a completely different post_id
-	*/
-	
-	if( isset($_GET['preview_id']) )
-	{
-		$autosave = wp_get_post_autosave( $_GET['preview_id'] );
-		if( $autosave->post_parent == $post_id )
-		{
-			$post_id = $autosave->ID;
-		}
-		
-	}
 	
 	
 	// is $field_name a name? pre 3.4.0
@@ -409,13 +467,9 @@ function the_field( $field_name, $post_id = false )
 
 function has_sub_field($field_name, $post_id = false)
 {
-	// needs a post_id
-	global $post; 
-	 
-	if( !$post_id ) 
-	{ 
-		$post_id = $post->ID; 
-	}
+	// filter post_id
+	$post_id = acf_filter_post_id( $post_id );
+	
 	
 	// empty?
 	if( empty($GLOBALS['acf_field']) )
@@ -511,7 +565,7 @@ function has_sub_field($field_name, $post_id = false)
 * 
 *-------------------------------------------------------------------------------------*/
 
-function get_sub_field($field_name)
+function get_sub_field( $field_name )
 {
 
 	// no field?
@@ -727,7 +781,7 @@ add_shortcode( 'acf', 'acf_shortcode' );
 function acf_form_head()
 {
 	// global vars
-	global $acf, $post_id;
+	global $post_id;
 	
 	
 	
@@ -786,7 +840,7 @@ function acf_form_wp_head()
 
 function acf_form($options = null)
 {
-	global $post, $acf;
+	global $post;
 	
 	
 	// defaults
@@ -929,44 +983,8 @@ function acf_form($options = null)
 
 function update_field( $field_key, $value, $post_id = false )
 {
-	// global
-	global $post, $acf; 
-	 
-	
-	// set post_id to global
-	if( !$post_id )
-	{
-		$post_id = $post->ID;
-	}
-	
-	
-	// allow for option == options
-	if( $post_id == "option" )
-	{
-		$post_id = "options";
-	}
-	
-	
-	/*
-	*  Override for preview
-	*  
-	*  If the $_GET['preview_id'] is set, then the user wants to see the preview data.
-	*  There is also the case of previewing a page with post_id = 1, but using get_field
-	*  to load data from another post_id.
-	*  In this case, we need to make sure that the autosave revision is actually related
-	*  to the $post_id variable. If they match, then the autosave data will be used, otherwise, 
-	*  the user wants to load data from a completely different post_id
-	*/
-	
-	if( isset($_GET['preview_id']) )
-	{
-		$autosave = wp_get_post_autosave( $_GET['preview_id'] );
-		if( $autosave->post_parent == $post_id )
-		{
-			$post_id = $autosave->ID;
-		}
-		
-	}
+	// filter post_id
+	$post_id = acf_filter_post_id( $post_id );
 	
 	
 	// vars
