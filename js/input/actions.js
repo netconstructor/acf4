@@ -75,12 +75,6 @@ var acf = {
 			text : {
 				max : "Maximum values reached ( {max} values )"
 			}
-		},
-		flexible_content : {
-			add_sortable : function(){},
-			update_order : function(){},
-			add_layout : function(){},
-			remove_layout : function(){}
 		}
 	}
 };
