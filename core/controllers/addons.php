@@ -39,7 +39,7 @@ class acf_addons
 	function admin_menu()
 	{
 		// add page
-		$page = add_submenu_page('edit.php?post_type=acf', __('Add ons','acf'), __('Add ons','acf'), 'manage_options', 'acf-addons', array($this,'html'));
+		$page = add_submenu_page('edit.php?post_type=acf', __('Add-Ons','acf'), __('Add-Ons','acf'), 'manage_options', 'acf-addons', array($this,'html'));
 		
 		
 		// actions
@@ -120,12 +120,94 @@ class acf_addons
 	*/
 	
 	function html()
-	{	
+	{
+		// vars
+		$dir = apply_filters('acf/get_info', 'dir');
+		
+		
+		$active = array(
+			'repeater' => class_exists('acf_field_repeater'),
+			'gallery' => class_exists('acf_field_gallery'),
+			'options_page' => class_exists('acf_options_page_plugin'),
+			'flexible_content' => class_exists('acf_field_flexible_content')
+		);
+		
 		?>
 <div class="wrap">
 
 	<div class="icon32" id="icon-acf"><br></div>
-	<h2 style="margin: 4px 0 25px;"><?php _e("Add ons",'acf'); ?></h2>
+	<h2 style="margin: 4px 0 15px;"><?php _e("Advanced Custom Fields Add-Ons",'acf'); ?></h2>
+	
+	<p style="margin: 0 0 20px;"><?php _e("The following Add-ons are available to increase the functionality of the Advanced Custom Fields plugin.",'acf'); ?><br />
+	<?php _e("Each Add-on can be installed as a separate plugin (receives updates) or included in your theme (does not receive updates).",'acf'); ?></p>
+	
+	<div id="add-ons" class="clearfix">
+		
+		<div class="add-on wp-box <?php if( $active['repeater'] ): ?>add-on-active<?php endif; ?>">
+			<img src="<?php echo $dir; ?>images/add-ons/repeater-field-thumb.jpg" />
+			<div class="inner">
+				<h3><?php _e("Repeater Field",'acf'); ?></h3>
+				<p><?php _e("Create infinite rows of repeatable data with this versatile interface!",'acf'); ?></p>
+			</div>
+			<div class="footer">
+				<?php if( $active['repeater'] ): ?>
+					<a class="button button-disabled"><span class="tick"></span><?php _e("Installed",'acf'); ?></a>
+				<?php else: ?>
+					<a class="button"><?php _e("Purchase & Install",'acf'); ?></a>
+				<?php endif; ?>
+			</div>
+		</div>
+		
+		
+		<div class="add-on wp-box <?php if( $active['gallery'] ): ?>add-on-active<?php endif; ?>">
+			<img src="<?php echo $dir; ?>images/add-ons/gallery-field-thumb.jpg" />
+			<div class="inner">
+				<h3><?php _e("Gallery Field",'acf'); ?></h3>
+				<p><?php _e("Create image galleries in a simple and intuitive interface!",'acf'); ?></p>
+			</div>
+			<div class="footer">
+				<?php if( $active['gallery'] ): ?>
+					<a class="button button-disabled"><span class="tick"></span><?php _e("Installed",'acf'); ?></a>
+				<?php else: ?>
+					<a class="button"><?php _e("Purchase & Install",'acf'); ?></a>
+				<?php endif; ?>
+			</div>
+		</div>
+		
+		
+		<div class="add-on wp-box <?php if( $active['options_page'] ): ?>add-on-active<?php endif; ?>">
+			<img src="<?php echo $dir; ?>images/add-ons/options-page-thumb.jpg" />
+			<div class="inner">
+				<h3><?php _e("Options Page",'acf'); ?></h3>
+				<p><?php _e("Create global data to use throughout your website!",'acf'); ?></p>
+			</div>
+			<div class="footer">
+				<?php if( $active['options_page'] ): ?>
+					<a class="button button-disabled"><span class="tick"></span><?php _e("Installed",'acf'); ?></a>
+				<?php else: ?>
+					<a class="button"><?php _e("Purchase & Install",'acf'); ?></a>
+				<?php endif; ?>
+			</div>
+		</div>
+
+		
+		<div class="add-on wp-box <?php if( $active['flexible_content'] ): ?>add-on-active<?php endif; ?>">
+			<img src="<?php echo $dir; ?>images/add-ons/flexible-content-thumb.jpg" />
+			<div class="inner">
+				<h3><?php _e("Flexible Field",'acf'); ?></h3>
+				<p><?php _e("Create unique designs with a flexible content layout manager!",'acf'); ?></p>
+			</div>
+			<div class="footer">
+				<?php if( $active['flexible_content'] ): ?>
+					<a class="button button-disabled"><span class="tick"></span><?php _e("Installed",'acf'); ?></a>
+				<?php else: ?>
+					<a class="button"><?php _e("Purchase & Install",'acf'); ?></a>
+				<?php endif; ?>
+			</div>
+		</div>
+
+		
+	</div>
 	
 	
 </div>
