@@ -50,9 +50,9 @@ class acf_input
 		add_filter('_wp_post_revision_fields', array($this, 'wp_post_revision_fields') );
 		
 		
-		// ajax
-		add_action('wp_ajax_acf_input', array($this, 'ajax_acf_input'));
-		add_action('wp_ajax_get_input_style', array($this, 'ajax_get_input_style'));
+		// ajax acf/update_field_groups
+		add_action('wp_ajax_acf/input/render_fields', array($this, 'ajax_render_fields'));
+		add_action('wp_ajax_acf/input/get_style', array($this, 'ajax_get_style'));
 		
 		
 		// edit attachment hooks (used by image / file / gallery)
@@ -170,7 +170,7 @@ class acf_input
 		$style = '';
 		if( isset($metabox_ids[0]) )
 		{
-			$style = $this->get_input_style( $metabox_ids[0] );
+			$style = $this->ajax_get_style( $metabox_ids[0] );
 		}
 		
 		
@@ -223,14 +223,14 @@ class acf_input
 	
 	
 	/*
-	*  get_input_style
+	*  ajax_get_style
 	*
 	*  @description: called by admin_head to generate acf css style (hide other metaboxes)
 	*  @since 2.0.5
 	*  @created: 23/06/12
 	*/
 
-	function get_input_style( $acf_id )
+	function ajax_get_style( $acf_id )
 	{
 		// global
 		global $acf_field_group;
@@ -367,14 +367,14 @@ class acf_input
 	
 	
 	/*
-	*  ajax_acf_input
+	*  ajax_render_fields
 	*
 	*  @description: 
 	*  @since 3.1.6
 	*  @created: 23/06/12
 	*/
 
-	function ajax_acf_input()
+	function ajax_render_fields()
 	{
 		
 		// defaults
