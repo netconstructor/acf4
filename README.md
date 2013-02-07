@@ -39,11 +39,14 @@ Please report all issues related to this beta version here on github, not on the
 * [Added] Add new Hooks / Filter - Need to add documnetation
 
 
+### Download Add-Ons
+You can now download your purchased Add-ons here: http://www.advancedcustomfields.com/add-ons-download/
+
+
 ### Known Issues
 * The register_field() function has been removed as there is a new way to create / regsiter your own field type. This means that all previously submitted add-ons will not work. I will help all developers re-make their add-ons for v4.
 * No add-ons are included in the plugin - these will be released seperatly soon
 * Export page is not yet available
-* Add-ons page is not yet available
 
 
 ### Things to be improved
