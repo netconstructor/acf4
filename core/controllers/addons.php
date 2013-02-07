@@ -153,7 +153,7 @@ class acf_addons
 				<?php if( $active['repeater'] ): ?>
 					<a class="button button-disabled"><span class="tick"></span><?php _e("Installed",'acf'); ?></a>
 				<?php else: ?>
-					<a class="button"><?php _e("Purchase & Install",'acf'); ?></a>
+					<a target="_blank" href="http://www.advancedcustomfields.com/add-ons/repeater-field/" class="button"><?php _e("Purchase & Install",'acf'); ?></a>
 				<?php endif; ?>
 			</div>
 		</div>
@@ -169,7 +169,7 @@ class acf_addons
 				<?php if( $active['gallery'] ): ?>
 					<a class="button button-disabled"><span class="tick"></span><?php _e("Installed",'acf'); ?></a>
 				<?php else: ?>
-					<a class="button"><?php _e("Purchase & Install",'acf'); ?></a>
+					<a target="_blank" href="http://www.advancedcustomfields.com/add-ons/gallery-field/" class="button"><?php _e("Purchase & Install",'acf'); ?></a>
 				<?php endif; ?>
 			</div>
 		</div>
@@ -185,7 +185,7 @@ class acf_addons
 				<?php if( $active['options_page'] ): ?>
 					<a class="button button-disabled"><span class="tick"></span><?php _e("Installed",'acf'); ?></a>
 				<?php else: ?>
-					<a class="button"><?php _e("Purchase & Install",'acf'); ?></a>
+					<a target="_blank" href="http://www.advancedcustomfields.com/add-ons/options-page/" class="button"><?php _e("Purchase & Install",'acf'); ?></a>
 				<?php endif; ?>
 			</div>
 		</div>
@@ -201,7 +201,7 @@ class acf_addons
 				<?php if( $active['flexible_content'] ): ?>
 					<a class="button button-disabled"><span class="tick"></span><?php _e("Installed",'acf'); ?></a>
 				<?php else: ?>
-					<a class="button"><?php _e("Purchase & Install",'acf'); ?></a>
+					<a target="_blank" href="http://www.advancedcustomfields.com/add-ons/flexible-content-field/" class="button"><?php _e("Purchase & Install",'acf'); ?></a>
 				<?php endif; ?>
 			</div>
 		</div>
