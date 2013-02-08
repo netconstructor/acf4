@@ -324,6 +324,13 @@ class acf_field_functions
 
 		if( is_array($rows) )
 		{
+			// potentialy, get_field_objects has picked up sub fields! These can't be found via sql so feturn false.
+			if( !isset($rows[0]) )
+			{
+				return false;
+			}
+			
+			
 			$row = $rows[0];
 			
 			

@@ -372,11 +372,21 @@ function get_field( $field_key, $post_id = false, $format_value = true )
 
 
 /*
-*  get_field_object
+*  get_field_object()
 *
-*  @description: returns an array containing all the field data for a given field_name
-*  @since: 3.6
-*  @created: 3/02/13
+*  This function will return an array containing all the field data for a given field_name
+*
+*  @type	function
+*  @since	3.6
+*  @date	3/02/13
+*
+*  @param	$field_key - string containing the name of teh field name / key ('sub_field' / 'field_1')
+*  @param	$post_id - the post_id of which the value is saved against
+*  @param	$options - an array containing options
+*				+ load_value - true | false
+*				+ format_value - true | false
+*
+*  @return	$return - an array containin the field groups
 */
 
 function get_field_object( $field_key, $post_id = false, $options = array() )
@@ -436,11 +446,18 @@ function get_field_object( $field_key, $post_id = false, $options = array() )
 
 
 /*
-*  the_field
+*  the_field()
 *
-*  @description: 
-*  @since: 1.0.3
-*  @created: 29/01/13
+*  This function is the same as echo get_field().
+*
+*  @type	function
+*  @since	1.0.3
+*  @date	29/01/13
+*
+*  @param	$field_name - the name of the field - 'sub_heading'
+*  @param	$post_id - the post_id of which the value is saved against
+*
+*  @return	
 */
 
 function the_field( $field_name, $post_id = false )
@@ -456,16 +473,24 @@ function the_field( $field_name, $post_id = false )
 }
 
 
-/*--------------------------------------------------------------------------------------
+/*
+*  the_field()
 *
-*	has_sub_field
+*  This function is used inside a while loop to return either true or false (loop again or stop).
+*  When using a repeater or flexible content field, it will loop through the rows until 
+*  there are none left or a break is detected
 *
-*	@author Elliot Condon
-*	@since 3.3.4
-* 
-*-------------------------------------------------------------------------------------*/
+*  @type	function
+*  @since	1.0.3
+*  @date	29/01/13
+*
+*  @param	$field_name - the name of the field - 'sub_heading'
+*  @param	$post_id - the post_id of which the value is saved against
+*
+*  @return	bool
+*/
 
-function has_sub_field($field_name, $post_id = false)
+function has_sub_field( $field_name, $post_id = false )
 {
 	// filter post_id
 	$post_id = acf_filter_post_id( $post_id );
@@ -556,14 +581,19 @@ function has_sub_field($field_name, $post_id = false)
 }
 
 
-/*--------------------------------------------------------------------------------------
+/*
+*  get_sub_field()
 *
-*	get_sub_field
+*  This function is used inside a 'has_sub_field' while loop to return a sub field value
 *
-*	@author Elliot Condon
-*	@since 1.0.3
-* 
-*-------------------------------------------------------------------------------------*/
+*  @type	function
+*  @since	1.0.3
+*  @date	29/01/13
+*
+*  @param	$field_name - the name of the field - 'sub_heading'
+*
+*  @return	mixed
+*/
 
 function get_sub_field( $field_name )
 {
@@ -592,14 +622,19 @@ function get_sub_field( $field_name )
 }
 
 
-/*--------------------------------------------------------------------------------------
+/*
+*  get_sub_field()
 *
-*	the_sub_field
+*  This function is the same as echo get_sub_field
 *
-*	@author Elliot Condon
-*	@since 1.0.3
-* 
-*-------------------------------------------------------------------------------------*/
+*  @type	function
+*  @since	1.0.3
+*  @date	29/01/13
+*
+*  @param	$field_name - the name of the field - 'sub_heading'
+*
+*  @return	
+*/
 
 function the_sub_field($field_name)
 {
@@ -614,18 +649,24 @@ function the_sub_field($field_name)
 }
 
 
-/*--------------------------------------------------------------------------------------
+/*
+*  register_field_group()
 *
-*	register_field_group
+*  This function is used to register a field group via code. It acceps 1 array containing
+*  all the field group data. This data can be obtained by using teh export tool within ACF
 *
-*	@author Elliot Condon
-*	@since 3.0.6
-* 
-*-------------------------------------------------------------------------------------*/
+*  @type	function
+*  @since	3.0.6
+*  @date	29/01/13
+*
+*  @param	$array - an array holding all the field group data
+*
+*  @return
+*/
 
 $GLOBALS['acf_register_field_group'] = array();
 
-function register_field_group($array)
+function register_field_group( $array )
 {
 	// add id
 	if( !isset($array['id']) )
@@ -682,43 +723,19 @@ function acf_register_field_group( $return )
 }
 
 
-
-/*--------------------------------------------------------------------------------------
+/*
+*  get_row_layout()
 *
-*	register_options_page
+*  This function will return a string representation of the current row layout within a 'has_sub_field' loop
 *
-*	@author Elliot Condon
-*	@since 3.0.0
-* 
-*-------------------------------------------------------------------------------------*/
-
-$GLOBALS['acf_options_pages'] = array();
-
-function register_options_page( $title = "" )
-{
-	$GLOBALS['acf_options_pages'][] = $title;
-}
-
-
-function acf_settings_options_pages( $options )
-{
-	// merge in options pages
-	$options['options_page']['pages'] = array_merge( $options['options_page']['pages'], $GLOBALS['acf_options_pages'] );
-	
-
-	return $options;
-}
-add_filter('acf_settings', 'acf_settings_options_pages');
-
-
-/*--------------------------------------------------------------------------------------
+*  @type	function
+*  @since	3.0.6
+*  @date	29/01/13
 *
-*	get_row_layout
+*  @param	$array - an array holding all the field group data
 *
-*	@author Elliot Condon
-*	@since 1.0.3
-* 
-*-------------------------------------------------------------------------------------*/
+*  @return	$value - string containing the layout
+*/
 
 function get_row_layout()
 {
@@ -730,14 +747,19 @@ function get_row_layout()
 }
 
 
-/*--------------------------------------------------------------------------------------
+/*
+*  acf_shortcode()
 *
-*	shorcode support
+*  This function is used to add basic shortcode support for the ACF plugin
 *
-*	@author Elliot Condon
-*	@since 1.1.1
-* 
-*-------------------------------------------------------------------------------------*/
+*  @type	function
+*  @since	1.1.1
+*  @date	29/01/13
+*
+*  @param	$array - an array holding all the field group data
+*
+*  @return	$value - the value found by get_field
+*/
 
 function acf_shortcode( $atts )
 {
@@ -759,7 +781,7 @@ function acf_shortcode( $atts )
 	$value = get_field( $field, $post_id );
 	
 	
-	if(is_array($value))
+	if( is_array($value) )
 	{
 		$value = @implode( ', ',$value );
 	}
@@ -972,14 +994,21 @@ function acf_form($options = null)
 }
 
 
-/*--------------------------------------------------------------------------------------
+/*
+*  update_field()
 *
-*	update_field
+*  This function will update a value in the database
 *
-*	@author Elliot Condon
-*	@since 3.1.9
-* 
-*-------------------------------------------------------------------------------------*/
+*  @type	function
+*  @since	3.1.9
+*  @date	29/01/13
+*
+*  @param	$field_name - the name of the field - 'sub_heading'
+*  @param	$value - the value to save in the database
+*  @param	$post_id - the post_id of which the value is saved against
+*
+*  @return
+*/
 
 function update_field( $field_key, $value, $post_id = false )
 {
@@ -1028,6 +1057,27 @@ function update_field( $field_key, $value, $post_id = false )
 	
 	return true;
 	
+}
+
+
+/*
+*  delete_field()
+*
+*  This function will remove a value from the database
+*
+*  @type	function
+*  @since	3.1.9
+*  @date	29/01/13
+*
+*  @param	$field_name - the name of the field - 'sub_heading'
+*  @param	$post_id - the post_id of which the value is saved against
+*
+*  @return
+*/
+
+function delete_field( $field_name, $post_id )
+{
+	do_action('acf/delete_value', $post_id, $field_name );
 }
 
 
@@ -1104,9 +1154,6 @@ function acf_convert_field_names_to_keys( $value, $field )
 	return $value;
 
 }
-
-
-
 
 
 
