@@ -252,6 +252,10 @@ table.acf_input select {
 	padding: 2px;
 }
 
+table.acf_input select option {
+	padding: 3px;
+}
+
 table.acf_input input[type=text]:focus,
 table.acf_input textarea:focus,
 table.acf_input select:focus {

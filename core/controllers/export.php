@@ -254,6 +254,7 @@ class acf_export
 </ol>
 
 <p><br /></p>
+
 <h3><?php _e("Export to PHP",'acf'); ?></h3>
 <p><?php _e("ACF will create the PHP code to include in your theme.",'acf'); ?></p>
 <p><?php _e("Registered field groups <b>will not</b> appear in the list of editable field groups. This is useful for including fields in themes.",'acf'); ?></p>
@@ -282,14 +283,40 @@ class acf_export
 		?>
 <div class="wp-box">
 	<div class="title">
-		<h3><?php _e("Export to PHP",'acf'); ?></h3>
+		<h3><?php _e("Export Field Groups to PHP",'acf'); ?></h3>
 	</div>
-	<div class="inner">
-		<textarea class="pre" readonly="true"><?php
+	<table class="acf_input widefat">
+		<tr>
+			<td class="label">
+<h3><?php _e("Instructions",'acf'); ?></h3>
+<ol>
+	<li><?php _e("Copy the PHP code generated",'acf'); ?></li>
+	<li><?php _e("Paste into your functions.php file",'acf'); ?></li>
+	<li><?php _e("To activate any Add-ons, edit and use the code in the first few lines.",'acf'); ?></li>
+</ol>
+
+<p><br /></p>
+
+<h3><?php _e("Notes",'acf'); ?></h3>
+<p><?php _e("Registered field groups <b>will not</b> appear in the list of editable field groups. This is useful for including fields in themes.",'acf'); ?></p>
+<p><?php _e("Please note that if you export and register field groups within the same WP, you will see duplicate fields on your edit screens. To fix this, please move the origional field group to the trash or remove the code from your functions.php file.",'acf'); ?></p>
+
+
+<p><br /></p>
+
+<h3><?php _e("ACF Lite",'acf'); ?></h3>
+<p><?php _e("Advanced Custom Fields has a lite version to be included in premium themes. You can find out more on github",'acf'); ?> <a href="https://github.com/elliotcondon/acf/" target="_blank"><?php _e("here",'acf'); ?></a>.</p>
+
+<p><br /></p>
+
+<p><a href="">&laquo; <?php _e("Back to export",'acf'); ?></a></p>
+			</td>
+			<td>
+				<textarea class="pre" readonly="true"><?php
 		
 		$acfs = array();
 		
-		if(isset($_POST['acf_posts']))
+		if( isset($_POST['acf_posts']) )
 		{
 			$acfs = get_posts(array(
 				'numberposts' 	=> -1,
@@ -297,39 +324,44 @@ class acf_export
 				'orderby' 		=> 'menu_order title',
 				'order' 		=> 'asc',
 				'include'		=>	$_POST['acf_posts'],
+				'suppress_filters' => false,
 			));
 		}
-		if($acfs)
+		if( $acfs )
 		{
 			?>
 <?php _e("/**
- * Activate Add-ons
- * Here you can enter your activation codes to unlock Add-ons to use in your theme. 
- * Since all activation codes are multi-site licenses, you are allowed to include your key in premium themes.
+ *  Install Add-ons
+ *  
+ *  The following code will include all 4 premium Add-Ons in your theme.
+ *  Please do not attempt to include a file which does not exist. This will produce an error.
+ *  
+ *  All fields must be included during the 'acf/register_fields' action.
+ *  Other types of Add-ons (like the options page) can be included outside of this action.
+ *  
+ *  The following code assumes you have a folder 'add-ons' inside your theme.
  */",'acf'); ?>
  
 
-function my_acf_settings( $options )
+// <?php _e("Fields",'acf'); ?> 
+add_action('acf/register_fields', 'my_register_fields');
+
+function my_register_fields()
 {
-    // activate add-ons
-    $options['activation_codes']['repeater'] = 'XXXX-XXXX-XXXX-XXXX';
-    $options['activation_codes']['options_page'] = 'XXXX-XXXX-XXXX-XXXX';
-    $options['activation_codes']['flexible_content'] = 'XXXX-XXXX-XXXX-XXXX';
-    $options['activation_codes']['gallery'] = 'XXXX-XXXX-XXXX-XXXX';
-    
-    // setup other options (http://www.advancedcustomfields.com/docs/filters/acf_settings/)
-    
-    return $options;
-    
+	include_once('add-ons/acf-repeater/repeater.php');
+	include_once('add-ons/acf-gallery/gallery.php');
+	include_once('add-ons/acf-flexible-content/flexible-content.php');
 }
-add_filter('acf_settings', 'my_acf_settings');
+
+// <?php _e("Options Page",'acf'); ?> 
+include_once( 'add-ons/acf-options-page/acf-options-page.php' );
 
 
 <?php _e("/**
- * Register field groups
- * The register_field_group function accepts 1 array which holds the relevant data to register a field group
- * You may edit the array as you see fit. However, this may result in errors if the array is not compatible with ACF
- * This code must run every time the functions.php file is read
+ *  Register Field Groups
+ *
+ *  The register_field_group function accepts 1 array which holds the relevant data to register a field group
+ *  You may edit the array as you see fit. However, this may result in errors if the array is not compatible with ACF
  */",'acf'); ?>
 
 
@@ -338,12 +370,13 @@ if(function_exists("register_field_group"))
 <?php
 			foreach($acfs as $acf)
 			{
+				// populate acfs
 				$var = array(
 					'id' => uniqid(),
-					'title' => get_the_title($acf->ID),
-					'fields' => $this->parent->get_acf_fields($acf->ID),
-					'location' => $this->parent->get_acf_location($acf->ID),
-					'options' => $this->parent->get_acf_options($acf->ID),
+					'title' => $acf->post_title,
+					'fields' => apply_filters('acf/field_group/get_fields', $acf->ID),
+					'location' => apply_filters('acf/field_group/get_location', $acf->ID),
+					'options' => apply_filters('acf/field_group/get_options', $acf->ID),
 					'menu_order' => $acf->menu_order,
 				);
 				
@@ -366,8 +399,10 @@ if(function_exists("register_field_group"))
 		{
 			_e("No field groups were selected",'acf');
 		}
-		?></textarea>
-	</div>
+				?></textarea>
+			</td>
+		</tr>
+	</table>
 </div>
 <script type="text/javascript">
 (function($){
@@ -402,25 +437,6 @@ if(function_exists("register_field_group"))
 
 })(jQuery);
 </script>
-
-<p><br /></p>
-<h3><?php _e("Instructions",'acf'); ?></h3>
-<p><?php _e("Registered field groups <b>will not</b> appear in the list of editable field groups. This is useful for including fields in themes.",'acf'); ?></p>
-<p><?php _e("Please note that if you export and register field groups within the same WP, you will see duplicate fields on your edit screens. To fix this, please move the origional field group to the trash or remove the code from your functions.php file.",'acf'); ?></p>
-<ol>
-	<li><?php _e("Copy the PHP code generated",'acf'); ?></li>
-	<li><?php _e("Paste into your functions.php file",'acf'); ?></li>
-	<li><?php _e("To activate any Add-ons, edit and use the code in the first few lines.",'acf'); ?></li>
-</ol>
-
-<p><br /></p>
-
-<h3><?php _e("ACF Lite",'acf'); ?></h3>
-<p><?php _e("Advanced Custom Fields has a lite version to be included in premium themes. You can find out more on github",'acf'); ?> <a href="https://github.com/elliotcondon/acf/" target="_blank"><?php _e("here",'acf'); ?></a>.</p>
-
-<p><br /></p>
-
-<p><a href="">&laquo; <?php _e("Back to export",'acf'); ?></a></p>
 	<?php
 	}
 	
