@@ -96,6 +96,7 @@ class acf_field_checkbox extends acf_field
 	{
 		// vars
 		$defaults = array(
+			'default_value'	=>	'',
 			'choices'		=>	'',
 		);
 		
@@ -114,31 +115,47 @@ class acf_field_checkbox extends acf_field
 		}
 		
 		?>
-		<tr class="field_option field_option_<?php echo $this->name; ?>">
-			<td class="label">
-				<label for=""><?php _e("Choices",'acf'); ?></label>
-				<p class="description"><?php _e("Enter your choices one per line",'acf'); ?><br />
-				<br />
-				<?php _e("Red",'acf'); ?><br />
-				<?php _e("Blue",'acf'); ?><br />
-				<br />
-				<?php _e("red : Red",'acf'); ?><br />
-				<?php _e("blue : Blue",'acf'); ?><br />
-				</p>
-			</td>
-			<td>
-				<?php
-				
-				do_action('acf/create_field', array(
-					'type'	=>	'textarea',
-					'class' => 	'textarea field_option-choices',
-					'name'	=>	'fields['.$key.'][choices]',
-					'value'	=>	$field['choices'],
-				));
-				
-				?>
-			</td>
-		</tr>
+<tr class="field_option field_option_<?php echo $this->name; ?>">
+	<td class="label">
+		<label for=""><?php _e("Choices",'acf'); ?></label>
+		<p class="description"><?php _e("Enter your choices one per line",'acf'); ?><br />
+		<br />
+		<?php _e("Red",'acf'); ?><br />
+		<?php _e("Blue",'acf'); ?><br />
+		<br />
+		<?php _e("red : Red",'acf'); ?><br />
+		<?php _e("blue : Blue",'acf'); ?><br />
+		</p>
+	</td>
+	<td>
+		<?php
+		
+		do_action('acf/create_field', array(
+			'type'	=>	'textarea',
+			'class' => 	'textarea field_option-choices',
+			'name'	=>	'fields['.$key.'][choices]',
+			'value'	=>	$field['choices'],
+		));
+		
+		?>
+	</td>
+</tr>
+<tr class="field_option field_option_<?php echo $this->name; ?>">
+	<td class="label">
+		<label><?php _e("Default Value",'acf'); ?></label>
+	</td>
+	<td>
+		<?php
+		
+		do_action('acf/create_field', array(
+			'type'	=>	'text',
+			'name'	=>	'fields['.$key.'][default_value]',
+			'value'	=>	$field['default_value'],
+		));
+		
+		?>
+	</td>
+</tr>
 		<?php
 		
 	}

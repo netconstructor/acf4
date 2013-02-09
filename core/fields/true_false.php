@@ -74,6 +74,7 @@ class acf_field_true_false extends acf_field
 	{
 		// vars
 		$defaults = array(
+			'default_value'	=>	0,
 			'message'	=>	'',
 		);
 		
@@ -94,6 +95,22 @@ class acf_field_true_false extends acf_field
 			'name'	=>	'fields['.$key.'][message]',
 			'value'	=>	$field['message'],
 		));
+		?>
+	</td>
+</tr>
+<tr class="field_option field_option_<?php echo $this->name; ?>">
+	<td class="label">
+		<label><?php _e("Default Value",'acf'); ?></label>
+	</td>
+	<td>
+		<?php
+		
+		do_action('acf/create_field', array(
+			'type'	=>	'true_false',
+			'name'	=>	'fields['.$key.'][default_value]',
+			'value'	=>	$field['default_value'],
+		));
+		
 		?>
 	</td>
 </tr>
