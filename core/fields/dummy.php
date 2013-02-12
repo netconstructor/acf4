@@ -258,13 +258,15 @@ class acf_field_dummy extends acf_field
 	{
 
 	}
-	
-
-	
 }
 
 
-/* In functions.php file */
+// create field
+new acf_field_dummy();
+
+
+/*--------------------------------------- fuctions.php ----------------------------------------------------*/
+
 add_action('acf/register_fields', 'my_register_fields');
 
 function my_register_fields()
