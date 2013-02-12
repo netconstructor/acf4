@@ -263,4 +263,13 @@ class acf_field_dummy extends acf_field
 	
 }
 
+
+/* In functions.php file */
+add_action('acf/register_fields', 'my_register_fields');
+
+function my_register_fields()
+{
+	include_once('fields/dummy.php');
+}
+
 ?>
