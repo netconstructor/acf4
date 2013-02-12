@@ -187,6 +187,7 @@ var acf = {
 					
 					if( ! html )
 					{
+						tr.remove();
 						return;
 					}
 					
