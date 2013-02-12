@@ -330,7 +330,8 @@ class acf_field_group
 		</script>';
 		
 		
-		do_action('acf_head-fields');
+		do_action('acf/field_group/admin_head'); // new action
+		do_action('acf_head-fields'); // old action
 		
 		
 		// add metaboxes

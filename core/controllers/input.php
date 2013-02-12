@@ -520,6 +520,9 @@ endif;
 ?>
 </script>
 		<?php
+		
+		// old action
+		do_action('acf_head-input');
 	}
 	
 	
