@@ -43,34 +43,12 @@ class Acf
 	
 	function __construct()
 	{
-
-		// vars
-		$this->settings = apply_filters('acf_settings', array(
-			'options_page' => array(
-				'capability' => 'edit_posts', // capability to view options page
-				'title' => __('Options','acf'), // title / menu name ('Site Options')
-				'pages' => array(), // an array of sub pages ('Header, Footer, Home, etc')
-			)
-		));
-		
-		
-		// allow for older filters
-		$this->settings['options_page']['title'] = apply_filters('acf_options_page_title', $this->settings['options_page']['title']);
-		
-		
-		// add protected vars to settings array
-		$this->settings['path'] = plugin_dir_path(__FILE__);
-		$this->settings['dir'] = plugins_url('/',__FILE__);
-		$this->settings['version'] = '4.0.0';
-		$this->settings['upgrade_version'] = '3.4.1';
-		
-
 		// set text domain
 		load_plugin_textdomain('acf', false, basename(dirname(__FILE__)).'/lang' );
 		
 		
 		// actions
-		add_action('init', array($this, 'init'));
+		add_action('init', array($this, 'init'), 1);
 		add_action('acf_save_post', array($this, 'acf_save_post'), 10);
 		
 		
@@ -191,7 +169,28 @@ class Acf
 	
 	function init()
 	{
-	
+		
+		// vars
+		$this->settings = apply_filters('acf_settings', array(
+			'options_page' => array(
+				'capability' => 'edit_posts', // capability to view options page
+				'title' => __('Options','acf'), // title / menu name ('Site Options')
+				'pages' => array(), // an array of sub pages ('Header, Footer, Home, etc')
+			)
+		));
+		
+		
+		// allow for older filters
+		$this->settings['options_page']['title'] = apply_filters('acf_options_page_title', $this->settings['options_page']['title']);
+		
+		
+		// add protected vars to settings array
+		$this->settings['path'] = plugin_dir_path(__FILE__);
+		$this->settings['dir'] = plugins_url('/',__FILE__);
+		$this->settings['version'] = '4.0.0';
+		$this->settings['upgrade_version'] = '3.4.1';
+		
+		
 		// Create ACF post type
 		$labels = array(
 		    'name' => __( 'Field&nbsp;Groups', 'acf' ),
