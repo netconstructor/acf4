@@ -265,10 +265,13 @@ table.acf_input select:focus {
 
 ul.radio_list {
 	position: relative;
-	overflow: hidden;
 	display: block;
-	padding: 3px 0;
+	padding: 1px;
 	margin: 0;
+}
+
+ul.radio_list.horizontal {
+	overflow: hidden;
 }
 
 ul.radio_list.horizontal li {
