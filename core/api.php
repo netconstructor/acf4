@@ -393,6 +393,7 @@ function get_field_object( $field_key, $post_id = false, $options = array() )
 {
 	// filter post_id
 	$post_id = acf_filter_post_id( $post_id );
+	$field = false;
 	
 	
 	// defaults for options
@@ -422,7 +423,11 @@ function get_field_object( $field_key, $post_id = false, $options = array() )
 	// validate field
 	if( !$field )
 	{
-		return false;
+		// treat as text field
+		$field = array(
+			'type' => 'text',
+			'name' => $field_key
+		);
 	}
 	
 	
