@@ -45,8 +45,8 @@ class Acf
 	{
 		// vars
 		$this->settings = array(
-			'path' => plugin_dir_path(__FILE__),
-			'dir' => plugins_url('/',__FILE__),
+			'path' => plugin_dir_path( __FILE__ ),
+			'dir' => plugin_dir_url( __FILE__ ),
 			'version' => '4.0.0',
 			'upgrade_version' => '3.4.1',
 		);

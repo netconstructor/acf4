@@ -7,6 +7,7 @@
 */
 
 var acf = {
+	ajaxurl : '',
 	admin_url : '',
 	wp_version : '0',
 	post_id : 0,

@@ -483,6 +483,7 @@ class acf_input
 acf.post_id = <?php echo $post_id; ?>;
 acf.nonce = "<?php echo wp_create_nonce( 'acf_nonce' ); ?>";
 acf.admin_url = "<?php echo admin_url(); ?>";
+acf.ajaxurl = "<?php echo admin_url( 'admin-ajax.php' ); ?>";
 acf.wp_version = "<?php echo $wp_version; ?>";
 	
 	
