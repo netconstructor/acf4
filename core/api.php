@@ -636,7 +636,7 @@ function acf_get_child_field_from_parent_field( $child_name, $parent )
 	{
 		foreach( $parent['sub_fields'] as $child )
 		{
-			if( $child['name'] == $child_name )
+			if( $child['name'] == $child_name || $child['key'] == $child_name )
 			{
 				$return = $child;
 				break;
@@ -651,7 +651,7 @@ function acf_get_child_field_from_parent_field( $child_name, $parent )
 			{
 				foreach( $layout['sub_fields'] as $child )
 				{
-					if( $child['name'] == $child_name )
+					if( $child['name'] == $child_name || $child['key'] == $child_name )
 					{
 						$return = $child;
 						break;
