@@ -5,88 +5,6 @@ $GLOBALS['acf_field'] = array();
 
 
 /*
-*  get_field_references
-*
-*  @description: 
-*  @since: 3.6
-*  @created: 29/01/13
-*/
-
-/*
-function get_field_references( $post_id )
-{
-	// cache
-	$cache = wp_cache_get( 'field_references-' . $post_id, 'acf' );
-	if( $cache )
-	{
-		return $cache;
-	}
-	
-	
-	// global
-	global $wpdb;
-	
-	
-	// vars
-	$references = array();
-	
-	
-	// get reference rows
-	if( is_numeric($post_id) )
-	{
-		$results = $wpdb->get_results($wpdb->prepare(
-			"SELECT meta_key, meta_value FROM $wpdb->postmeta WHERE post_id = %d and meta_value LIKE %s",
-			$post_id,
-			'field\_%'
-		));
-		
-		if( is_array($results) ){ foreach( $results as $row ){
-			$references[ $row->meta_key ] = $row->meta_value;
-		}}
-		
-	}
-	elseif( strpos($post_id, 'user_') !== false )
-	{
-		$user_id = str_replace('user_', '', $post_id);
-		
-		
-		$results = $wpdb->get_results($wpdb->prepare(
-			"SELECT meta_key, meta_value FROM $wpdb->usermeta WHERE user_id = %d and meta_value LIKE %s",
-			$user_id,
-			'field\_%'
-		));
-		
-		if( is_array($results) ){ foreach( $results as $row ){
-			$references[ $row->meta_key ] = $row->meta_value;
-		}}
-		
-	}
-	else
-	{
-		$results = $wpdb->get_results($wpdb->prepare(
-			"SELECT option_name, option_value FROM $wpdb->options WHERE option_name LIKE and option_value LIKE %s",
-			$post_id . '\_%',
-			'field\_%'
-		));
-		
-		if( is_array($results) ){ foreach( $results as $row ){
-			$references[ $row->option_name ] = $row->option_value;
-		}}
-		
-	}
-	
-	
-	// set cache
-	wp_cache_set( 'field_references-' . $post_id, $references, 'acf' );
-		
-	
-	// return	
-	return $references;
-}
-*/
-
-
-/*
 *  acf_filter_post_id()
 *
 *  A helper function to filter the post_id variable.
@@ -504,19 +422,27 @@ function has_sub_field( $field_name, $post_id = false )
 	// empty?
 	if( empty($GLOBALS['acf_field']) )
 	{
+		// vars
+		$f = get_field_object( $field_name, $post_id );
+		$v = $f['value'];
+		unset( $f['value'] );
+		
+		
 		$GLOBALS['acf_field'][] = array(
 			'name'	=>	$field_name,
-			'value'	=>	get_field($field_name, $post_id),
+			'value'	=>	$v,
+			'field'	=>	$f,
 			'row'	=>	-1,
 			'post_id' => $post_id,
 		);
 	}
 	
-	
+
 	// vars
 	$depth = count( $GLOBALS['acf_field'] ) - 1;
 	$name = $GLOBALS['acf_field'][$depth]['name'];
 	$value = $GLOBALS['acf_field'][$depth]['value'];
+	$field = $GLOBALS['acf_field'][$depth]['field'];
 	$row = $GLOBALS['acf_field'][$depth]['row'];
 	$id = $GLOBALS['acf_field'][$depth]['post_id'];
 	
@@ -534,11 +460,12 @@ function has_sub_field( $field_name, $post_id = false )
 	if( $field_name != $name )
 	{
 		// is this a "new" while loop refering to a sub field?
-		if( isset($value[$row][$field_name]) )
+		if( isset($value[ $row ][ $field_name ]) )
 		{
 			$GLOBALS['acf_field'][] = array(
 				'name'	=>	$field_name,
-				'value'	=>	$value[$row][$field_name],
+				'value'	=>	$value[ $row ][ $field_name ],
+				'field' => acf_get_child_field_from_parent_field( $field_name, $field ),
 				'row'	=>	-1,
 				'post_id' => $post_id,
 			);
@@ -562,6 +489,7 @@ function has_sub_field( $field_name, $post_id = false )
 	// update vars
 	$depth = count( $GLOBALS['acf_field'] ) - 1;
 	$value = $GLOBALS['acf_field'][$depth]['value'];
+	$field = $GLOBALS['acf_field'][$depth]['field'];
 	$row = $GLOBALS['acf_field'][$depth]['row'];
 
 		
@@ -613,17 +541,18 @@ function get_sub_field( $field_name )
 	// vars
 	$depth = count( $GLOBALS['acf_field'] ) - 1;
 	$value = $GLOBALS['acf_field'][$depth]['value'];
+	$field = $GLOBALS['acf_field'][$depth]['field'];
 	$row = $GLOBALS['acf_field'][$depth]['row'];
-	
-	
+
+
 	// no value at i
-	if( !isset($GLOBALS['acf_field'][$depth]['value'][$row][$field_name]) )
+	if( !isset($value[ $row ][ $field_name ]) )
 	{
 		return false;
 	}
+
 	
-	
-	return $GLOBALS['acf_field'][$depth]['value'][$row][$field_name];
+	return $value[ $row ][ $field_name ];
 }
 
 
@@ -651,6 +580,91 @@ function the_sub_field($field_name)
 	}
 	
 	echo $value;
+}
+
+
+/*
+*  get_sub_field_object()
+*
+*  This function is used inside a 'has_sub_field' while loop to return a sub field object
+*
+*  @type	function
+*  @since	1.0.3
+*  @date	29/01/13
+*
+*  @param	$field_name - the name of the field - 'sub_heading'
+*
+*  @return	mixed
+*/
+
+function get_sub_field_object( $child_name )
+{
+	// no field?
+	if( empty($GLOBALS['acf_field']) )
+	{
+		return false;
+	}
+
+
+	// vars
+	$depth = count( $GLOBALS['acf_field'] ) - 1;
+	$parent = $GLOBALS['acf_field'][$depth]['field'];
+
+
+	// return
+	return acf_get_child_field_from_parent_field( $child_name, $parent );
+	
+}
+
+
+/*
+*  acf_get_sub_field_from_parent_field
+*
+*  @description: 
+*  @since: 3.6
+*  @created: 23/02/13
+*/
+
+function acf_get_child_field_from_parent_field( $child_name, $parent )
+{
+	// vars
+	$return = false;
+	
+	
+	// find child
+	if( isset($parent['sub_fields']) && is_array($parent['sub_fields']) )
+	{
+		foreach( $parent['sub_fields'] as $child )
+		{
+			if( $child['name'] == $child_name )
+			{
+				$return = $child;
+				break;
+			}
+		}
+	}
+	elseif( isset($parent['layouts']) && is_array($parent['layouts']) )
+	{
+		foreach( $parent['layouts'] as $layout )
+		{
+			if( isset($layout['sub_fields']) && is_array($layout['sub_fields']) )
+			{
+				foreach( $layout['sub_fields'] as $child )
+				{
+					if( $child['name'] == $child_name )
+					{
+						$return = $child;
+						break;
+					}
+				}
+			}
+		}
+	}
+	
+
+	// return
+	return $return;
+	
 }
 
 

@@ -33,9 +33,9 @@ class acf_input
 		
 		if( isset($_POST['post_type']) )
 		{
-			if( $_POST['post_type'] == "tribe_events" ){ $save_priority = 15; }
+			if( $_POST['post_type'] == "tribe_events" ){ $save_priority = 10; }
 		}
-		add_action('save_post', array($this, 'save_post'), $save_priority); // save later to avoid issues with 3rd party plugins
+		add_action('save_post', array($this, 'save_post'), $save_priority);
 		
 		
 		// actions

@@ -38,7 +38,6 @@ class acf_field_functions
 		
 		
 		// extra
-		add_filter('acf/load_field', array($this, 'load_field_defaults'), 5, 1);
 		add_filter('acf/load_field_defaults', array($this, 'load_field_defaults'), 5, 1);
 	}
 	
@@ -369,14 +368,14 @@ class acf_field_functions
 				
 				
 				// apply filters
-				$field = apply_filters('acf_load_field', $field);
+				$field = apply_filters('acf/load_field_defaults', $field);
+				
 				
 				$keys = array('type', 'name', 'key');
 				$called = array(); // field[type] && field[name] may be the same! Don't run the same filter twice!
 				foreach( $keys as $key )
 				{
 					// validate
-					if( !isset($field[ $key ]) ){ continue; }
 					if( in_array($field[ $key ], $called) ){ continue; }
 					
 					
@@ -389,6 +388,10 @@ class acf_field_functions
 					$field = apply_filters('acf/load_field-' . $field[ $key ], $field); // new filter
 					
 				}
+				
+				
+				// apply filters
+				$field = apply_filters('acf_load_field', $field);
 				
 			
 				// set cache
