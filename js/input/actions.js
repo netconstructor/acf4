@@ -259,8 +259,8 @@ var acf = {
 	*  @created: 17/01/13
 	*/
 	
-	$('form#post').live("submit", function(){
-		
+	$('form#post').live('submit', function(){
+			
 		if( ! save_post )
 		{
 			// do validation
@@ -287,7 +287,7 @@ var acf = {
 		// remove hidden postboxes
 		$('.acf_postbox.acf-hidden').remove();
 		
-		
+
 		// submit the form
 		return true;
 		

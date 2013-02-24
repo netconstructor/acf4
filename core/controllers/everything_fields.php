@@ -241,76 +241,101 @@ class acf_everything_fields
 		
 		
 		?>
-		<script type="text/javascript">
-		(function($){
+<script type="text/javascript">
+(function($){
 
-		acf.data = {
-			action 			:	'acf_everything_fields',
-			metabox_ids		:	'<?php echo implode( ',', $this->data['metabox_ids'] ); ?>',
-			page_type		:	'<?php echo $this->data['page_type']; ?>',
-			page_action		:	'<?php echo $this->data['page_action']; ?>',
-			option_name		:	'<?php echo $this->data['option_name']; ?>'
-		};
-		
-		$(document).ready(function(){
+acf.data = {
+	action 			:	'acf_everything_fields',
+	metabox_ids		:	'<?php echo implode( ',', $this->data['metabox_ids'] ); ?>',
+	page_type		:	'<?php echo $this->data['page_type']; ?>',
+	page_action		:	'<?php echo $this->data['page_action']; ?>',
+	option_name		:	'<?php echo $this->data['option_name']; ?>'
+};
 
-			$.ajax({
-				url: ajaxurl,
-				data: acf.data,
-				type: 'post',
-				dataType: 'html',
-				success: function(html){
-					
+$(document).ready(function(){
+
+	$.ajax({
+		url: ajaxurl,
+		data: acf.data,
+		type: 'post',
+		dataType: 'html',
+		success: function(html){
+			
 <?php 
-					if($this->data['page_type'] == "user")
-					{
-						if($this->data['page_action'] == "add")
-						{
-							echo "$('#createuser > table.form-table > tbody').append( html );";
-						}
-						else
-						{
-							echo "$('#your-profile > p.submit').before( html );";
-						}
-					}
-					elseif($this->data['page_type'] == "shopp_category")
-					{
-						echo "$('#post-body-content').append( html );";
-					}
-					elseif($this->data['page_type'] == "taxonomy")
-					{
-						if($this->data['page_action'] == "add")
-						{
-							echo "$('#addtag > p.submit').before( html );";
-						}
-						else
-						{
-							echo "$('#edittag > p.submit').before( html );";
-						}
-					}
-					elseif($this->data['page_type'] == "media")
-					{
-						if($this->data['page_action'] == "add")
-						{
-							echo "$('#addtag > p.submit').before( html );";
-						}
-						else
-						{
-							echo "$('#media-single-form table tbody tr.submit').before( html );";
-						}
-					}
+			if($this->data['page_type'] == "user")
+			{
+				if($this->data['page_action'] == "add")
+				{
+					echo "$('#createuser > table.form-table > tbody').append( html );";
+				}
+				else
+				{
+					echo "$('#your-profile > p.submit').before( html );";
+				}
+			}
+			elseif($this->data['page_type'] == "shopp_category")
+			{
+				echo "$('#post-body-content').append( html );";
+			}
+			elseif($this->data['page_type'] == "taxonomy")
+			{
+				if($this->data['page_action'] == "add")
+				{
+					echo "$('#addtag > p.submit').before( html );";
+				}
+				else
+				{
+					echo "$('#edittag > p.submit').before( html );";
+				}
+			}
+			elseif($this->data['page_type'] == "media")
+			{
+				if($this->data['page_action'] == "add")
+				{
+					echo "$('#addtag > p.submit').before( html );";
+				}
+				else
+				{
+					echo "$('#media-single-form table tbody tr.submit').before( html );";
+				}
+			}
 ?>
 
-					setTimeout( function(){ 
-						$(document).trigger('acf/setup_fields', $('#wpbody') ); 
-					}, 200);
-					
-				}
-			});
+			setTimeout( function(){ 
+				$(document).trigger('acf/setup_fields', $('#wpbody') ); 
+			}, 200);
+			
+		}
+	});
+	
+	
+	/*
+	*  Taxonomy Add
+	*
+	*  @description: 
+	*  @since: 3.6
+	*  @created: 24/02/13
+	*/
+	
+	$(document).ajaxComplete(function(event, xhr, settings) {
 		
-		});
-		})(jQuery);
-		</script>
+		
+
+	});
+
+
+
+	
+});
+
+
+
+	
+
+
+
+})(jQuery);
+</script>
 		<?php
 	}
 	
