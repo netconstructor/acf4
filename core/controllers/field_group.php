@@ -496,6 +496,10 @@ class acf_field_group
 			$options = array_merge($defaults, $options);
 		}
 		
+		// vars
+		$choices = array();
+		$optgroup = false;
+		
 		
 		// some case's have the same outcome
 		if($options['param'] == "page_parent")
@@ -503,9 +507,6 @@ class acf_field_group
 			$options['param'] = "page";
 		}
 
-		
-		$choices = array();
-		$optgroup = false;
 		
 		switch($options['param'])
 		{
@@ -580,8 +581,9 @@ class acf_field_group
 				$choices = array(
 					'front_page'	=>	__("Front Page",'acf'),
 					'posts_page'	=>	__("Posts Page",'acf'),
-					'parent'		=>	__("Parent Page",'acf'),
-					'child'			=>	__("Child Page",'acf'),
+					'top_level'		=>	__("Top Level Page (parent of 0)",'acf'),
+					'parent'		=>	__("Parent Page (has children)",'acf'),
+					'child'			=>	__("Child Page (has parent)",'acf'),
 				);
 								
 				break;

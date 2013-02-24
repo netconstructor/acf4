@@ -589,7 +589,7 @@ function the_sub_field($field_name)
 *  This function is used inside a 'has_sub_field' while loop to return a sub field object
 *
 *  @type	function
-*  @since	1.0.3
+*  @since	3.5.8.1
 *  @date	29/01/13
 *
 *  @param	$field_name - the name of the field - 'sub_heading'

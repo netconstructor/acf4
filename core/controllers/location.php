@@ -344,6 +344,25 @@ class acf_location
 	        }
 	        
         }
+        elseif( $rule['value'] == 'top_level')
+        {
+        	$post_parent = $post->post_parent;
+        	if( $options['page_parent'] )
+        	{
+	        	$post_parent = $options['page_parent'];
+        	}
+        	
+        	
+	        if($rule['operator'] == "==")
+	        {
+	        	$match = ( $post_parent == 0 );
+	        }
+	        elseif($rule['operator'] == "!=")
+	        {
+	        	$match = ( $post_parent != 0 );
+	        }
+	        
+        }
         elseif( $rule['value'] == 'parent')
         {
         
