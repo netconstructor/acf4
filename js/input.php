@@ -9,7 +9,6 @@ $files = array(
 	'color-picker.js',
 	'date-picker.js',
 	'file.js',
-	'gallery.js',
 	'image.js',
 	'relationship.js',
 	'tab.js',
