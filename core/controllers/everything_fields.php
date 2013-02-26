@@ -319,8 +319,31 @@ $(document).ready(function(){
 	
 	$(document).ajaxComplete(function(event, xhr, settings) {
 		
-		// clear WYSIWYG field
+		// vars
+		data = acf.helpers.url_to_object(settings.data);
 		
+		
+		// validate
+		if( data.action != 'add-tag' )
+		{
+			return;
+		}
+		
+
+		// clear WYSIWYG field
+		$('#addtag').find('.acf_wysiwyg textarea').each(function(){
+
+			
+			// vars
+			var textarea = $(this),
+				id = textarea.attr('id'),
+				editor = tinyMCE.get( id );
+			
+			editor.setContent('');
+			editor.save();
+			
+			
+		});
 
 	});
 

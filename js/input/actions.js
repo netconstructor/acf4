@@ -24,7 +24,8 @@ var acf = {
 		uniqid : function(){},
 		sortable : function(){},
 		add_message : function(){},
-		is_clone_field : function(){}
+		is_clone_field : function(){},
+		url_to_object : function(){}
 	},
 	conditional_logic : {},
 	media : {
@@ -128,7 +129,7 @@ var acf = {
 	
 	
 	/*
-	*  Helper uniqid
+	*  Helper: uniqid
 	*
 	*  @description: 
 	*  @since: 3.5.8
@@ -139,7 +140,33 @@ var acf = {
     {
     	var newDate = new Date;
     	return newDate.getTime();
-    }
+    };
+    
+    
+    /*
+	*  Helper: url_to_object
+	*
+	*  @description: 
+	*  @since: 4.0.0
+	*  @created: 17/01/13
+	*/
+	
+    acf.helpers.url_to_object = function( url ){
+	    
+	    // vars
+	    var obj = {},
+	    	pairs = url.split('&');
+	    
+	    
+		for( i in pairs )
+		{
+		    var split = pairs[i].split('=');
+		    obj[decodeURIComponent(split[0])] = decodeURIComponent(split[1]);
+		}
+		
+		return obj;
+	    
+    };
     
 	
 	/*
