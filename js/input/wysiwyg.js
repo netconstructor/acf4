@@ -138,6 +138,7 @@
 			$(document).trigger('acf/wysiwyg/blur', id);
 		});
 		
+		
 	};
 	
 	
@@ -332,6 +333,28 @@
 			
 			
 		}, 11);
+		
+	});
+	
+	
+	/*
+	*  Full screen
+	*
+	*  @description: this hack will hide the 'imag eupload' button in the wysiwyg full screen mode if the field has disabled image uploads!
+	*  @since: 3.6
+	*  @created: 26/02/13
+	*/
+	
+	$('.acf_wysiwyg a.mce_fullscreen').live('click', function(){
+		
+		// vars
+		var wysiwyg = $(this).closest('.acf_wysiwyg'),
+			upload = wysiwyg.attr('data-upload');
+		
+		if( upload == 'no' )
+		{
+			$('#mce_fullscreen_container td.mceToolbar .mce_add_media').hide();
+		}
 		
 	});
 	

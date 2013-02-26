@@ -319,6 +319,7 @@ $(document).ready(function(){
 	
 	$(document).ajaxComplete(function(event, xhr, settings) {
 		
+		// clear WYSIWYG field
 		
 
 	});
