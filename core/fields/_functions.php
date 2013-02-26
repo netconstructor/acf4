@@ -597,7 +597,8 @@ class acf_field_functions
 	// create the conditional function
 	$(document).live('acf/conditional_logic/<?php echo $field['key']; ?>', function(){
 		
-		var field = $('.field-<?php echo $field['key']; ?>');		
+		var field = $('[data-field_key="<?php echo $field['key']; ?>"]');
+
 <?php
 
 		$if = array();

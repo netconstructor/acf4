@@ -702,6 +702,10 @@ tr.acf-conditional_logic-show {
 	display: none;
 }
 
+.hl.acf-tab-group > li.acf-conditional_logic-hide {
+	display: none;
+}
+
 
 #acf_color_picker {
 	position: absolute;
