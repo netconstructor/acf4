@@ -456,7 +456,15 @@ var acf = {
 		setTimeout(function(){
 			
 			// Hack for CPT without a content editor
-			wp.media.view.settings.post.id = acf.post_id;
+			try
+			{
+				wp.media.view.settings.post.id = acf.post_id;	
+			} 
+			catch(e)
+			{
+				// one of the objects was 'undefined'...
+			}
+			
 
 			
 			// setup fields
