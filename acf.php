@@ -264,6 +264,8 @@ class Acf
 		include_once('core/fields/image.php');
 		include_once('core/fields/file.php');
 		include_once('core/fields/number.php');
+		include_once('core/fields/email.php');
+		include_once('core/fields/password.php');
 		include_once('core/fields/select.php');
 		include_once('core/fields/checkbox.php');
 		include_once('core/fields/radio.php');

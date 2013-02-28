@@ -1,6 +1,6 @@
 <?php
 
-class acf_field_number extends acf_field
+class acf_field_email extends acf_field
 {
 	
 	/*
@@ -15,8 +15,8 @@ class acf_field_number extends acf_field
 	function __construct()
 	{
 		// vars
-		$this->name = 'number';
-		$this->label = __("Number",'acf');
+		$this->name = 'email';
+		$this->label = __("Email",'acf');
 		
 		
 		// do not delete!
@@ -38,7 +38,7 @@ class acf_field_number extends acf_field
 	
 	function create_field( $field )
 	{
-		echo '<input type="number" step="any" value="' . esc_attr( $field['value'] ) . '" id="' . esc_attr( $field['id'] ) . '" class="' . esc_attr( $field['class'] ) . '" name="' . esc_attr( $field['name'] ) . '" />';
+		echo '<input type="email" value="' . esc_attr( $field['value'] ) . '" id="' . esc_attr( $field['id'] ) . '" class="' . esc_attr( $field['class'] ) . '" name="' . esc_attr( $field['name'] ) . '" />';
 	}
 	
 	
@@ -83,45 +83,10 @@ class acf_field_number extends acf_field
 			</td>
 		</tr>
 		<?php
-	}
-	
-	
-	/*
-	*  update_value()
-	*
-	*  This filter is appied to the $value before it is updated in the db
-	*
-	*  @type	filter
-	*  @since	3.6
-	*  @date	23/01/13
-	*
-	*  @param	$value - the value which will be saved in the database
-	*  @param	$field - the field array holding all the field options
-	*  @param	$post_id - the $post_id of which the value will be saved
-	*
-	*  @return	$value - the modified value
-	*/
-	
-	function update_value( $value, $field, $post_id )
-	{
-		// remove ','
-		$value = str_replace(',', '', $value);
-		
-		
-		// convert to float. This removes any chars
-		$value = floatval( $value );
-		
-		
-		// convert back to string. This alows decimals to save
-		$value = (string) $value;
-		
-		
-		return $value;
-	}
-	
+	}	
 	
 }
 
-new acf_field_number();
+new acf_field_email();
 
 ?>
