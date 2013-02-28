@@ -221,6 +221,9 @@ $error_field_type = '<b>' . __('Error', 'acf') . '</b> ' . __('Field type does n
 								
 								?>
 								<div class="contional-logic-rules-wrapper" <?php if( ! $field['conditional_logic']['status'] ) echo 'style="display:none"'; ?>>
+									<div class="contional-warning">
+										<p><?php _e("Only fields which have been saved will appear in this list",'acf'); ?></p>
+									</div>
 									<table class="conditional-logic-rules widefat acf-rules <?php if( count($field['conditional_logic']['rules']) == 1) echo 'remove-disabled'; ?>">
 										<tbody>
 										<?php foreach( $field['conditional_logic']['rules'] as $rule_i => $rule ): 

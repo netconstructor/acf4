@@ -643,6 +643,24 @@ table.conditional-logic-rules tbody td {
 	border: 0 none;
 }
 
+.contional-warning {
+	background: #FFFFE0;
+    border: #E6DB55 solid 1px;
+    padding: 0 0.6em;
+    border-radius: 3px 3px 3px 3px;
+    margin: 10px 0 0;
+    
+    display: none;
+}
+
+.has-new-field .contional-warning {
+	display: block;
+}
+
+.contional-warning p {
+	margin: 0.5em 0 !important;
+    padding: 2px;
+}
 
 /*---------------------------------------------------------------------------------------------
 *

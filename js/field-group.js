@@ -15,6 +15,7 @@ var acf = {
 	},
 	conditional_logic : {
 		fields : [],
+		has_new_fields : false,
 		setup : function(){}
 	}
 };
@@ -850,7 +851,7 @@ var acf = {
 		// vars
 		var id = $(this).val(),
 			field = $('#acf_fields .field-' + id),
-			type = field.find('tr.field_type select').val(),
+			type = field.attr('data-type'),
 			conditional_function = $(this).closest('tr').find('.conditional-logic-value');
 			
 		
@@ -918,14 +919,28 @@ var acf = {
 	
 	acf.conditional_logic.setup = function()
 	{
+		// reset
 		acf.conditional_logic.fields = [];
+		acf.conditional_logic.has_new_fields = false;
 		
-		$('#acf_fields > .inside > .fields > .field').each(function(){
+		
+		// loop through fields
+		$('#acf_fields > .inside > .fields > .field[data-id!="field_clone"]').each(function(){
 			
 			var field = $(this),
-				id = field.attr('data-id');
-				type = field.find('tr.field_type select').val(),
+				id = field.attr('data-id'),
+				key = field.children('.input-field_key').val(),
+				type = field.attr('data-type'),
 				label = field.find('tr.field_label input').val();
+			
+			
+			// ignore duplicate 
+			if( key == 'field_clone' )
+			{
+				acf.conditional_logic.has_new_fields = true;
+				return;
+			}
+			
 			
 			if( type == 'select' || type == 'checkbox' || type == 'true_false' || type == 'radio' )
 			{
@@ -938,6 +953,18 @@ var acf = {
 			
 			
 		});
+		
+		
+		// add class to fields if a new_field exists!
+		if( acf.conditional_logic.has_new_fields )
+		{
+			$('#acf_fields > .inside > .fields').addClass('has-new-field');
+		}
+		else
+		{
+			$('#acf_fields > .inside > .fields').removeClass('has-new-field');
+		}
+		
 		
 	}
 	

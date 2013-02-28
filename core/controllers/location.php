@@ -575,9 +575,6 @@ class acf_location
     
         
         return $match;
-	
-	
-	
         
     }
     
