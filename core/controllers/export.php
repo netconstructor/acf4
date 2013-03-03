@@ -28,16 +28,6 @@ class acf_export
 		$this->action = '';
 		
 		
-		if( isset($_POST['export_to_xml']) )
-		{
-			$this->action = 'export_to_xml';
-		}
-		elseif( isset($_POST['export_to_php']) )
-		{
-			$this->action = 'export_to_php';
-		}
-		
-		
 		// actions
 		add_action('admin_menu', array($this,'admin_menu'), 11, 0);
 	}
@@ -77,6 +67,20 @@ class acf_export
 	{
 		// vars
 		$path = apply_filters('acf/get_info', 'path');
+		
+		
+		// verify nonce
+		if( isset($_POST['nonce']) && wp_verify_nonce($_POST['nonce'], 'acf_nonce') )
+		{
+			if( isset($_POST['export_to_xml']) )
+			{
+				$this->action = 'export_to_xml';
+			}
+			elseif( isset($_POST['export_to_php']) )
+			{
+				$this->action = 'export_to_php';
+			}
+		}
 		
 		
 		// include export action
@@ -202,6 +206,7 @@ class acf_export
 		
 		?>
 <form method="post">
+<input type="hidden" name="nonce" value="<?php echo wp_create_nonce( 'acf_nonce' ); ?>" />
 <div class="wp-box">
 	<div class="title">
 		<h3><?php _e("Export Field Groups",'acf'); ?></h3>
@@ -340,6 +345,11 @@ class acf_export
  *  Other types of Add-ons (like the options page) can be included outside of this action.
  *  
  *  The following code assumes you have a folder 'add-ons' inside your theme.
+ *
+ *  IMPORTANT
+ *  Add-ons may be included in a premium theme as outlined in the terms and conditions.
+ *  However, they are NOT to be included in a premium / free plugin.
+ *  For more information, please read http://www.advancedcustomfields.com/terms-conditions/
  */",'acf'); ?>
  
 
