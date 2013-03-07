@@ -157,7 +157,7 @@ class acf_location
 			foreach( $acfs as $acf )
 			{
 				// load location
-				$acf['location'] = apply_filters('acf/field_group/get_location', $acf['id']);
+				$acf['location'] = apply_filters('acf/field_group/get_location', array(), $acf['id']);
 
 				
 				// vars

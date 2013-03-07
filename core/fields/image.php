@@ -29,6 +29,7 @@ class acf_field_image extends acf_field
 		add_action('admin_head-media-upload-popup', array($this, 'popup_head'));
 		
 		add_action('wp_ajax_acf/fields/image/get_images', array($this, 'ajax_get_images'), 10, 1);
+		add_action('wp_ajax_nopriv_acf/fields/image/get_images', array($this, 'ajax_get_images'), 10, 1);
 		add_action('wp_prepare_attachment_for_js', array($this, 'wp_prepare_attachment_for_js'), 10, 3);
 	}
 	

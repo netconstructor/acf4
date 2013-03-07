@@ -30,6 +30,10 @@ class acf_export
 		
 		// actions
 		add_action('admin_menu', array($this,'admin_menu'), 11, 0);
+		
+		
+		// filters
+		add_filter('acf/export/clean_fields', array($this,'clean_fields'), 10, 1);
 	}
 	
 	
@@ -358,13 +362,13 @@ add_action('acf/register_fields', 'my_register_fields');
 
 function my_register_fields()
 {
-	include_once('add-ons/acf-repeater/repeater.php');
-	include_once('add-ons/acf-gallery/gallery.php');
-	include_once('add-ons/acf-flexible-content/flexible-content.php');
+	//include_once('add-ons/acf-repeater/repeater.php');
+	//include_once('add-ons/acf-gallery/gallery.php');
+	//include_once('add-ons/acf-flexible-content/flexible-content.php');
 }
 
 // <?php _e("Options Page",'acf'); ?> 
-include_once( 'add-ons/acf-options-page/acf-options-page.php' );
+//include_once( 'add-ons/acf-options-page/acf-options-page.php' );
 
 
 <?php _e("/**
@@ -378,22 +382,30 @@ include_once( 'add-ons/acf-options-page/acf-options-page.php' );
 if(function_exists("register_field_group"))
 {
 <?php
-			foreach($acfs as $acf)
+			foreach( $acfs as $i => $acf )
 			{
 				// populate acfs
 				$var = array(
-					'id' => uniqid(),
+					'id' => $acf->post_name,
 					'title' => $acf->post_title,
-					'fields' => apply_filters('acf/field_group/get_fields', $acf->ID),
-					'location' => apply_filters('acf/field_group/get_location', $acf->ID),
-					'options' => apply_filters('acf/field_group/get_options', $acf->ID),
+					'fields' => apply_filters('acf/field_group/get_fields', array(), $acf->ID),
+					'location' => apply_filters('acf/field_group/get_location', array(), $acf->ID),
+					'options' => apply_filters('acf/field_group/get_options', array(), $acf->ID),
 					'menu_order' => $acf->menu_order,
 				);
 				
+				
+				$var['fields'] = apply_filters('acf/export/clean_fields', $var['fields']);
+
+
+				// create html
 				$html = var_export($var, true);
 				
 				// change double spaces to tabs
 				$html = str_replace("  ", "\t", $html);
+				
+				// correctly formats "=> array("
+				$html = preg_replace('/([\t\r\n]+?)array/', 'array', $html);
 				
 				// add extra tab at start of each line
 				$html = str_replace("\n", "\n\t", $html);
@@ -450,7 +462,68 @@ if(function_exists("register_field_group"))
 	<?php
 	}
 	
-			
+	
+	/*
+	*  clean_fields
+	*
+	*  @description: 
+	*  @since: 3.5.7
+	*  @created: 7/03/13
+	*/
+	
+	function clean_fields( $fields )
+	{
+		// trim down the fields
+		if( $fields )
+		{
+			foreach( $fields as $i => $field )
+			{
+				// unset unneccessary bits
+				unset( $field['id'], $field['class'], $field['order_no'] );
+				
+				
+				// instructions
+				if( !$field['instructions'] )
+				{
+					unset( $field['instructions'] );
+				}
+				
+				
+				// Required
+				if( !$field['required'] )
+				{
+					unset( $field['required'] );
+				}
+				
+				
+				// conditional logic
+				if( !$field['conditional_logic']['status'] )
+				{
+					unset( $field['conditional_logic'] );
+				}
+				
+				
+				// children
+				if( isset($field['sub_fields']) )
+				{
+					$field['sub_fields'] = apply_filters('acf/export/clean_fields', $field['sub_fields']);
+				}
+				elseif( isset($field['layouts']) )
+				{
+					foreach( $field['layouts'] as $l => $layout )
+					{
+						$field['layouts'][ $l ]['sub_fields'] = apply_filters('acf/export/clean_fields', $layout['sub_fields']);
+					}
+				}
+
+				
+				// override field
+				$fields[ $i ] = $field;
+			}
+		}
+		
+		return $fields;
+	}	
 }
 
 $acf_export= new acf_export();

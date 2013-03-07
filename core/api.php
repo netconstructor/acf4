@@ -134,7 +134,7 @@ function get_field_reference( $field_name, $post_id )
 *  @return	$return - an array containin the field groups
 */
 
-function get_field_objects( $post_id = false )
+function get_field_objects( $post_id = false, $options = false )
 {
 	// global
 	global $wpdb;
@@ -183,7 +183,7 @@ function get_field_objects( $post_id = false )
 	{
 		foreach( $keys as $key )
 		{
-			$field = get_field_object( $key, $post_id );
+			$field = get_field_object( $key, $post_id, $options );
 			
 			if( !is_array($field) )
 			{
@@ -707,8 +707,8 @@ function register_field_group( $array )
 }
 
 
-add_filter('acf/get_field_groups', 'acf_register_field_group', 10, 1);
-function acf_register_field_group( $return )
+add_filter('acf/get_field_groups', 'api_acf_get_field_groups', 1, 1);
+function api_acf_get_field_groups( $return )
 {
 
 	// validate
@@ -718,10 +718,15 @@ function acf_register_field_group( $return )
 	}
 	
 	
-	// merge in custom
-	$return = array_merge($return, $GLOBALS['acf_register_field_group']);
-	
-	
+	foreach( $GLOBALS['acf_register_field_group'] as $acf )
+	{
+		$return[] = array(
+			'id' => $acf['id'],
+			'title' => $acf['title'],
+			'menu_order' => $acf['menu_order'],
+		);
+	}
+
 	
 	// order field groups based on menu_order, title
 	// Obtain a list of columns
@@ -739,6 +744,98 @@ function acf_register_field_group( $return )
 	}
 	
 	return $return;
+}
+
+
+add_filter('acf/field_group/get_fields', 'api_acf_field_group_get_fields', 1, 2);
+function api_acf_field_group_get_fields( $fields, $post_id )
+{
+	// validate
+	if( !empty($GLOBALS['acf_register_field_group']) )
+	{
+		foreach( $GLOBALS['acf_register_field_group'] as $acf )
+		{
+			if( $acf['id'] == $post_id )
+			{
+				foreach( $acf['fields'] as $f )
+				{
+					$fields[] = apply_filters('acf/load_field', $f, $f['key']);
+				}
+				
+				break;
+			}
+		}
+	}
+
+	return $fields;
+
+}
+
+
+add_filter('acf/load_field', 'api_acf_load_field', 1, 2);
+function api_acf_load_field( $field, $field_key )
+{
+	// validate
+	if( !empty($GLOBALS['acf_register_field_group']) )
+	{
+		foreach( $GLOBALS['acf_register_field_group'] as $acf )
+		{
+			if( !empty($acf['fields']) )
+			{
+				foreach( $acf['fields'] as $f )
+				{
+					if( $f['key'] == $field_key )
+					{
+						$field = $f;
+						break;
+					}
+				}
+			}
+		}
+	}
+
+	return $field;
+}
+
+
+add_filter('acf/field_group/get_location', 'api_acf_field_group_get_location', 1, 2);
+function api_acf_field_group_get_location( $location, $post_id )
+{
+	// validate
+	if( !empty($GLOBALS['acf_register_field_group']) )
+	{
+		foreach( $GLOBALS['acf_register_field_group'] as $acf )
+		{
+			if( $acf['id'] == $post_id )
+			{
+				$location = $acf['location'];
+				break;
+			}
+		}
+	}
+
+	return $location;
+}
+
+
+
+add_filter('acf/field_group/get_options', 'api_acf_field_group_get_options', 1, 2);
+function api_acf_field_group_get_options( $options, $post_id )
+{
+	// validate
+	if( !empty($GLOBALS['acf_register_field_group']) )
+	{
+		foreach( $GLOBALS['acf_register_field_group'] as $acf )
+		{
+			if( $acf['id'] == $post_id )
+			{
+				$options = $acf['options'];
+				break;
+			}
+		}
+	}
+
+	return $options;
 }
 
 
@@ -981,7 +1078,7 @@ function acf_form($options = null)
 		
 		
 		// load fields
-		$fields = apply_filters('acf/field_group/get_fields', $acf['id']);
+		$fields = apply_filters('acf/field_group/get_fields', array(), $acf['id']);
 		
 		
 		echo '<div id="acf_' . $acf['id'] . '" class="postbox acf_postbox">';

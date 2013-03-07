@@ -12,7 +12,7 @@ global $post;
 		
 		
 // vars
-$location =  apply_filters('acf/field_group/get_location', $post->ID);
+$location = apply_filters('acf/field_group/get_location', array(), $post->ID);
 
 
 // at lease 1 location rule

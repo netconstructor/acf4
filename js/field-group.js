@@ -15,7 +15,6 @@ var acf = {
 	},
 	conditional_logic : {
 		fields : [],
-		has_new_fields : false,
 		setup : function(){}
 	}
 };
@@ -55,17 +54,61 @@ var acf = {
 	
 	/*
 	*  acf.helpers.uniqid
-	*  
-	*  @since			3.1.6
-	*  @description		Returns a unique ID (secconds of time)
+	*
+	*  @description: JS equivelant of PHP uniqid
+	*  @since: 3.6
+	*  @created: 7/03/13
 	*/
 	
-	acf.helpers.uniqid = function()
+	acf.helpers.uniqid = function(prefix, more_entropy)
     {
-    	var newDate = new Date;
-    	return newDate.getTime();
+    	  // +   original by: Kevin van Zonneveld (http://kevin.vanzonneveld.net)
+		  // +    revised by: Kankrelune (http://www.webfaktory.info/)
+		  // %        note 1: Uses an internal counter (in php_js global) to avoid collision
+		  // *     example 1: uniqid();
+		  // *     returns 1: 'a30285b160c14'
+		  // *     example 2: uniqid('foo');
+		  // *     returns 2: 'fooa30285b1cd361'
+		  // *     example 3: uniqid('bar', true);
+		  // *     returns 3: 'bara20285b23dfd1.31879087'
+		  if (typeof prefix == 'undefined') {
+		    prefix = "";
+		  }
+		
+		  var retId;
+		  var formatSeed = function (seed, reqWidth) {
+		    seed = parseInt(seed, 10).toString(16); // to hex str
+		    if (reqWidth < seed.length) { // so long we split
+		      return seed.slice(seed.length - reqWidth);
+		    }
+		    if (reqWidth > seed.length) { // so short we pad
+		      return Array(1 + (reqWidth - seed.length)).join('0') + seed;
+		    }
+		    return seed;
+		  };
+		
+		  // BEGIN REDUNDANT
+		  if (!this.php_js) {
+		    this.php_js = {};
+		  }
+		  // END REDUNDANT
+		  if (!this.php_js.uniqidSeed) { // init seed with big random int
+		    this.php_js.uniqidSeed = Math.floor(Math.random() * 0x75bcd15);
+		  }
+		  this.php_js.uniqidSeed++;
+		
+		  retId = prefix; // start with prefix, add current milliseconds hex string
+		  retId += formatSeed(parseInt(new Date().getTime() / 1000, 10), 8);
+		  retId += formatSeed(this.php_js.uniqidSeed, 5); // add seed hex string
+		  if (more_entropy) {
+		    // for more entropy we add a float lower to 10
+		    retId += (Math.random() * 10).toFixed(8).toString();
+		  }
+		
+		  return retId;
+
     }
-    
+        
     
     /*
 	*  Form Submit
@@ -211,19 +254,13 @@ var acf = {
 	
 	$.fn.update_names = function()
 	{
-		console.time('update_names');
-		
 		var field = $(this),
 			old_id = field.attr('data-id'),
-			new_id = acf.helpers.uniqid();
+			new_id = 'field_' + acf.helpers.uniqid();
 		
 		
 		// give field a new id
 		field.attr('data-id', new_id);
-		
-		
-		// update hidden key input
-		field.children('.input-field_key').val('field_clone');
 		
 		
 		// update class
@@ -231,7 +268,7 @@ var acf = {
 		
 		
 		// update field key column
-		field.find('.field_meta td.field_key').text( '' );
+		field.find('.field_meta td.field_key').text( new_id );
 		
 		
 		// update attributes
@@ -244,9 +281,6 @@ var acf = {
 		{	
 			$(this).attr('name', $(this).attr('name').replace(old_id, new_id) );
 		});
-		
-		
-		console.timeEnd('update_names');
 		
 	}
 	
@@ -921,7 +955,6 @@ var acf = {
 	{
 		// reset
 		acf.conditional_logic.fields = [];
-		acf.conditional_logic.has_new_fields = false;
 		
 		
 		// loop through fields
@@ -932,14 +965,6 @@ var acf = {
 				key = field.children('.input-field_key').val(),
 				type = field.attr('data-type'),
 				label = field.find('tr.field_label input').val();
-			
-			
-			// ignore duplicate 
-			if( key == 'field_clone' )
-			{
-				acf.conditional_logic.has_new_fields = true;
-				return;
-			}
 			
 			
 			if( type == 'select' || type == 'checkbox' || type == 'true_false' || type == 'radio' )
@@ -953,18 +978,6 @@ var acf = {
 			
 			
 		});
-		
-		
-		// add class to fields if a new_field exists!
-		if( acf.conditional_logic.has_new_fields )
-		{
-			$('#acf_fields > .inside > .fields').addClass('has-new-field');
-		}
-		else
-		{
-			$('#acf_fields > .inside > .fields').removeClass('has-new-field');
-		}
-		
 		
 	}
 	

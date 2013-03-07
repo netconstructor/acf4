@@ -494,7 +494,7 @@ $(document).ready(function(){
 			foreach( $acfs as $acf )
 			{
 				// load options
-				$acf['options'] = apply_filters('acf/field_group/get_options', $acf['id']);
+				$acf['options'] = apply_filters('acf/field_group/get_options', array(), $acf['id']);
 				
 				
 				// only add the chosen field groups
@@ -519,7 +519,7 @@ $(document).ready(function(){
 				
 				
 				// load fields
-				$fields = apply_filters('acf/field_group/get_fields', $acf['id']);
+				$fields = apply_filters('acf/field_group/get_fields', array(), $acf['id']);
 				
 				
 				if( is_array($fields) ){ foreach( $fields as $field ){

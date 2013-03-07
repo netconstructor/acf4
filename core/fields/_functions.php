@@ -298,165 +298,103 @@ class acf_field_functions
 	
 	function load_field( $field, $field_key, $post_id = false )
 	{
-		// return cache
-		$cache = wp_cache_get( 'load_field-' . $field_key, 'acf' );
-		if($cache != false)
+		// load cache
+		if( !$field )
 		{
-			return $cache;
+			$field = wp_cache_get( 'load_field-' . $field_key, 'acf' );
 		}
 		
 		
-		// vars
-		global $wpdb;
-		
-		
-		// get field from postmeta
-		$sql = $wpdb->prepare("SELECT post_id, meta_value FROM $wpdb->postmeta WHERE meta_key = %s", $field_key);
-		
-		if( $post_id )
+		// load from DB
+		if( !$field )
 		{
-			$sql .= $wpdb->prepare("AND post_id = %d", $post_id);
-		}
-
-		$rows = $wpdb->get_results( $sql, ARRAY_A );
-		
-
-		if( is_array($rows) )
-		{
-			// potentialy, get_field_objects has picked up sub fields! These can't be found via sql so feturn false.
-			if( !isset($rows[0]) )
+			// vars
+			global $wpdb;
+			
+			
+			// get field from postmeta
+			$sql = $wpdb->prepare("SELECT post_id, meta_value FROM $wpdb->postmeta WHERE meta_key = %s", $field_key);
+			
+			if( $post_id )
 			{
-				return false;
+				$sql .= $wpdb->prepare("AND post_id = %d", $post_id);
 			}
+	
+			$rows = $wpdb->get_results( $sql, ARRAY_A );
 			
 			
-			$row = $rows[0];
 			
-			
-			/*
-			*  WPML compatibility
-			*
-			*  If WPML is active, and the $post_id (Field group ID) was not defined,
-			*  it is assumed that the load_field functio has been called from the API (front end).
-			*  In this case, the field group ID is never known and we can check for the correct translated field group
-			*/
-			
-			if( defined('ICL_LANGUAGE_CODE') && !$post_id )
+			// nothing found?
+			if( !empty($rows) )
 			{
-				$wpml_post_id = icl_object_id($row['post_id'], 'acf', true, ICL_LANGUAGE_CODE);
+				$row = $rows[0];
 				
-				foreach( $rows as $r )
+				
+				/*
+				*  WPML compatibility
+				*
+				*  If WPML is active, and the $post_id (Field group ID) was not defined,
+				*  it is assumed that the load_field functio has been called from the API (front end).
+				*  In this case, the field group ID is never known and we can check for the correct translated field group
+				*/
+				
+				if( defined('ICL_LANGUAGE_CODE') && !$post_id )
 				{
-					if( $r['post_id'] == $wpml_post_id )
+					$wpml_post_id = icl_object_id($row['post_id'], 'acf', true, ICL_LANGUAGE_CODE);
+					
+					foreach( $rows as $r )
 					{
-						// this row is a field from the translated field group
-						$row = $r;
-					}
-				}
-			}
-			
-			
-			// return field if it is not in a trashed field group
-			if( get_post_status( $row['post_id'] ) != "trash" )
-			{
-				$row['meta_value'] = maybe_unserialize( $row['meta_value'] );
-				$row['meta_value'] = maybe_unserialize( $row['meta_value'] ); // run again for WPML
-				
-				
-				// store field
-				$field = $row['meta_value'];
-				
-				
-				// apply filters
-				$field = apply_filters('acf/load_field_defaults', $field);
-				
-				
-				$keys = array('type', 'name', 'key');
-				$called = array(); // field[type] && field[name] may be the same! Don't run the same filter twice!
-				foreach( $keys as $key )
-				{
-					// validate
-					if( in_array($field[ $key ], $called) ){ continue; }
-					
-					
-					// add to $called
-					$called[] = $field[ $key ];
-					
-					
-					// run filters
-					$field = apply_filters('acf_load_field-' . $field[ $key ], $field); // old filter
-					$field = apply_filters('acf/load_field-' . $field[ $key ], $field); // new filter
-					
-				}
-				
-				
-				// apply filters
-				$field = apply_filters('acf_load_field', $field);
-				
-			
-				// set cache
-				wp_cache_set( 'load_field-' . $field_key, $field, 'acf' );
-				
-				return $field;
-			}
-		}
-		
-
-
-		// hook to load in registered field groups
-		$acfs = apply_filters('acf/get_field_groups', false);
-		
-		if($acfs)
-		{
-			// loop through acfs
-			foreach($acfs as $acf)
-			{
-				// loop through fields
-				if($acf['fields'])
-				{
-					foreach($acf['fields'] as $field)
-					{
-						if($field['key'] == $field_key)
+						if( $r['post_id'] == $wpml_post_id )
 						{
-							// apply filters
-							$field = apply_filters('acf_load_field', $field);
-							
-							
-							$keys = array('type', 'name', 'key');
-							$called = array(); // field[type] && field[name] may be the same! Don't run the same filter twice!
-							foreach( $keys as $key )
-							{
-								// validate
-								if( !isset($field[ $key ]) ){ continue; }
-								if( in_array($field[ $key ], $called) ){ continue; }
-								
-								
-								// add to $called
-								$called[] = $field[ $key ];
-								
-								
-								// run filters
-								$field = apply_filters('acf_load_field-' . $field[ $key ], $field); // old filter
-								$field = apply_filters('acf/load_field-' . $field[ $key ], $field); // new filter
-								
-							}
-							
-							
-							// set cache
-							wp_cache_set( 'load_field-' . $field_key, $field, 'acf' );
-							
-							return $field;
+							// this row is a field from the translated field group
+							$row = $r;
 						}
 					}
 				}
-				// if($acf['fields'])
+				
+				
+				// return field if it is not in a trashed field group
+				if( get_post_status( $row['post_id'] ) != "trash" )
+				{
+					$field = $row['meta_value'];
+					$field = maybe_unserialize( $field );
+					$field = maybe_unserialize( $field ); // run again for WPML
+				}
 			}
-			// foreach($acfs as $acf)
 		}
-		// if($acfs)
-
- 		
- 		return null;
+		
+		
+		// apply filters
+		$field = apply_filters('acf/load_field_defaults', $field);
+		
+		
+		$keys = array('type', 'name', 'key');
+		$called = array(); // field[type] && field[name] may be the same! Don't run the same filter twice!
+		foreach( $keys as $key )
+		{
+			// validate
+			if( in_array($field[ $key ], $called) ){ continue; }
+			
+			
+			// add to $called
+			$called[] = $field[ $key ];
+			
+			
+			// run filters
+			$field = apply_filters('acf_load_field-' . $field[ $key ], $field); // old filter
+			$field = apply_filters('acf/load_field-' . $field[ $key ], $field); // new filter
+			
+		}
+		
+		
+		// apply filters
+		$field = apply_filters('acf_load_field', $field);
+		
+	
+		// set cache
+		wp_cache_set( 'load_field-' . $field_key, $field, 'acf' );
+		
+		return $field;
 	}
 	
 	

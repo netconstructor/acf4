@@ -192,7 +192,7 @@ class acf_input
 			foreach( $acfs as $acf )
 			{
 				// load options
-				$acf['options'] = apply_filters('acf/field_group/get_options', $acf['id']);
+				$acf['options'] = apply_filters('acf/field_group/get_options', array(), $acf['id']);
 				
 				
 				// vars
@@ -237,7 +237,7 @@ class acf_input
 		
 		
 		// vars
-		$options = apply_filters('acf/field_group/get_options', $acf_id);
+		$options = apply_filters('acf/field_group/get_options', array(), $acf_id);
 		$html = '';
 		
 		
@@ -355,8 +355,8 @@ class acf_input
 		
 		if( $options['show'] )
 		{
-			$fields = apply_filters('acf/field_group/get_fields', $options['field_group']['id']);
-					
+			$fields = apply_filters('acf/field_group/get_fields', array(), $options['field_group']['id']);
+	
 			do_action('acf/create_fields', $fields, $options['post_id']);
 		}
 		else
@@ -404,7 +404,7 @@ class acf_input
 			{
 				if( $acf['id'] == $options['acf_id'] )
 				{
-					$fields = apply_filters('acf/field_group/get_fields', $acf['id']);
+					$fields = apply_filters('acf/field_group/get_fields', array(), $acf['id']);
 					
 					do_action('acf/create_fields', $fields, $options['post_id']);
 					

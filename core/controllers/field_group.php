@@ -30,9 +30,9 @@ class acf_field_group
 		
 		// filters
 		add_filter('acf/get_field_groups', array($this, 'get_field_groups'), 1, 1);
-		add_filter('acf/field_group/get_fields', array($this, 'get_fields'), 5, 1);
-		add_filter('acf/field_group/get_location', array($this, 'get_location'), 5, 1);
-		add_filter('acf/field_group/get_options', array($this, 'get_options'), 5, 1);
+		add_filter('acf/field_group/get_fields', array($this, 'get_fields'), 5, 2);
+		add_filter('acf/field_group/get_location', array($this, 'get_location'), 5, 2);
+		add_filter('acf/field_group/get_options', array($this, 'get_options'), 5, 2);
 		add_filter('acf/field_group/get_next_field_id', array($this, 'get_next_field_id'), 5, 1);
 		
 		
@@ -104,18 +104,22 @@ class acf_field_group
 	*  @created: 26/01/13
 	*/
 	
-	function get_fields( $post_id )
+	function get_fields( $fields, $post_id )
 	{
 		// global
 		global $wpdb;
 		
 		
-		// vars
-		$return = array();
-		
+		// loaded by PHP already?
+		if( !empty($fields) )
+		{
+			return $fields;	
+		}
+
 		
 		// get field from postmeta
 		$rows = $wpdb->get_results( $wpdb->prepare("SELECT meta_key FROM $wpdb->postmeta WHERE post_id = %d AND meta_key LIKE %s", $post_id, 'field\_%'), ARRAY_A);
+		
 		
 		if( $rows )
 		{
@@ -123,15 +127,17 @@ class acf_field_group
 			{
 				$field = apply_filters('acf/load_field', false, $row['meta_key'], $post_id );
 	
-			 	$return[ $field['order_no'] ] = $field;
+			 	$fields[ $field['order_no'] ] = $field;
 			}
 		 	
-		 	ksort($return);
+		 	// sort
+		 	ksort( $fields );
 	 	}
 	 	
 	 	
+	 	
 	 	// return
-		return $return;
+		return $fields;
 		
 	}
 	
@@ -144,8 +150,15 @@ class acf_field_group
 	*  @created: 26/01/13
 	*/
 	
-	function get_location( $post_id )
+	function get_location( $location, $post_id )
 	{
+		// loaded by PHP already?
+		if( !empty($location) )
+		{
+			return $location;	
+		}
+		
+		
 		// defaults
 		$location = array(
 		 	'rules'		=>	array(),
@@ -196,8 +209,15 @@ class acf_field_group
 	*  @created: 26/01/13
 	*/
 	
-	function get_options( $post_id )
+	function get_options( $options, $post_id )
 	{
+		// loaded by PHP already?
+		if( !empty($options) )
+		{
+			return $options;	
+		}
+		
+		
 		// defaults
 	 	$options = array(
 	 		'position'			=>	'normal',
@@ -807,10 +827,8 @@ class acf_field_group
 		*  save fields
 		*/
 		
-
 		// vars
 		$dont_delete = array();
-		
 		
 		
 		if( $_POST['fields'] )
@@ -824,20 +842,14 @@ class acf_field_group
 			
 
 			// loop through and save fields
-			foreach( $_POST['fields'] as $field )
+			foreach( $_POST['fields'] as $key => $field )
 			{
 				$i++;
 				
 				
 				// order + key
 				$field['order_no'] = $i;
-				
-				
-				// new field?
-				if( $field['key'] == 'field_clone' )
-				{
-					$field['key'] = 'field_' . apply_filters( 'acf/field_group/get_next_field_id', 0 );
-				}
+				$field['key'] = $key;
 				
 				
 				// save
@@ -900,60 +912,6 @@ class acf_field_group
 		unset( $_POST['options'] );
 	
 		
-	}
-	
-	
-	/*
-	*  get_next_field_id
-	*
-	*  @description: 
-	*  @since: 3.5.5
-	*  @created: 31/12/12
-	*/
-	
-	function get_next_field_id( $next_id )
-	{
-		// vars
-		global $wpdb;
-		$exists = true;
-		
-		
-		// get next id
-		$next_id = intval( get_option('acf_next_field_id', 1) );
-		
-			
-		// while doesnt exist
-		while( $exists == true )
-		{
-			// get field from postmeta
-			$row = $wpdb->get_row($wpdb->prepare(
-				"
-				SELECT meta_id 
-				FROM $wpdb->postmeta 
-				WHERE meta_key = %s
-				", 
-				'field_' . $next_id
-			), ARRAY_A );
-			
-			
-			// loop again or break through?
-			if( ! $row )
-			{
-				$exists = false;
-			}
-			else
-			{
-				$next_id++;
-			}
-		}
-		
-		
-		// update the acf_next_field_id
-		update_option('acf_next_field_id', ($next_id + 1) );
-		
-		
-		// return
-		return $next_id;
 	}
 	
 			
