@@ -1074,7 +1074,7 @@ function acf_form($options = null)
 		
 		
 		// load options
-		$acf['options'] = apply_filters('acf/field_group/get_options', $acf['id']);
+		$acf['options'] = apply_filters('acf/field_group/get_options', array(), $acf['id']);
 		
 		
 		// load fields
