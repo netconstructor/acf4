@@ -10,10 +10,6 @@
 
 class acf_third_party
 {
-	
-	var $action;
-	
-	
 	/*
 	*  __construct
 	*
@@ -204,12 +200,8 @@ class acf_third_party
 	
 	function create_new_field_keys( $field )
 	{
-		// get next id
-		$next_id = apply_filters( 'acf/field_group/get_next_field_id', 0 );
-		
-		
 		// update key
-		$field['key'] = 'field_' . $next_id;
+		$field['key'] = 'field_' . uniqid();
 		
 		
 		// update sub field's keys
@@ -226,45 +218,9 @@ class acf_third_party
 	}
 	
 	
-	/*
-	*  import_post_meta
-	*
-	*  @description: 
-	*  @since: 3.5.5
-	*  @created: 31/12/12
-	*/
-	
-	function import_post_meta_key( $meta_key )
-	{
-		if( strpos($meta_key, 'field_') !== false )
-		{
-			$meta_key = 'field_' . apply_filters( 'acf/field_group/get_next_field_id', 0 );
-		}
-		
-		return $meta_key;
-	}
-	
-	
-	/*
-	*  import_post_meta
-	*
-	*  @description: 
-	*  @since: 3.5.5
-	*  @created: 1/01/13
-	*/
-	
-	function import_post_meta( $post_id, $key, $value )
-	{
-		if( strpos($key, 'field_') !== false )
-		{
-			$value['key'] = $key;
-			
-			update_post_meta( $post_id, $key, $value );
-		}
-	}
 			
 }
 
-$acf_third_party = new acf_third_party();
+new acf_third_party();
 
 ?>
