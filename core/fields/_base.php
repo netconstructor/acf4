@@ -38,17 +38,17 @@ class acf_field
 		
 		
 		// value
-		$this->add_filter('acf/load_value-' . $this->name, array($this, 'load_value'), 10, 3);
-		$this->add_filter('acf/update_value-' . $this->name, array($this, 'update_value'), 10, 3);
-		$this->add_filter('acf/format_value-' . $this->name, array($this, 'format_value'), 10, 2);
-		$this->add_filter('acf/format_value_for_api-' . $this->name, array($this, 'format_value_for_api'), 10, 2);
+		$this->add_filter('acf/load_value/type=' . $this->name, array($this, 'load_value'), 10, 3);
+		$this->add_filter('acf/update_value/type=' . $this->name, array($this, 'update_value'), 10, 3);
+		$this->add_filter('acf/format_value/type=' . $this->name, array($this, 'format_value'), 10, 2);
+		$this->add_filter('acf/format_value_for_api/type=' . $this->name, array($this, 'format_value_for_api'), 10, 2);
 		
 		
 		// field
-		$this->add_filter('acf/load_field-' . $this->name, array($this, 'load_field'), 10, 3);
-		$this->add_filter('acf/update_field-' . $this->name, array($this, 'update_field'), 10, 2);
-		$this->add_action('acf/create_field-' . $this->name, array($this, 'create_field'), 10, 1);
-		$this->add_action('acf/create_field_options-' . $this->name, array($this, 'create_options'), 10, 1);
+		$this->add_filter('acf/load_field/type=' . $this->name, array($this, 'load_field'), 10, 3);
+		$this->add_filter('acf/update_field/type=' . $this->name, array($this, 'update_field'), 10, 2);
+		$this->add_action('acf/create_field/type=' . $this->name, array($this, 'create_field'), 10, 1);
+		$this->add_action('acf/create_field_options/type=' . $this->name, array($this, 'create_options'), 10, 1);
 		
 		
 		// input actions

@@ -52,7 +52,7 @@ class acf_field_functions
 	
 	function load_value($value, $post_id, $field)
 	{
-		$cache = wp_cache_get( 'value-' . $post_id . '-' . $field['name'], 'acf' );
+		$cache = wp_cache_get( 'load_value/post_id=' . $post_id . '/name=' . $field['name'], 'acf' );
 		if( $cache )
 		{
 			return $cache;
@@ -128,30 +128,18 @@ class acf_field_functions
 		
 		
 		// apply filters
-		$value = apply_filters('acf_load_value', $value, $field, $post_id );
-		
-		$keys = array('type', 'name', 'key');
-		$called = array(); // field[type] && field[name] may be the same! Don't run the same filter twice!
-		foreach( $keys as $key )
+		foreach( array('type', 'name', 'key') as $key )
 		{
-			// validate
-			if( !isset($field[ $key ]) ){ continue; }
-			if( in_array($field[ $key ], $called) ){ continue; }
-			
-			
-			// add to $called
-			$called[] = $field[ $key ];
-			
-			
 			// run filters
 			$value = apply_filters('acf_load_value-' . $field[ $key ], $value, $post_id, $field); // old filter
-			$value = apply_filters('acf/load_value-' . $field[ $key ], $value, $post_id, $field); // new filter
-			
+			$value = apply_filters('acf/load_value/' . $key . '=' . $field[ $key ], $value, $post_id, $field); // new filter
 		}
+		$value = apply_filters('acf_load_value', $value, $post_id, $field );
 		
 		
 		//update cache
-		wp_cache_set( 'value-' . $post_id . '-' . $field['name'], $value, 'acf' );
+		wp_cache_set( 'load_value/post_id=' . $post_id . '/name=' . $field['name'], $value, 'acf' );
+
 		
 		return $value;
 	}
@@ -167,7 +155,7 @@ class acf_field_functions
 	
 	function format_value( $value, $field )
 	{
-		$value = apply_filters('acf/format_value-' . $field['type'] , $value, $field);
+		$value = apply_filters('acf/format_value/type=' . $field['type'] , $value, $field);
 		
 		return $value;
 	}
@@ -183,7 +171,7 @@ class acf_field_functions
 	
 	function format_value_for_api( $value, $field )
 	{
-		$value = apply_filters('acf/format_value_for_api-' . $field['type'] , $value, $field);
+		$value = apply_filters('acf/format_value_for_api/type=' . $field['type'] , $value, $field);
 		
 		return $value;
 	}
@@ -203,30 +191,15 @@ class acf_field_functions
 		$value = stripslashes_deep($value);
 		
 		
-		
 		// apply filters
-		$value = apply_filters('acf_update_value', $value, $field, $post_id );
-		
-		$keys = array('type', 'name', 'key');
-		$called = array(); // field[type] && field[name] may be the same! Don't run the same filter twice!
-		foreach( $keys as $key )
+		foreach( array('type', 'name', 'key') as $key )
 		{
-			// validate
-			if( !isset($field[ $key ]) ){ continue; }
-			if( in_array($field[ $key ], $called) ){ continue; }
-			
-			
-			// add to $called
-			$called[] = $field[ $key ];
-			
-			
 			// run filters
 			$value = apply_filters('acf_update_value-' . $field[ $key ], $value, $field, $post_id); // old filter
-			$value = apply_filters('acf/update_value-' . $field[ $key ], $value, $field, $post_id); // new filter
-			//echo 'acf/update_value-' . $field[ $key ] . '<br />';
+			$value = apply_filters('acf/update_value/' . $key . '=' . $field[ $key ], $value, $field, $post_id); // new filter
 		}
+		$value = apply_filters('acf_update_value', $value, $field, $post_id );
 
-				
 		
 		// if $post_id is a string, then it is used in the everything fields and can be found in the options table
 		if( is_numeric($post_id) )
@@ -251,8 +224,8 @@ class acf_field_functions
 		}
 		
 		
-		//clear the cache for this field
-		wp_cache_delete( 'value-' . $post_id . '-' . $field['name'], 'acf' );
+		// update the cache
+		wp_cache_set( 'load_value/post_id=' . $post_id . '/name=' . $field['name'], $value, 'acf' );
 	}
 	
 	
@@ -284,7 +257,7 @@ class acf_field_functions
 			delete_option( '_' . $post_id . '_' . $key );
 		}
 		
-		wp_cache_delete( 'value-' . $post_id . '-' . $key, 'acf' );
+		wp_cache_delete( 'load_value/post_id=' . $post_id . '/name=' . $key, 'acf' );
 	}
 	
 	
@@ -301,7 +274,7 @@ class acf_field_functions
 		// load cache
 		if( !$field )
 		{
-			$field = wp_cache_get( 'load_field-' . $field_key, 'acf' );
+			$field = wp_cache_get( 'load_field/key=' . $field_key, 'acf' );
 		}
 		
 		
@@ -368,31 +341,22 @@ class acf_field_functions
 		$field = apply_filters('acf/load_field_defaults', $field);
 		
 		
-		$keys = array('type', 'name', 'key');
-		$called = array(); // field[type] && field[name] may be the same! Don't run the same filter twice!
-		foreach( $keys as $key )
+		// apply filters
+		foreach( array('type', 'name', 'key') as $key )
 		{
-			// validate
-			if( in_array($field[ $key ], $called) ){ continue; }
-			
-			
-			// add to $called
-			$called[] = $field[ $key ];
-			
-			
 			// run filters
 			$field = apply_filters('acf_load_field-' . $field[ $key ], $field); // old filter
-			$field = apply_filters('acf/load_field-' . $field[ $key ], $field); // new filter
-			
+			$field = apply_filters('acf/load_field/' . $key . '=' . $field[ $key ], $field); // new filter
 		}
-		
+		$field = apply_filters('acf_load_field', $field );
+
 		
 		// apply filters
 		$field = apply_filters('acf_load_field', $field);
 		
 	
 		// set cache
-		wp_cache_set( 'load_field-' . $field_key, $field, 'acf' );
+		wp_cache_set( 'load_field/key=' . $field_key, $field, 'acf' );
 		
 		return $field;
 	}
@@ -475,7 +439,7 @@ class acf_field_functions
 	function update_field( $field, $post_id )
 	{
 		// filters
-		$field = apply_filters('acf/update_field-' . $field['type'], $field, $post_id ); // new filter
+		$field = apply_filters('acf/update_field/type=' . $field['type'], $field, $post_id ); // new filter
 		
 		
 		// save
@@ -515,7 +479,7 @@ class acf_field_functions
 		
 		
 		// create field specific html
-		do_action('acf/create_field-' . $field['type'], $field);
+		do_action('acf/create_field/type=' . $field['type'], $field);
 		
 		
 		// conditional logic
@@ -601,7 +565,7 @@ foreach( $field['conditional_logic']['rules'] as $rule ):
 	
 	function create_field_options($field)
 	{
-		do_action('acf/create_field_options-' . $field['type'], $field);
+		do_action('acf/create_field_options/type=' . $field['type'], $field);
 	}
 
 	

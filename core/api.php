@@ -258,10 +258,6 @@ function get_fields( $post_id = false )
  
 function get_field( $field_key, $post_id = false, $format_value = true ) 
 {
-	// filter post_id
-	$post_id = acf_filter_post_id( $post_id );
-	
-	
 	// vars
 	$return = false;
 	$options = array(
