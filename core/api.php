@@ -308,6 +308,7 @@ function get_field_object( $field_key, $post_id = false, $options = array() )
 	// filter post_id
 	$post_id = acf_filter_post_id( $post_id );
 	$field = false;
+	$orig_field_key = $field_key;
 	
 	
 	// defaults for options
@@ -340,7 +341,8 @@ function get_field_object( $field_key, $post_id = false, $options = array() )
 		// treat as text field
 		$field = array(
 			'type' => 'text',
-			'name' => $field_key
+			'name' => $orig_field_key,
+			'key' => 'temp_key_for_' . $orig_field_key,
 		);
 	}
 	
