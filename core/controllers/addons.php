@@ -192,9 +192,9 @@ class acf_addons
 
 		
 		<div class="add-on wp-box <?php if( $active['flexible_content'] ): ?>add-on-active<?php endif; ?>">
-			<img src="<?php echo $dir; ?>images/add-ons/flexible-content-thumb.jpg" />
+			<img src="<?php echo $dir; ?>images/add-ons/flexible-content-field-thumb.jpg" />
 			<div class="inner">
-				<h3><?php _e("Flexible Field",'acf'); ?></h3>
+				<h3><?php _e("Flexible Content Field",'acf'); ?></h3>
 				<p><?php _e("Create unique designs with a flexible content layout manager!",'acf'); ?></p>
 			</div>
 			<div class="footer">

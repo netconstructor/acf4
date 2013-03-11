@@ -47,9 +47,9 @@
 
 h3.h2 {
 	font-family: "HelveticaNeue-Light","Helvetica Neue Light","Helvetica Neue",sans-serif;
-	font-size: 23px;
+	font-size: 25px;
     line-height: 29px;
-    padding: 9px 15px 4px 0;
+    padding: 5px 0 4px 0;
     margin: 0;
     font-weight: normal;
 }
@@ -171,6 +171,7 @@ body.custom-fields_page_acf-settings .wp-pointer-arrow {
 *	Add-Ons
 *	
 *-------------------------------------------------------------------------*/
+
 #add-ons {
 	
 }
@@ -197,6 +198,118 @@ body.custom-fields_page_acf-settings .wp-pointer-arrow {
 	margin: 4px 5px 0 0;
 	background: url(../images/sprite.png) -18px -318px no-repeat;
 }
+
+
+/*--------------------------------------------------------------------------
+*
+*	About (post update information)
+*	
+*-------------------------------------------------------------------------*/
+
+.acf-content {
+	font-size: 15px;
+    margin: 25px 40px 0 20px;
+    max-width: 1050px;
+    position: relative;
+}
+
+
+/*
+*  Title
+*/
+
+.acf-content-title h1 {
+    color: #333333;
+    font-size: 2.8em;
+    font-weight: 200;
+    line-height: 1.2em;
+    margin: 0.2em 0 0;
+}
+
+.acf-content-title h2 {
+    color: #777777;
+    font-size: 24px;
+    font-weight: normal;
+    line-height: 1.6em;
+    margin: 1em 0 1.4em;
+    font-family: "HelveticaNeue-Light","Helvetica Neue Light","Helvetica Neue",sans-serif;
+}
+
+
+/*
+*  Tabs
+*/
+
+.acf-content .nav-tab-wrapper {
+	padding-left: 6px;
+	margin-bottom: 30px;
+}
+
+.acf-content .nav-tab-wrapper .nav-tab {
+    color: #21759B;
+    font-size: 18px;
+    margin: 0 3px -1px 0;
+    padding: 4px 10px 6px;
+    vertical-align: top;
+}
+
+.acf-tab-content {
+	display: none;
+}
+
+.acf-tab-content.active {
+	display: block;
+}
+
+
+
+/*
+*  Body
+*/
+
+.acf-content-body {
+	margin: 0 0 30px;
+	padding: 0 0 30px;
+}
+
+.acf-content-body hr {	
+	border: 0 none;
+	border-top: #DFDFDF solid 1px;
+	background: transparent;
+	margin: 30px 0;
+	clear: both;
+}
+
+.acf-content-body h3 {
+	font-size: 24px;
+	margin: 2em 0 1em;
+}
+
+.acf-content-body h4 {
+	color: #464646;
+	font-size: 1em;
+	margin: 2em 0 0.6em;
+}
+
+.acf-content-body h4 + p {
+	 margin-top: 0.6em;
+}
+
+.acf-content-body p {
+	line-height: 1.6em;
+   
+}
+
+#acf-add-ons-table {
+	margin-left: 100px;
+}
+
+#acf-add-ons-table img {
+	display: block;
+	width: 120px;
+}
+
+
 
 /*--------------------------------------------------------------------------
 *

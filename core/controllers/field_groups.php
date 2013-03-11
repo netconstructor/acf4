@@ -200,21 +200,29 @@ class acf_field_groups
 	{
 		// vars
 		$version = apply_filters('acf/get_info', 'version');
+		$dir = apply_filters('acf/get_info', 'dir');
 		
 		?>
-<div id="acf-col-right" class="hidden">
+<script type="text/html" id="tmpl-acf-col-right">
+<div id="acf-col-right">
 
 	<div class="wp-box">
 		<div class="inner">
-			<h3 class="h2"><?php _e("Advanced Custom Fields",'acf'); ?> <span>v<?php echo $version; ?></span></h3>
+			<h3 class="h2"><?php _e("Advanced Custom Fields",'acf'); ?> <?php echo $version; ?></h3>
 
 			<h3><?php _e("Changelog",'acf'); ?></h3>
-			<p><?php _e("See what's new in",'acf'); ?> <a class="thickbox" href="<?php echo admin_url('plugin-install.php'); ?>?tab=plugin-information&plugin=advanced-custom-fields&section=changelog&TB_iframe=true&width=640&height=559">v<?php echo $version; ?></a>
+			<p><?php _e("See what's new in",'acf'); ?> <a href="<?php echo admin_url('edit.php?post_type=acf&about=true'); ?>">version <?php echo $version; ?></a>
 			
 			<h3><?php _e("Resources",'acf'); ?></h3>
-			<p><?php _e("Read documentation, learn the functions and find some tips &amp; tricks for your next web project.",'acf'); ?><br />
-			<a href="http://www.advancedcustomfields.com/" target="_blank"><?php _e("Visit the ACF website",'acf'); ?></a></p>
-
+			<ul>
+				<li><a href="http://www.advancedcustomfields.com/resources/#getting-started" target="_blank">Getting Started</a></li>
+				<li><a href="http://www.advancedcustomfields.com/resources/#field-types" target="_blank">Field Types</a></li>
+				<li><a href="http://www.advancedcustomfields.com/resources/#functions" target="_blank">Functions</a></li>
+				<li><a href="http://www.advancedcustomfields.com/resources/#actions" target="_blank">Actions</a></li>
+				<li><a href="http://www.advancedcustomfields.com/resources/#filters" target="_blank">Filters</a></li>
+				<li><a href="http://www.advancedcustomfields.com/resources/#how-to" target="_blank">"How to" guides</a></li>
+				<li><a href="http://www.advancedcustomfields.com/resources/#tutorials" target="_blank">Tutorials</a></li>
+			</ul>
 		</div>
 		<div class="footer footer-blue">
 			<ul class="left hl">
@@ -227,14 +235,101 @@ class acf_field_groups
 		</div>
 	</div>
 </div>
+</script>
+<script type="text/html" id="tmpl-acf-about">
+<div id="acf-about" class="acf-content">
+	<div class="acf-content-title">
+		<h1>Welcome to Advanced Custom Fields <?php echo $version; ?></h1>
+		<h2>Thank you for updating to the latest version! <br />ACF <?php echo $version; ?> is more polished and enjoyable than ever before. We hope you like it.</h2>
+	</div>
+	<div class="acf-content-body">
+		<h2 class="nav-tab-wrapper">
+			<a class="acf-tab-toggle nav-tab nav-tab-active" href="#" data-tab="1">What’s New</a>
+			<a class="acf-tab-toggle nav-tab" href="#" data-tab="2">Changelog</a>
+		</h2>
+		<div class="acf-tab-content active" data-tab="1">
+			
+			<table id="acf-add-ons-table" class="alignright">
+				<tr>
+					<td><img src="<?php echo $dir; ?>images/add-ons/repeater-field-thumb.jpg" /></td>
+					<td><img src="<?php echo $dir; ?>images/add-ons/gallery-field-thumb.jpg" /></td>
+				</tr>
+				<tr>
+					<td><img src="<?php echo $dir; ?>images/add-ons/options-page-thumb.jpg" /></td>
+					<td><img src="<?php echo $dir; ?>images/add-ons/flexible-content-field-thumb.jpg" /></td>
+				</tr>
+			</table>
+		
+			<h3>Add-ons</h3>
+			
+			<h4>Activation codes have grown into plugins!</h4>
+			<p>Add-ons are now activated by downloading and installing individual plugins. Although these plugins will not be hosted on the wordpress.org repository, each Add-on will continue to receive updates in the usual way.</p>
+			
+			<h4>Where can I find my Add-on plugins?</h4>
+			<p>Download links can be found alongside the activation code in your ACF receipt. <a href="http://www.advancedcustomfields.com/store/account/" target="_blank">visit your account</a>.<br />
+			For faster access, this <a href="http://www.advancedcustomfields.com/add-ons-download/" target="_blank">download page</a> has also been created.</p>
+			
+			<hr />
+			
+			<h3>Easier Development</h3>
+			
+			<h4>Custom Field Types</h4>
+			<p>Creating your own field type has never been easier! Unfortunately, version 3 field types are not compatible with version 4.<br />
+			Migrating your field types is easy, please <a href="http://www.advancedcustomfields.com/docs/tutorials/creating-a-new-field-type/" target="_blank">follow this tutorial</a> to learn more. </p>
+			
+			<h4>Actions &amp; Filters</h4>
+			<p>Lots of new actions and filters have been added in version 4. Only one action has been removed; "acf_settings". <a href="http://www.advancedcustomfields.com/resources/getting-started/migrating-from-v3-to-v4/" target="_blank">read more about the changes</a></p>
+			
+			<h4>Preview draft is now working!</h4>
+			<p>This bug has been squashed along with many other little critters! <a class="acf-tab-toggle" href="#" data-tab="2">See the full changelog</a></p>
+			
+			<hr />
+			
+			<h3>Thank You</h3>
+			<p>A <strong>BIG</strong> thank you to everyone who has helped test the version 4 beta and for all the support I have received.</p>
+			<p>Without you all, this release would not have been possible!</p>
+			
+		</div>
+		<div class="acf-tab-content" data-tab="2">
+			<h3>No activation codes!</h3>
+			<p>sfsdjg sjdfhg jsdhgf sdf </p>
+		</div>
+		<p><br /></p>
+		<ul class="hl clearfix">
+			<li><a class="acf-button acf-button-big" href="<?php echo admin_url('edit.php?post_type=acf'); ?>">Awesome. Let's get to work</a></li>
+		</ul>
+		
+	</div>
+	
+	
+	
+</div>
+</script>
 <script type="text/javascript">
 (function($){
-	$('#wpbody .wrap').wrapInner('<div id="acf-col-left" />');
-	$('#wpbody .wrap').wrapInner('<div id="acf-cols" />');
-	$('#acf-col-right').removeClass('hidden').prependTo('#acf-cols');
 	
+	// wrap
+	$('#wpbody .wrap').attr('id', 'acf-field_groups');
+	$('#acf-field_groups').wrapInner('<div id="acf-col-left" />');
+	$('#acf-field_groups').wrapInner('<div id="acf-cols" />');
+	
+	
+	// add sidebar
+	$('#acf-cols').prepend( $('#tmpl-acf-col-right').html() );
+	
+	
+	// take out h2 + icon
 	$('#acf-col-left > .icon32').insertBefore('#acf-cols');
 	$('#acf-col-left > h2').insertBefore('#acf-cols');
+	
+	
+	<?php if( isset($_GET['about']) ): ?>
+	// add about copy
+	$('#wpbody-content').prepend( $('#tmpl-acf-about').html() );
+	$('#acf-field_groups').hide();
+	$('#screen-meta-links').hide();
+	<?php endif; ?>
+	
 })(jQuery);
 </script>
 		<?php

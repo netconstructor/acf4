@@ -89,7 +89,7 @@ input.ir { border: 0 none; background: none; }
     font-family: Georgia,"Times New Roman","Bitstream Charter",Times,serif;
 }
 .wp-box .inner {
-    padding: 10px;
+    padding: 15px;
 }
 .wp-box .footer {
     background: none repeat scroll 0 0 #F5F5F5;
@@ -122,6 +122,7 @@ input.ir { border: 0 none; background: none; }
 
 .wp-box h3 {
 	margin: 1.5em 0 0;
+	
 }
 
 .wp-box p {
@@ -386,6 +387,10 @@ input[type="submit"].acf-button[disabled]:hover {
 	
 }
 
+a.acf-button-big {
+	font-size: 16px;
+	padding: 13px;
+}
 
 /*--------------------------------------------------------------------------
 *
