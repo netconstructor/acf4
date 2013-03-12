@@ -269,7 +269,6 @@ body.custom-fields_page_acf-settings .wp-pointer-arrow {
 
 .acf-content-body {
 	margin: 0 0 30px;
-	padding: 0 0 30px;
 }
 
 .acf-content-body hr {	
@@ -307,6 +306,33 @@ body.custom-fields_page_acf-settings .wp-pointer-arrow {
 #acf-add-ons-table img {
 	display: block;
 	width: 120px;
+}
+
+
+/*
+*  Footer
+*/ 
+
+.acf-content-footer {
+	margin: 60px 0 30px;
+}
+
+
+/*
+*  Cangelog
+*/
+
+.acf-content-body ul {
+	list-style: disc outside none;
+	padding-left: 30px;
+}
+
+.acf-content-body ul li {
+	margin: 12px 0;
+}
+
+.acf-content-body ul li a {
+	
 }
 
 
