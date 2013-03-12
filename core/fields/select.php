@@ -24,9 +24,9 @@ class acf_field_select extends acf_field
     	
     	
     	// extra
-		add_filter('acf/update_field-select', array($this, 'update_field'), 5, 2);
-		add_filter('acf/update_field-checkbox', array($this, 'update_field'), 5, 2);
-		add_filter('acf/update_field-radio', array($this, 'update_field'), 5, 2);
+		//add_filter('acf/update_field/type=select', array($this, 'update_field'), 5, 2);
+		add_filter('acf/update_field/type=checkbox', array($this, 'update_field'), 5, 2);
+		add_filter('acf/update_field/type=radio', array($this, 'update_field'), 5, 2);
 	}
 
 	

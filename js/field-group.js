@@ -390,7 +390,6 @@ var acf = {
 		// vars
 		var a = $(this),
 			field = a.closest('.field'),
-			//orig_type = field.find('tr.field_type select').first().val(),
 			new_field = field.clone();
 			
 			
