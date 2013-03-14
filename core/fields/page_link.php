@@ -148,17 +148,18 @@ class acf_page_link extends acf_field
 	*
 	*  This filter is appied to the $value after it is loaded from the db and before it is passed back to the api functions such as the_field
 	*
-	*  @param	$value	- the value which was loaded from the database
-	*  @param	$field	- the field array holding all the field options
-	*
-	*  @return	$value	- the modified value
-	*
 	*  @type	filter
 	*  @since	3.6
 	*  @date	23/01/13
+	*
+	*  @param	$value	- the value which was loaded from the database
+	*  @param	$post_id - the $post_id from which the value was loaded
+	*  @param	$field	- the field array holding all the field options
+	*
+	*  @return	$value	- the modified value
 	*/
 	
-	function format_value_for_api( $value, $field )
+	function format_value_for_api( $value, $post_id, $field )
 	{
 		if( !$value )
 		{

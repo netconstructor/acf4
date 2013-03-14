@@ -351,7 +351,7 @@ function get_field_object( $field_key, $post_id = false, $options = array() )
 		// format value
 		if( $options['format_value'] )
 		{
-			$field['value'] = apply_filters('acf/format_value_for_api', $field['value'], $field);
+			$field['value'] = apply_filters('acf/format_value_for_api', $field['value'], $post_id, $field);
 		}
 	}
 

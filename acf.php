@@ -496,8 +496,9 @@ class Acf
 			// set value
 			if( !isset($field['value']) )
 			{
+				
 				$field['value'] = apply_filters('acf/load_value', false, $post_id, $field);
-				$field['value'] = apply_filters('acf/format_value', $field['value'], $field);
+				$field['value'] = apply_filters('acf/format_value', $field['value'], $post_id, $field);
 			}
 			
 			

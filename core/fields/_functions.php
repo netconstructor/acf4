@@ -25,8 +25,8 @@ class acf_field_functions
 		add_filter('acf/load_value', array($this, 'load_value'), 5, 3);
 		add_action('acf/update_value', array($this, 'update_value'), 5, 3);
 		add_action('acf/delete_value', array($this, 'delete_value'), 5, 2);
-		add_action('acf/format_value', array($this, 'format_value'), 5, 2);
-		add_action('acf/format_value_for_api', array($this, 'format_value_for_api'), 5, 2);
+		add_action('acf/format_value', array($this, 'format_value'), 5, 3);
+		add_action('acf/format_value_for_api', array($this, 'format_value_for_api'), 5, 3);
 		
 		
 		// field
@@ -153,9 +153,9 @@ class acf_field_functions
 	*  @created: 26/01/13
 	*/
 	
-	function format_value( $value, $field )
+	function format_value( $value, $post_id, $field )
 	{
-		$value = apply_filters('acf/format_value/type=' . $field['type'] , $value, $field);
+		$value = apply_filters('acf/format_value/type=' . $field['type'], $value, $post_id, $field);
 		
 		return $value;
 	}
@@ -169,9 +169,9 @@ class acf_field_functions
 	*  @created: 26/01/13
 	*/
 	
-	function format_value_for_api( $value, $field )
+	function format_value_for_api( $value, $post_id, $field )
 	{
-		$value = apply_filters('acf/format_value_for_api/type=' . $field['type'] , $value, $field);
+		$value = apply_filters('acf/format_value_for_api/type=' . $field['type'], $value, $post_id, $field);
 		
 		return $value;
 	}
