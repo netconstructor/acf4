@@ -261,15 +261,10 @@ function get_field( $field_key, $post_id = false, $format_value = true )
 	// vars
 	$return = false;
 	$options = array(
-		'load_value' => true
+		'load_value' => true,
+		'format_value' => $format_value
 	);
-	
-	
-	// format value
-	if( $format_value )
-	{
-		$options['format_value'] = true;
-	}
+
 	
 	$field = get_field_object( $field_key, $post_id, $options);
 	
