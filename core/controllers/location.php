@@ -437,13 +437,14 @@ class acf_location
         
         if($rule['operator'] == "==")
         {
-        	$match = ( $page_parent == $rule['value'] );
+        	$match = ( $post_parent == $rule['value'] );
         }
         elseif($rule['operator'] == "!=")
         {
-        	$match = ( $page_parent != $rule['value'] );
+        	$match = ( $post_parent != $rule['value'] );
         }
-                
+        
+        
         return $match;
 
 	}
