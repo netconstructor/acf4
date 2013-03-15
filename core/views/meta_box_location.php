@@ -61,9 +61,9 @@ if( empty($location['rules']) )
 									'taxonomy'		=>	__("Taxonomy",'acf'),
 								),
 								__("Other",'acf') => array(
-									'ef_taxonomy'	=>	__("Taxonomy (Add / Edit)",'acf'),
+									'ef_taxonomy'	=>	__("Taxonomy Term (Add / Edit)",'acf'),
 									'ef_user'		=>	__("User (Add / Edit)",'acf'),
-									'ef_media'		=>	__("Media (Edit)",'acf')
+									'ef_media'		=>	__("Media Attachment (Edit)",'acf')
 								)
 							);
 							

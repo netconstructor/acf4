@@ -69,7 +69,7 @@ class acf_location
 		// vars
 		$options = array(
 			'nonce' => '',
-			'return' => 'json'
+			'ajax' => true
 		);
 		
 		
@@ -122,7 +122,7 @@ class acf_location
 			'ef_user' => 0,
 			'ef_media' => 0,
 			'lang' => 0,
-			'return' => 'php'
+			'ajax' => false
 		);
 		
 		
@@ -427,7 +427,12 @@ class acf_location
 		
 		// vars
 		$post = get_post( $options['post_id'] );
-		$page_parent = $post->post_parent;
+		
+		$post_parent = $post->post_parent;
+    	if( $options['page_parent'] )
+    	{
+        	$post_parent = $options['page_parent'];
+    	}
         
         
         if($rule['operator'] == "==")
@@ -521,29 +526,34 @@ class acf_location
 		$terms = $options['post_category'];
 		
 		
-		// no terms? This is not an ajax call. Load them from the post_id
-		if( empty($terms) )
+		// not AJAX 
+		if( !$options['ajax'] )
 		{
-			$all_terms = get_the_terms( $options['post_id'], 'category' );
-			if($all_terms)
+			// no terms? Load them from the post_id
+			if( empty($terms) )
 			{
-				foreach($all_terms as $all_term)
+				$all_terms = get_the_terms( $options['post_id'], 'category' );
+				if($all_terms)
 				{
-					$terms[] = $all_term->term_id;
+					foreach($all_terms as $all_term)
+					{
+						$terms[] = $all_term->term_id;
+					}
+				}
+			}
+			
+			
+			// no terms at all? 
+			if( empty($terms) )
+			{
+				// If no ters, this is a new post and should be treated as if it has the "Uncategorized" (1) category ticked
+				if( is_array($taxonomies) && in_array('category', $taxonomies) )
+				{
+					$terms[] = '1';
 				}
 			}
 		}
 		
-		
-		// no terms at all? 
-		if( empty($terms) )
-		{
-			// If no ters, this is a new post and should be treated as if it has the "Uncategorized" (1) category ticked
-			if( is_array($taxonomies) && in_array('category', $taxonomies) )
-			{
-				$terms[] = '1';
-			}
-		}
 
         
         if($rule['operator'] == "==")
@@ -713,33 +723,37 @@ class acf_location
 		$terms = $options['taxonomy'];
 		
 		
-		// no terms? This is not an ajax call. Load them from the post_id
-		if( empty($terms) )
+		// not AJAX 
+		if( !$options['ajax'] )
 		{
-        	if( is_array($taxonomies) )
-        	{
-	        	foreach( $taxonomies as $tax )
-				{
-					$all_terms = get_the_terms( $options['post_id'], $tax );
-					if($all_terms)
+			// no terms? Load them from the post_id
+			if( empty($terms) )
+			{
+	        	if( is_array($taxonomies) )
+	        	{
+		        	foreach( $taxonomies as $tax )
 					{
-						foreach($all_terms as $all_term)
+						$all_terms = get_the_terms( $options['post_id'], $tax );
+						if($all_terms)
 						{
-							$terms[] = $all_term->term_id;
+							foreach($all_terms as $all_term)
+							{
+								$terms[] = $all_term->term_id;
+							}
 						}
 					}
 				}
 			}
-		}
-		
-		
-		// no terms at all? 
-		if( empty($terms) )
-		{
-			// If no ters, this is a new post and should be treated as if it has the "Uncategorized" (1) category ticked
-			if( is_array($taxonomies) && in_array('category', $taxonomies) )
+			
+			
+			// no terms at all? 
+			if( empty($terms) )
 			{
-				$terms[] = '1';
+				// If no ters, this is a new post and should be treated as if it has the "Uncategorized" (1) category ticked
+				if( is_array($taxonomies) && in_array('category', $taxonomies) )
+				{
+					$terms[] = '1';
+				}
 			}
 		}
 
