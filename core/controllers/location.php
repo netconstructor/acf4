@@ -131,7 +131,7 @@ class acf_location
 		
 		
 		// Parse values
-		$options = apply_filters( 'acf_parse_value', $options );
+		$options = apply_filters( 'acf/parse_types', $options );
 		
 
 		// WPML

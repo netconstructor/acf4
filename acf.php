@@ -135,7 +135,7 @@ class Acf
 		{
 			foreach( $value as $k => $v )
 			{
-				$value[ $k ] = apply_filters( 'acf_parse_value', $v );
+				$value[ $k ] = apply_filters( 'acf/parse_types', $v );
 			}	
 		}
 		else
