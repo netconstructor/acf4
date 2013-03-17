@@ -23,6 +23,8 @@ if( is_admin() )
 	include_once('core/controllers/addons.php');
 	include_once('core/controllers/third_party.php');
 	include_once('core/controllers/everything_fields.php');
+	include_once('core/controllers/upgrade.php');
+	
 }
 
 include_once('core/api.php');
