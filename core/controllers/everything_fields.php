@@ -385,7 +385,7 @@ $(document).ready(function(){
 		// $post_id to save against
 		$post_id = $_POST['taxonomy'] . '_' . $term_id;
 		
-		do_action('acf_save_post', $post_id);
+		do_action('acf/save_post', $post_id);
 	}
 		
 		
@@ -403,7 +403,7 @@ $(document).ready(function(){
 		// $post_id to save against
 		$post_id = 'user_' . $user_id;
 		
-		do_action('acf_save_post', $post_id);		
+		do_action('acf/save_post', $post_id);		
 	}
 	
 	
@@ -421,7 +421,7 @@ $(document).ready(function(){
 		// $post_id to save against
 		$post_id = $post['ID'];
 		
-		do_action('acf_save_post', $post_id);
+		do_action('acf/save_post', $post_id);
 		
 		return $post;
 	}
@@ -440,7 +440,7 @@ $(document).ready(function(){
 		// $post_id to save against
 		$post_id = 'shopp_category_' . $category->id;
 		
-		do_action('acf_save_post', $post_id);
+		do_action('acf/save_post', $post_id);
 	}
 	
 	

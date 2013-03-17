@@ -438,7 +438,7 @@ class acf_input
 		
 		
 		// update the post (may even be a revision / autosave preview)
-		do_action('acf_save_post', $post_id);
+		do_action('acf/save_post', $post_id);
         
         
 	}
@@ -515,9 +515,6 @@ endif;
 ?>
 </script>
 		<?php
-		
-		// old action
-		do_action('acf_head-input');
 	}
 	
 	

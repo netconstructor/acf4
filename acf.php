@@ -58,7 +58,7 @@ class Acf
 		
 		// actions
 		add_action('init', array($this, 'init'), 1);
-		add_action('acf_save_post', array($this, 'acf_save_post'), 10);
+		add_action('acf/save_post', array($this, 'acf_save_post'), 10);
 		
 		
 		// filters
