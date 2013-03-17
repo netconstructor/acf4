@@ -1190,6 +1190,26 @@ function delete_field( $field_name, $post_id )
 }
 
 
+/*
+*  create_field()
+*
+*  This function will creat the HTML for a field
+*
+*  @type	function
+*  @since	4.0.0
+*  @date	17/03/13
+*
+*  @param	$field - an array containing all the field attributes
+*
+*  @return
+*/
+
+function create_field( $field )
+{
+	do_action('acf/create_field', $field );
+}
+
+
 /*--------------------------------------------------------------------------------------
 *
 *	acf_convert_field_names_to_keys
