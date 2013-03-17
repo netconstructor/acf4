@@ -134,7 +134,7 @@ function get_field_reference( $field_name, $post_id )
 *  @return	$return - an array containin the field groups
 */
 
-function get_field_objects( $post_id = false, $options = false )
+function get_field_objects( $post_id = false, $options = array() )
 {
 	// global
 	global $wpdb;
