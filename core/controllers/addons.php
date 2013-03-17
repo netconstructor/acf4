@@ -215,11 +215,9 @@ class acf_addons
 		
 		return;
 		
-	}
-	
-			
+	}		
 }
 
-$acf_addons = new acf_addons();
+new acf_addons();
 
 ?>
