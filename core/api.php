@@ -924,7 +924,7 @@ function acf_form_head()
 		
 		
 		// allow for custom save
-		$post_id = apply_filters('acf_form_pre_save_post', $post_id);
+		$post_id = apply_filters('acf/pre_save_post', $post_id);
 		
 		
 		// save the data

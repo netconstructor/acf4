@@ -29,7 +29,7 @@ class acf_everything_fields
 		
 		// actions
 		add_action('admin_menu', array($this,'admin_menu'));
-		add_action('wp_ajax_acf_everything_fields', array($this, 'acf_everything_fields'));
+		add_action('wp_ajax_acf/everything_fields', array($this, 'acf_everything_fields'));
 		
 		
 		// save
@@ -245,7 +245,7 @@ class acf_everything_fields
 (function($){
 
 acf.data = {
-	action 			:	'acf_everything_fields',
+	action 			:	'acf/everything_fields',
 	metabox_ids		:	'<?php echo implode( ',', $this->data['metabox_ids'] ); ?>',
 	page_type		:	'<?php echo $this->data['page_type']; ?>',
 	page_action		:	'<?php echo $this->data['page_action']; ?>',
@@ -629,6 +629,6 @@ $(document).ready(function(){
 			
 }
 
-$acf_everything_fields = new acf_everything_fields();
+new acf_everything_fields();
 
 ?>
