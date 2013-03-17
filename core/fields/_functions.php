@@ -187,7 +187,10 @@ class acf_field_functions
 	{
 		// strip slashes
 		// - not needed? http://support.advancedcustomfields.com/discussion/3168/backslashes-stripped-in-wysiwyg-filed
-		//$value = stripslashes_deep($value);
+		if( get_magic_quotes_gpc() )
+		{
+			$value = stripslashes_deep($value);
+		}
 		
 		
 		// apply filters
