@@ -526,6 +526,6 @@ if(function_exists("register_field_group"))
 	}	
 }
 
-$acf_export= new acf_export();
+new acf_export();
 
 ?>

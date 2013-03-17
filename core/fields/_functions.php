@@ -131,10 +131,8 @@ class acf_field_functions
 		foreach( array('type', 'name', 'key') as $key )
 		{
 			// run filters
-			$value = apply_filters('acf_load_value-' . $field[ $key ], $value, $post_id, $field); // old filter
 			$value = apply_filters('acf/load_value/' . $key . '=' . $field[ $key ], $value, $post_id, $field); // new filter
 		}
-		$value = apply_filters('acf_load_value', $value, $post_id, $field );
 		
 		
 		//update cache
@@ -196,10 +194,8 @@ class acf_field_functions
 		foreach( array('type', 'name', 'key') as $key )
 		{
 			// run filters
-			$value = apply_filters('acf_update_value-' . $field[ $key ], $value, $field, $post_id); // old filter
 			$value = apply_filters('acf/update_value/' . $key . '=' . $field[ $key ], $value, $field, $post_id); // new filter
 		}
-		$value = apply_filters('acf_update_value', $value, $field, $post_id );
 
 		
 		// if $post_id is a string, then it is used in the everything fields and can be found in the options table
@@ -346,14 +342,8 @@ class acf_field_functions
 		foreach( array('type', 'name', 'key') as $key )
 		{
 			// run filters
-			$field = apply_filters('acf_load_field-' . $field[ $key ], $field); // old filter
 			$field = apply_filters('acf/load_field/' . $key . '=' . $field[ $key ], $field); // new filter
 		}
-		$field = apply_filters('acf_load_field', $field );
-
-		
-		// apply filters
-		$field = apply_filters('acf_load_field', $field);
 		
 	
 		// set cache

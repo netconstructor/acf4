@@ -218,13 +218,13 @@ class acf_field_groups
 			
 			<h3><?php _e("Resources",'acf'); ?></h3>
 			<ul>
-				<li><a href="http://www.advancedcustomfields.com/resources/#getting-started" target="_blank">Getting Started</a></li>
-				<li><a href="http://www.advancedcustomfields.com/resources/#field-types" target="_blank">Field Types</a></li>
-				<li><a href="http://www.advancedcustomfields.com/resources/#functions" target="_blank">Functions</a></li>
-				<li><a href="http://www.advancedcustomfields.com/resources/#actions" target="_blank">Actions</a></li>
-				<li><a href="http://www.advancedcustomfields.com/resources/#filters" target="_blank">Filters</a></li>
-				<li><a href="http://www.advancedcustomfields.com/resources/#how-to" target="_blank">"How to" guides</a></li>
-				<li><a href="http://www.advancedcustomfields.com/resources/#tutorials" target="_blank">Tutorials</a></li>
+				<li><a href="http://www.advancedcustomfields.com/resources/#getting-started" target="_blank"><?php _e("Getting Started",'acf'); ?></a></li>
+				<li><a href="http://www.advancedcustomfields.com/resources/#field-types" target="_blank"><?php _e("Field Types",'acf'); ?></a></li>
+				<li><a href="http://www.advancedcustomfields.com/resources/#functions" target="_blank"><?php _e("Functions",'acf'); ?></a></li>
+				<li><a href="http://www.advancedcustomfields.com/resources/#actions" target="_blank"><?php _e("Actions",'acf'); ?></a></li>
+				<li><a href="http://www.advancedcustomfields.com/resources/#filters" target="_blank"><?php _e("Filters",'acf'); ?></a></li>
+				<li><a href="http://www.advancedcustomfields.com/resources/#how-to" target="_blank"><?php _e("\"How to\" guides",'acf'); ?></a></li>
+				<li><a href="http://www.advancedcustomfields.com/resources/#tutorials" target="_blank"><?php _e("Tutorials",'acf'); ?></a></li>
 			</ul>
 		</div>
 		<div class="footer footer-blue">
@@ -245,16 +245,16 @@ class acf_field_groups
 	
 	<!-- acf-content-title -->
 	<div class="acf-content-title">
-		<h1>Welcome to Advanced Custom Fields <?php echo $version; ?></h1>
-		<h2>Thank you for updating to the latest version! <br />ACF <?php echo $version; ?> is more polished and enjoyable than ever before. We hope you like it.</h2>
+		<h1><?php _e("Welcome to Advanced Custom Fields",'acf'); ?> <?php echo $version; ?></h1>
+		<h2><?php _e("Thank you for updating to the latest version!",'acf'); ?> <br />ACF <?php echo $version; ?> <?php _e("is more polished and enjoyable than ever before. We hope you like it.",'acf'); ?></h2>
 	</div>
 	<!-- / acf-content-title -->
 	
 	<!-- acf-content-body -->
 	<div class="acf-content-body">
 		<h2 class="nav-tab-wrapper">
-			<a class="acf-tab-toggle nav-tab <?php if( $tab == 'whats-new' ){ echo 'nav-tab-active'; } ?>" href="<?php echo admin_url('edit.php?post_type=acf&info=whats-new'); ?>">What’s New</a>
-			<a class="acf-tab-toggle nav-tab <?php if( $tab == 'changelog' ){ echo 'nav-tab-active'; } ?>" href="<?php echo admin_url('edit.php?post_type=acf&info=changelog'); ?>">Changelog</a>
+			<a class="acf-tab-toggle nav-tab <?php if( $tab == 'whats-new' ){ echo 'nav-tab-active'; } ?>" href="<?php echo admin_url('edit.php?post_type=acf&info=whats-new'); ?>"><?php _e("What’s New",'acf'); ?></a>
+			<a class="acf-tab-toggle nav-tab <?php if( $tab == 'changelog' ){ echo 'nav-tab-active'; } ?>" href="<?php echo admin_url('edit.php?post_type=acf&info=changelog'); ?>"><?php _e("Changelog",'acf'); ?></a>
 		</h2>
 
 <?php if( $tab == 'whats-new' ): ?>
@@ -270,38 +270,38 @@ class acf_field_groups
 			</tr>
 		</table>
 	
-		<h3>Add-ons</h3>
+		<h3><?php _e("Add-ons",'acf'); ?></h3>
 		
-		<h4>Activation codes have grown into plugins!</h4>
-		<p>Add-ons are now activated by downloading and installing individual plugins. Although these plugins will not be hosted on the wordpress.org repository, each Add-on will continue to receive updates in the usual way.</p>
+		<h4><?php _e("Activation codes have grown into plugins!",'acf'); ?></h4>
+		<p><?php _e("Add-ons are now activated by downloading and installing individual plugins. Although these plugins will not be hosted on the wordpress.org repository, each Add-on will continue to receive updates in the usual way.",'acf'); ?></p>
 		
-		<h4>Where can I find my Add-on plugins?</h4>
-		<p>Download links can be found alongside the activation code in your ACF receipt. <a href="http://www.advancedcustomfields.com/store/account/" target="_blank">visit your account</a>.<br />
-		For faster access, this <a href="http://www.advancedcustomfields.com/add-ons-download/" target="_blank">download page</a> has also been created.</p>
-		
-		<hr />
-		
-		<h3>Easier Development</h3>
-		
-		<h4>Custom Field Types</h4>
-		<p>Creating your own field type has never been easier! Unfortunately, version 3 field types are not compatible with version 4.<br />
-		Migrating your field types is easy, please <a href="http://www.advancedcustomfields.com/docs/tutorials/creating-a-new-field-type/" target="_blank">follow this tutorial</a> to learn more. </p>
-		
-		<h4>Actions &amp; Filters</h4>
-		<p>Lots of new actions and filters have been added in version 4. Only one action has been removed; "acf_settings". <a href="http://www.advancedcustomfields.com/resources/getting-started/migrating-from-v3-to-v4/" target="_blank">read more about the changes</a></p>
-		
-		<h4>Preview draft is now working!</h4>
-		<p>This bug has been squashed along with many other little critters! <a class="acf-tab-toggle" href="#" data-tab="2">See the full changelog</a></p>
+		<h4><?php _e("Where can I find my Add-on plugins?",'acf'); ?></h4>
+		<p><?php _e("Download links can be found alongside the activation code in your ACF receipt.",'acf'); ?> <a href="http://www.advancedcustomfields.com/store/account/" target="_blank"><?php _e("Visit your account",'acf'); ?></a>.<br />
+		<?php _e("For faster access, this",'acf'); ?> <a href="http://www.advancedcustomfields.com/add-ons-download/" target="_blank"><?php _e("download page",'acf'); ?></a> <?php _e("has also been created.",'acf'); ?></p>
 		
 		<hr />
 		
-		<h3>Thank You</h3>
-		<p>A <strong>BIG</strong> thank you to everyone who has helped test the version 4 beta and for all the support I have received.</p>
-		<p>Without you all, this release would not have been possible!</p>
+		<h3><?php _e("Easier Development",'acf'); ?></h3>
+		
+		<h4><?php _e("Custom Field Types",'acf'); ?></h4>
+		<p><?php _e("Creating your own field type has never been easier! Unfortunately, version 3 field types are not compatible with version 4.",'acf'); ?><br />
+		<?php _e("Migrating your field types is easy, please",'acf'); ?> <a href="http://www.advancedcustomfields.com/docs/tutorials/creating-a-new-field-type/" target="_blank"><?php _e("follow this tutorial",'acf'); ?></a> <?php _e("to learn more.",'acf'); ?></p>
+		
+		<h4><?php _e("Actions &amp; Filters",'acf'); ?></h4>
+		<p><?php _e("Lots of new actions and filters have been added in version 4. Only one action has been removed; \"acf_settings\"",'acf'); ?>. <a href="http://www.advancedcustomfields.com/resources/getting-started/migrating-from-v3-to-v4/" target="_blank"><?php _e("Read more about the changes",'acf'); ?></a></p>
+		
+		<h4><?php _e("Preview draft is now working!",'acf'); ?></h4>
+		<p><?php _e("This bug has been squashed along with many other little critters!",'acf'); ?> <a class="acf-tab-toggle" href="#" data-tab="2"><?php _e("See the full changelog",'acf'); ?></a></p>
+		
+		<hr />
+		
+		<h3><?php _e("Thank You",'acf'); ?></h3>
+		<p><?php _e("A <strong>BIG</strong> thank you to everyone who has helped test the version 4 beta and for all the support I have received.",'acf'); ?></p>
+		<p><?php _e("Without you all, this release would not have been possible!",'acf'); ?></p>
 		
 <?php elseif( $tab == 'changelog' ): ?>
 		
-		<h3>Changelog for <?php echo $version; ?></h3>
+		<h3><?php _e("Changelog for",'acf'); ?> <?php echo $version; ?></h3>
 		<?php
 		
 		$items = file_get_contents( $path . 'readme.txt' );
@@ -318,7 +318,7 @@ class acf_field_groups
 			
 				
 		?>
-			<li><?php echo $item[0]; ?><?php if( isset($item[1]) ): ?><a href="http<?php echo $item[1]; ?>" target="_blank">Learn more</a><?php endif; ?></li>
+			<li><?php echo $item[0]; ?><?php if( isset($item[1]) ): ?><a href="http<?php echo $item[1]; ?>" target="_blank"><?php _e("Learn more",'acf'); ?></a><?php endif; ?></li>
 		<?php endforeach; ?>
 		</ul>
 		
@@ -332,7 +332,7 @@ class acf_field_groups
 	<!-- acf-content-footer -->
 	<div class="acf-content-footer">
 		<ul class="hl clearfix">
-			<li><a class="acf-button acf-button-big" href="<?php echo admin_url('edit.php?post_type=acf'); ?>">Awesome. Let's get to work</a></li>
+			<li><a class="acf-button acf-button-big" href="<?php echo admin_url('edit.php?post_type=acf'); ?>"><?php _e("Awesome. Let's get to work",'acf'); ?></a></li>
 		</ul>
 	</div>
 	<!-- / acf-content-footer -->
@@ -374,6 +374,6 @@ class acf_field_groups
 			
 }
 
-$acf_field_groups= new acf_field_groups();
+new acf_field_groups();
 
 ?>

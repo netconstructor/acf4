@@ -764,6 +764,6 @@ html.wp-toolbar {
 			
 }
 
-$acf_input = new acf_input();
+new acf_input();
 
 ?>

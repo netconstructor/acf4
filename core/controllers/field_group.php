@@ -351,7 +351,6 @@ class acf_field_group
 		
 		
 		do_action('acf/field_group/admin_head'); // new action
-		do_action('acf_head-fields'); // old action
 		
 		
 		// add metaboxes
@@ -917,6 +916,6 @@ class acf_field_group
 			
 }
 
-$acf_field_group = new acf_field_group();
+new acf_field_group();
 
 ?>

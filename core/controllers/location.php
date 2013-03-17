@@ -939,6 +939,6 @@ class acf_location
 			
 }
 
-$acf_location = new acf_location();
+new acf_location();
 
 ?>
