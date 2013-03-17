@@ -288,10 +288,21 @@ class acf_field_groups
 		<?php _e("Migrating your field types is easy, please",'acf'); ?> <a href="http://www.advancedcustomfields.com/docs/tutorials/creating-a-new-field-type/" target="_blank"><?php _e("follow this tutorial",'acf'); ?></a> <?php _e("to learn more.",'acf'); ?></p>
 		
 		<h4><?php _e("Actions &amp; Filters",'acf'); ?></h4>
-		<p><?php _e("Lots of new actions and filters have been added in version 4. Only one action has been removed; \"acf_settings\"",'acf'); ?>. <a href="http://www.advancedcustomfields.com/resources/getting-started/migrating-from-v3-to-v4/" target="_blank"><?php _e("Read more about the changes",'acf'); ?></a></p>
+		<p><?php _e("All actions & filters have recieved a major facelift to make customizing ACF even easier! Please",'acf'); ?> <a href="http://www.advancedcustomfields.com/resources/getting-started/migrating-from-v3-to-v4/" target="_blank"><?php _e("read this guide",'acf'); ?></a> <?php _e("to find the updated naming convention.",'acf'); ?></p>
 		
 		<h4><?php _e("Preview draft is now working!",'acf'); ?></h4>
 		<p><?php _e("This bug has been squashed along with many other little critters!",'acf'); ?> <a class="acf-tab-toggle" href="#" data-tab="2"><?php _e("See the full changelog",'acf'); ?></a></p>
+		
+		<hr />
+		
+		<h3><?php _e("Important",'acf'); ?></h3>
+		
+		<h4><?php _e("Database Changes",'acf'); ?></h4>
+		<p><?php _e("Absolutely <strong>no</strong> changes have been made to the database between versions 3 and 4. This means you can roll back to version 3 without any issues.",'acf'); ?></p>
+		
+		<h4><?php _e("Potential Issues",'acf'); ?></h4>
+		<p><?php _e("Do to the sizable changes surounding Add-ons, field types and action/filters, your website may not operate correctly. It is important that you read the full",'acf'); ?> <a href="http://www.advancedcustomfields.com/resources/getting-started/migrating-from-v3-to-v4/" target="_blank"><?php _e("Migrating from v3 to v4",'acf'); ?></a> <?php _e("guide to view the full list of changes.",'acf'); ?></p>
+		 <p><?php _e("If you have updated the ACF plugin without prior knowledge of such changes, I suggest that you roll back to the latest",'acf'); ?> <a href="http://wordpress.org/extend/plugins/advanced-custom-fields/developers/"><?php _e("version 3",'acf'); ?></a> <?php _e("of this plugin.",'acf'); ?></p>
 		
 		<hr />
 		
