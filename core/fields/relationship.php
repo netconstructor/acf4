@@ -169,8 +169,8 @@ class acf_field_relationship extends acf_field
 		
 		// filters
 		$options = apply_filters('acf/fields/relationship/query', $options);
-		$options = apply_filters('acf/fields/relationship/query-' . $options['field_name'] , $options);
-		$options = apply_filters('acf/fields/relationship/query-' . $options['field_key'], $options);
+		$options = apply_filters('acf/fields/relationship/query/name=' . $options['field_name'] , $options);
+		$options = apply_filters('acf/fields/relationship/query/key=' . $options['field_key'], $options);
 		
 		
 		$results = '';
@@ -207,8 +207,8 @@ class acf_field_relationship extends acf_field
 				
 				// filters
 				$title = apply_filters('acf/fields/relationship/result', $title, $post);
-				$title = apply_filters('acf/fields/relationship/result-' . $options['field_name'] , $title, $post);
-				$title = apply_filters('acf/fields/relationship/result-' . $options['field_key'], $title, $post);
+				$title = apply_filters('acf/fields/relationship/result/name=' . $options['field_name'] , $title, $post);
+				$title = apply_filters('acf/fields/relationship/result/key=' . $options['field_key'], $title, $post);
 				
 				
 				$results .= '<li><a href="' . get_permalink($post->ID) . '" data-post_id="' . $post->ID . '">' . $title .  '<span class="acf-button-add"></span></a></li>';
