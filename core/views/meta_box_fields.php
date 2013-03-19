@@ -86,7 +86,7 @@ $error_field_type = '<b>' . __('Error', 'acf') . '</b> ' . __('Field type does n
 	<?php foreach($fields as $field): 
 		$fake_name = $field['key'];
 	?>
-	<div class="field field-<?php echo $field['type']; ?> field-<?php echo $field['key']; ?>" data-type="<?php echo $field['type']; ?>" data-id="<?php echo $field['key']; ?>">
+	<div class="field field_type-<?php echo $field['type']; ?> field_key-<?php echo $field['key']; ?>" data-type="<?php echo $field['type']; ?>" data-id="<?php echo $field['key']; ?>">
 		<input type="hidden" class="input-field_key" name="fields[<?php echo $field['key']; ?>][key]" value="<?php echo $field['key']; ?>" />
 		<div class="field_meta">
 			<table class="acf widefat">

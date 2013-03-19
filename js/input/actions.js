@@ -396,13 +396,13 @@ var acf = {
 	acf.conditional_logic.calculate = function( options )
 	{
 		// vars
-		var field = $('.field-' + options.field),
-			toggle = $('.field-' + options.toggle),
+		var field = $('.field_key-' + options.field),
+			toggle = $('.field_key-' + options.toggle),
 			r = false;
 		
 		
 		// compare values
-		if( toggle.hasClass('field-true_false') || toggle.hasClass('field-checkbox') || toggle.hasClass('field-radio') )
+		if( toggle.hasClass('field_type-true_false') || toggle.hasClass('field_type-checkbox') || toggle.hasClass('field_type-radio') )
 		{
 			if( options.operator == "==" )
 			{

@@ -174,7 +174,7 @@ var acf = {
 		
 		
 		// update data atts
-		field.removeClass('field-' + field_type).addClass('field-' + val);
+		field.removeClass('field_type-' + field_type).addClass('field_type-' + val);
 		field.attr('data-type', val);
 		
 		
@@ -396,7 +396,7 @@ var acf = {
 		
 		// update names
 		new_field.update_names();
-		new_field.find('.field[data-id!="field_clone"]').each(function(){
+		new_field.find('.field:not(.field_key-field_clone)').each(function(){
 			$(this).update_names();
 		});
 
@@ -447,7 +447,7 @@ var acf = {
 		
 		
 		// clone last tr
-		var new_field = fields.children('.field-field_clone').clone();
+		var new_field = fields.children('.field_key-field_clone').clone();
 		
 		
 		// update names
@@ -459,7 +459,7 @@ var acf = {
 		
 		
 		// append to table
-		fields.children('.field-field_clone').before(new_field);
+		fields.children('.field_key-field_clone').before(new_field);
 		
 		
 		// remove no fields message
@@ -534,10 +534,12 @@ var acf = {
 		var label = $(this).find('option[value="' + val + '"]').html();
 		
 		// update field type (if not a clone field)
-		if($(this).closest('.field_clone').length == 0)
+		/*
+if($(this).closest('.field_clone').length == 0)
 		{
 			$(this).closest('.field').find('td.field_type').first().html(label);
 		}
+*/
 		
 	});
 	
@@ -883,7 +885,7 @@ var acf = {
 		
 		// vars
 		var id = $(this).val(),
-			field = $('#acf_fields .field-' + id),
+			field = $('#acf_fields .field_key-' + id),
 			type = field.attr('data-type'),
 			conditional_function = $(this).closest('tr').find('.conditional-logic-value');
 			
@@ -957,7 +959,7 @@ var acf = {
 		
 		
 		// loop through fields
-		$('#acf_fields > .inside > .fields > .field[data-id!="field_clone"]').each(function(){
+		$('#acf_fields > .inside > .fields > .field:not(.field_key-field_clone)').each(function(){
 			
 			var field = $(this),
 				id = field.attr('data-id'),

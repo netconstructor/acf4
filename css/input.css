@@ -112,6 +112,9 @@
 	padding-top: 0;
 }
 
+#poststuff .acf_postbox .field_type-message p.label {
+	display: none !important;
+} 
 
 /*---------------------------------------------------------------------------------------------
 *
@@ -587,7 +590,7 @@ td.acf_input-wrap {
 *
 *---------------------------------------------------------------------------------------------*/
 
-.field-tab {
+.field_type-tab {
 	display: none !important;
 	
 }

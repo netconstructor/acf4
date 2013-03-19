@@ -261,7 +261,7 @@ table.widefat.acf td {
 	background: #FCFCFC;
 }
 
-.fields .field-field_clone {
+.fields .field_key-field_clone {
 	display: none;
 }
 
@@ -650,13 +650,28 @@ table.conditional-logic-rules tbody td {
 *	
 *---------------------------------------------------------------------------------------------*/
 
-
-#acf_fields .fields .field-tab tr.field_name,
-#acf_fields .fields .field-tab tr.field_instructions,
-#acf_fields .fields .field-tab tr.required {
+#acf_fields .fields .field_type-tab tr.field_name,
+#acf_fields .fields .field_type-tab tr.field_instructions,
+#acf_fields .fields .field_type-tab tr.required {
 	display: none;
 }
 
+
+/*---------------------------------------------------------------------------------------------
+*
+*	Field: Message
+*	
+*---------------------------------------------------------------------------------------------*/
+
+#acf_fields .fields .field_type-message tr.field_name,
+#acf_fields .fields .field_type-message tr.field_instructions,
+#acf_fields .fields .field_type-message tr.required {
+	display: none;
+}
+
+#acf_fields .fields .field_type-message textarea {
+	height: 175px;
+}
 
 /*--------------------------------------------------------------------------
 *

@@ -549,7 +549,7 @@ $(document).ready(function(){
 					
 					if( $layout == 'metabox' )
 					{
-						echo '<div id="acf-' . $field['name'] . '" class="field field-' . $field['type'] . ' field-'.$field['key'] . $required_class . '" data-field_name="' . $field['name'] . '" data-field_key="' . $field['key'] . '">';
+						echo '<div id="acf-' . $field['name'] . '" class="field field_type-' . $field['type'] . ' field_key-' . $field['key'] . $required_class . '" data-field_name="' . $field['name'] . '" data-field_key="' . $field['key'] . '" data-field_type="' . $field['type'] . '">';
 		
 							echo '<p class="label">';
 								echo '<label for="fields[' . $field['key'] . ']">' . $field['label'] . $required_label . '</label>';
@@ -563,16 +563,18 @@ $(document).ready(function(){
 					}
 					elseif( $layout == 'div' )
 					{
-						echo '<div id="acf-' . $field['name'] . '" class="form-field field field-' . $field['type'] . ' field-'.$field['key'] . $required_class . '" data-field_name="' . $field['name'] . '" data-field_key="' . $field['key'] . '">';
+						echo '<div id="acf-' . $field['name'] . '" class="form-field field field_type-' . $field['type'] . ' field_key-' . $field['key'] . $required_class . '" data-field_name="' . $field['name'] . '" data-field_key="' . $field['key'] . '" data-field_type="' . $field['type'] . '">';
+						
 							echo '<label for="fields[' . $field['key'] . ']">' . $field['label'] . $required_label . '</label>';	
 							$field['name'] = 'fields[' . $field['key'] . ']';
 							do_action('acf/create_field', $field );
 							if($field['instructions']) echo '<p class="description">' . $field['instructions'] . '</p>';
+							
 						echo '</div>';
 					}
 					else
 					{
-						echo '<tr id="acf-' . $field['name'] . '" class="form-field field field-' . $field['type'] . ' field-'.$field['key'] . $required_class . '" data-field_name="' . $field['name'] . '" data-field_key="' . $field['key'] . '">';
+						echo '<tr id="acf-' . $field['name'] . '" class="form-field field field_type-' . $field['type'] . ' field_key-'.$field['key'] . $required_class . '" data-field_name="' . $field['name'] . '" data-field_key="' . $field['key'] . '" data-field_type="' . $field['type'] . '">';
 							echo '<th valign="top" scope="row"><label for="fields[' . $field['key'] . ']">' . $field['label'] . $required_label . '</label></th>';	
 							echo '<td>';
 								$field['name'] = 'fields[' . $field['key'] . ']';

@@ -493,7 +493,7 @@ class acf_field_functions
 	// create the conditional function
 	$(document).live('acf/conditional_logic/<?php echo $field['key']; ?>', function(){
 		
-		var field = $('[data-field_key="<?php echo $field['key']; ?>"]');
+		var field = $('.field_key-<?php echo $field['key']; ?>');
 
 <?php
 
@@ -533,7 +533,7 @@ foreach( $field['conditional_logic']['rules'] as $rule ):
 	}
 	
 	?>
-	$('.field-<?php echo $rule['field']; ?> *[name]').live('change', function(){
+	$('.field_key-<?php echo $rule['field']; ?> *[name]').live('change', function(){
 		$(document).trigger('acf/conditional_logic/<?php echo $field['key']; ?>');
 	});
 <?php endforeach; ?>

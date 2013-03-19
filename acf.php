@@ -259,6 +259,7 @@ class Acf
 		// register fields
 		include_once('core/fields/_functions.php');
 		include_once('core/fields/_base.php');
+		include_once('core/fields/message.php');
 		include_once('core/fields/tab.php');
 		include_once('core/fields/text.php');
 		include_once('core/fields/textarea.php');
@@ -278,6 +279,8 @@ class Acf
 		include_once('core/fields/date_picker/date_picker.php');
 		include_once('core/fields/color_picker.php');
 		
+		
+		// register 3rd party fields
 		do_action('acf/register_fields');
 		
 		
@@ -515,7 +518,7 @@ class Acf
 			}
 			
 			
-			echo '<div id="acf-' . $field['name'] . '" class="field field-' . $field['type'] . ' field-' . $field['key'] . $required_class . '" data-field_name="' . $field['name'] . '" data-field_key="' . $field['key'] . '">';
+			echo '<div id="acf-' . $field['name'] . '" class="field field_type-' . $field['type'] . ' field_key-' . $field['key'] . $required_class . '" data-field_name="' . $field['name'] . '" data-field_key="' . $field['key'] . '" data-field_type="' . $field['type'] . '">';
 
 				echo '<p class="label">';
 					echo '<label for="' . $field['id'] . '">' . $field['label'] . $required_label . '</label>';
