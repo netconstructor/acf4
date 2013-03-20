@@ -166,7 +166,6 @@ class acf_field_wysiwyg extends acf_field
 		$defaults = array(
 			'toolbar'		=>	'full',
 			'media_upload' 	=>	'yes',
-			'the_content' 	=>	'yes',
 			'default_value'	=>	'',
 		);
 		
@@ -239,27 +238,6 @@ class acf_field_wysiwyg extends acf_field
 		?>
 	</td>
 </tr>
-<tr class="field_option field_option_<?php echo $this->name; ?>">
-	<td class="label">
-		<label><?php _e("Run filter \"the_content\"?",'acf'); ?></label>
-		<p class="description"><?php _e("Enable this filter to use shortcodes within the WYSIWYG field",'acf'); ?></p>
-		<p class="description"><?php _e("Disable this filter if you encounter recursive template problems with plugins / themes",'acf'); ?></p>
-	</td>
-	<td>
-		<?php 
-		do_action('acf/create_field', array(
-			'type'	=>	'radio',
-			'name'	=>	'fields['.$key.'][the_content]',
-			'value'	=>	$field['the_content'],
-			'layout'	=>	'horizontal',
-			'choices' => array(
-				'yes'	=>	__("Yes",'acf'),
-				'no'	=>	__("No",'acf'),
-			)
-		));
-		?>
-	</td>
-</tr>
 		<?php
 	}
 		
@@ -282,24 +260,10 @@ class acf_field_wysiwyg extends acf_field
 	
 	function format_value_for_api( $value, $post_id, $field )
 	{
-		// vars
-		$defaults = array(
-			'the_content' 	=>	'yes',
-		);
-		$field = array_merge($defaults, $field);
-		
-		
-		// filter
-		if( $field['the_content'] == 'yes' )
-		{
-			$value = apply_filters('the_content',$value); 
-		}
-		else
-		{
-			$value = wpautop( $value );
-		}
-
-		
+		// filters
+		$value = wpautop( $value );
+		$value = do_shortcode( $value );
+				
 		return $value;
 	}
 	
