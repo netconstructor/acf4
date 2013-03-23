@@ -47,8 +47,13 @@ class acf_upgrade
 		{
 			update_option('acf_version', $new_version );
 			
-			if( $new_version > $old_version )
+			if( !$old_version )
 			{
+				// do nothing, this is a fresh install
+			}
+			elseif( $new_version > $old_version )
+			{
+				// this is a newer version (update)
 				$url = admin_url('edit.php?post_type=acf&info=changelog');
 				
 				if( $new_version == '4.0.0' )
@@ -62,7 +67,6 @@ class acf_upgrade
 			}
 		}
 		
-				
 		add_submenu_page('edit.php?post_type=acf', __('Upgrade','acf'), __('Upgrade','acf'), 'manage_options','acf-upgrade', array($this,'html') );
 	}
 	
