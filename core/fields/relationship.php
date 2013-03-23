@@ -25,6 +25,7 @@ class acf_field_relationship extends acf_field
     	
     	// extra
 		add_action('wp_ajax_acf/fields/relationship/query_posts', array($this, 'query_posts'));
+		add_action('wp_ajax_nopriv_acf/fields/relationship/query_posts', array($this, 'query_posts'));
 	}
 	
 	
