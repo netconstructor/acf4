@@ -30,11 +30,6 @@ class acf_third_party
 		
 		// Post Type Switcher - http://wordpress.org/extend/plugins/post-type-switcher/
 		add_filter('pts_post_type_filter', array($this, 'pts_post_type_filter'));
-		
-		
-		// WordPres Importer
-		add_filter('import_post_meta_key', array($this, 'import_post_meta_key'), 10, 1);
-		add_action('import_post_meta', array($this, 'import_post_meta'), 10, 3);
 	}
 	
 	

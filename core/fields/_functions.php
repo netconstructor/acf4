@@ -80,6 +80,7 @@ class acf_field_functions
 		 	{
 			 	$value = $value[0];
 		 	}
+
 		}
 		elseif( strpos($post_id, 'user_') !== false )
 		{
