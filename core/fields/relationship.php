@@ -309,13 +309,7 @@ class acf_field_relationship extends acf_field
 		{
 			foreach( $field['value'] as $post )
 			{
-				// check that post exists (my have been trashed)
-				if( !is_object($post) )
-				{
-					continue;
-				}
-				
-				
+
 				// right aligned info
 				$title = '<span class="relationship-item-info">';
 				
@@ -343,8 +337,8 @@ class acf_field_relationship extends acf_field
 				
 				// filters
 				$title = apply_filters('acf/fields/relationship/result', $title, $post);
-				$title = apply_filters('acf/fields/relationship/result-' . $field['name'] , $title, $post);
-				$title = apply_filters('acf/fields/relationship/result-' . $field['key'], $title, $post);
+				$title = apply_filters('acf/fields/relationship/result/name=' . $field['name'] , $title, $post);
+				$title = apply_filters('acf/fields/relationship/result/key=' . $field['key'], $title, $post);
 				
 				
 				echo '<li>
@@ -529,7 +523,11 @@ class acf_field_relationship extends acf_field
 		foreach( $value as $k => $v)
 		{
 			// check that post exists (my have been trashed)
-			if( isset($ordered_posts[ $v ]) )
+			if( !isset($ordered_posts[ $v ]) )
+			{
+				unset( $value[ $k ] );
+			}
+			else
 			{
 				$value[ $k ] = $ordered_posts[ $v ];
 			}
