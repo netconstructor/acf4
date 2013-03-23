@@ -210,9 +210,9 @@ class acf_field_functions
 		}
 		elseif( strpos($post_id, 'user_') !== false )
 		{
-			$post_id = str_replace('user_', '', $post_id);
-			update_metadata('user', $post_id, $field['name'], $value);
-			update_metadata('user', $post_id, '_' . $field['name'], $field['key']);
+			$user_id = str_replace('user_', '', $post_id);
+			update_metadata('user', $user_id, $field['name'], $value);
+			update_metadata('user', $user_id, '_' . $field['name'], $field['key']);
 		}
 		else
 		{
