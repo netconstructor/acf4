@@ -713,7 +713,6 @@ class acf_location
         	$match = ( $post_format != $rule['value'] );
         }
         
-       
         
         return $match;
         
