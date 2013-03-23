@@ -401,7 +401,11 @@ class acf_post_object extends acf_field
 			foreach( $value as $k => $v)
 			{
 				// check that post exists (my have been trashed)
-				if( isset($ordered_posts[ $v ]) )
+				if( !isset($ordered_posts[ $v ]) )
+				{
+					unset( $value[ $k ] );
+				}
+				else
 				{
 					$value[ $k ] = $ordered_posts[ $v ];
 				}
