@@ -390,6 +390,7 @@ var acf = {
 		// vars
 		var a = $(this),
 			field = a.closest('.field'),
+			orig_type = field.attr('data-type'),
 			new_field = field.clone();
 			
 			
@@ -418,13 +419,14 @@ var acf = {
 		
 		// update new_field label / name
 		var label = new_field.find('tr.field_label:first input[type="text"]'),
-			name = new_field.find('tr.field_name:first input[type="text"]');
+			name = new_field.find('tr.field_name:first input[type="text"]'),
+			type = new_field.find('tr.field_type:first select');
 		
 		
 		name.val('');
 		label.val( label.val() + ' (' + acf.text.copy + ')' );
 		label.trigger('blur').trigger('keyup');
-		//new_field.find('tr.field_type select').first().val( orig_type ).trigger('change');
+		type.val( orig_type ).trigger('change');
 		
 		
 		// update order numbers
