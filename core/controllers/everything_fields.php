@@ -346,16 +346,8 @@ $(document).ready(function(){
 		});
 
 	});
-
-
-
 	
 });
-
-
-
-	
-
 
 
 })(jQuery);
@@ -376,6 +368,13 @@ $(document).ready(function(){
 	
 	function save_taxonomy( $term_id )
 	{
+		// verify nonce
+		if( !isset($_POST['acf_nonce']) || !wp_verify_nonce($_POST['acf_nonce'], 'input') )
+		{
+			return $term_id;
+		}
+		
+		
 		// for some weird reason, this is triggered by saving a menu... 
 		if( !isset($_POST['taxonomy']) )
 		{
@@ -400,8 +399,16 @@ $(document).ready(function(){
 	
 	function save_user( $user_id )
 	{
+		// verify nonce
+		if( !isset($_POST['acf_nonce']) || !wp_verify_nonce($_POST['acf_nonce'], 'input') )
+		{
+			return $user_id;
+		}
+		
+		
 		// $post_id to save against
 		$post_id = 'user_' . $user_id;
+		
 		
 		do_action('acf/save_post', $post_id);		
 	}
@@ -418,10 +425,19 @@ $(document).ready(function(){
 	
 	function save_attachment( $post, $attachment )
 	{
+		// verify nonce
+		if( !isset($_POST['acf_nonce']) || !wp_verify_nonce($_POST['acf_nonce'], 'input') )
+		{
+			return $post;
+		}
+		
+		
 		// $post_id to save against
 		$post_id = $post['ID'];
 		
+		
 		do_action('acf/save_post', $post_id);
+		
 		
 		return $post;
 	}
@@ -437,8 +453,16 @@ $(document).ready(function(){
 	
 	function shopp_category_saved( $category )
 	{
+		// verify nonce
+		if( !isset($_POST['acf_nonce']) || !wp_verify_nonce($_POST['acf_nonce'], 'input') )
+		{
+			return $category;
+		}
+		
+		
 		// $post_id to save against
 		$post_id = 'shopp_category_' . $category->id;
+		
 		
 		do_action('acf/save_post', $post_id);
 	}
@@ -503,6 +527,10 @@ $(document).ready(function(){
 					continue;
 				}
 			    
+				
+				//nonce
+				echo '<input type="hidden" name="acf_nonce" value="' . wp_create_nonce( 'input' ) . '" />';
+				
 				
 				// title 
 				if( $options['page_action'] == "edit" && !in_array($options['page_type'], array('media', 'shopp_category')) )

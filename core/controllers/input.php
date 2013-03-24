@@ -343,8 +343,7 @@ class acf_input
 		// vars
 		$options = $args['args'];
 		
-		
-		echo '<input type="hidden" name="save_input" value="true" />';
+		echo '<input type="hidden" name="acf_nonce" value="' . wp_create_nonce( 'input' ) . '" />';
 		echo '<div class="options" data-layout="' . $options['field_group']['options']['layout'] . '" data-show="' . $options['show'] . '" style="display:none"></div>';
 		
 		if( $options['show'] )
@@ -430,12 +429,12 @@ class acf_input
 		}
 		
 		
-		// only for save acf
-		if( ! isset($_POST['save_input']) || $_POST['save_input'] != 'true')
+		// verify nonce
+		if( !isset($_POST['acf_nonce']) || !wp_verify_nonce($_POST['acf_nonce'], 'input') )
 		{
 			return $post_id;
 		}
-		
+
 		
 		// update the post (may even be a revision / autosave preview)
 		do_action('acf/save_post', $post_id);

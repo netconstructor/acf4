@@ -804,15 +804,18 @@ class acf_field_group
 	
 	function save_post($post_id)
 	{
-		// only for save acf
-		if( ! isset($_POST['acf_field_group']) || ! wp_verify_nonce($_POST['acf_field_group'], 'acf_field_group') )
+		// do not save if this is an auto save routine
+		if( defined('DOING_AUTOSAVE') && DOING_AUTOSAVE )
 		{
 			return $post_id;
 		}
 		
 		
-		// do not save if this is an auto save routine
-		if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) return $post_id;
+		// verify nonce
+		if( !isset($_POST['acf_nonce']) || !wp_verify_nonce($_POST['acf_nonce'], 'field_group') )
+		{
+			return $post_id;
+		}
 		
 		
 		// only save once! WordPress save's a revision as well.

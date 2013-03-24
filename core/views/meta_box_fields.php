@@ -53,7 +53,7 @@ $error_field_type = '<b>' . __('Error', 'acf') . '</b> ' . __('Field type does n
 	acf.text.conditional_no_fields = "<?php _e('No toggle fields available','acf'); ?>";
 	acf.text.copy = "<?php _e('copy','acf'); ?>";
 	</script>
-	<input type="hidden" name="acf_field_group" value="<?php echo wp_create_nonce( 'acf_field_group' ); ?>" />
+	<input type="hidden" name="acf_nonce" value="<?php echo wp_create_nonce( 'field_group' ); ?>" />
 </div>
 <!-- / Hidden Fields -->
 
