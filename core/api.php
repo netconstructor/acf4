@@ -928,9 +928,8 @@ function acf_form_head()
 	global $post_id;
 	
 	
-	
-	// run database save first
-	if( isset($_POST['acf_save']) )
+	// verify nonce
+	if( isset($_POST['acf_nonce']) && wp_verify_nonce($_POST['acf_nonce'], 'input') )
 	{
 		// $post_id to save against
 		$post_id = $_POST['post_id'];
@@ -950,7 +949,6 @@ function acf_form_head()
 			wp_redirect($_POST['return']);
 			exit;
 		}
-		
 	}
 	
 	
@@ -1081,7 +1079,7 @@ function acf_form( $options = false )
 	<?php endif; ?>
 	
 	<div style="display:none">
-		<input type="hidden" name="acf_save" value="true" />
+		<input type="hidden" name="acf_nonce" value="<?php echo wp_create_nonce( 'input' ); ?>" />
 		<input type="hidden" name="post_id" value="<?php echo $options['post_id']; ?>" />
 		<input type="hidden" name="return" value="<?php echo $options['return']; ?>" />
 		<?php wp_editor('', 'acf_settings'); ?>
