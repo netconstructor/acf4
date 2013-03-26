@@ -11,23 +11,31 @@ Copyright: Elliot Condon
 */
 
 
+// lite mode
+if( !defined('ACF_LITE') )
+{
+	define( 'ACF_LITE', false );
+}
+
+
+// API
+include_once('core/api.php');
+
+
 // controllers
 include_once('core/controllers/field_groups.php');
 include_once('core/controllers/field_group.php');
 include_once('core/controllers/input.php');
 include_once('core/controllers/location.php');
 
-if( is_admin() )
+if( is_admin() && !ACF_LITE )
 {
 	include_once('core/controllers/export.php');
 	include_once('core/controllers/addons.php');
 	include_once('core/controllers/third_party.php');
 	include_once('core/controllers/everything_fields.php');
 	include_once('core/controllers/upgrade.php');
-	
 }
-
-include_once('core/api.php');
 
 
 class Acf
@@ -78,7 +86,7 @@ class Acf
 		
 		
 		// admin only
-		if( is_admin() )
+		if( is_admin() && !ACF_LITE )
 		{
 			add_action('admin_menu', array($this,'admin_menu'));
 			add_action('admin_head', array($this,'admin_head'));
