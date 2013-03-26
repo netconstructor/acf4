@@ -45,10 +45,15 @@ class Acf
 	
 	function __construct()
 	{
+		// helpers
+		add_filter('acf/helpers/get_path', array($this, 'helpers_get_path'), 1, 1);
+		add_filter('acf/helpers/get_dir', array($this, 'helpers_get_dir'), 1, 1);
+		
+		
 		// vars
 		$this->settings = array(
-			'path' => plugin_dir_path( __FILE__ ),
-			'dir' => plugin_dir_url( __FILE__ ),
+			'path' => apply_filters('acf/helpers/get_path', __FILE__),
+			'dir' => apply_filters('acf/helpers/get_dir', __FILE__),
 			'version' => '4.0.0',
 			'upgrade_version' => '3.4.1',
 		);
@@ -64,9 +69,6 @@ class Acf
 		
 		
 		// filters
-		
-		
-		// helpers
 		add_filter('acf/get_info', array($this, 'get_info'), 1, 1);
 		add_filter('acf/parse_types', array($this, 'parse_types'), 1, 1);
 		add_filter('acf/get_post_types', array($this, 'get_post_types'), 1, 3);
@@ -86,6 +88,64 @@ class Acf
 		
 		return true;
 	}
+	
+	
+	/*
+    *  helpers_get_path
+    *
+    *  @description: calculates the path (works for plugin / theme folders)
+    *  @since: 3.6
+    *  @created: 30/01/13
+    */
+    
+    function helpers_get_path( $file )
+    {
+        return trailingslashit(dirname($file));
+    }
+    
+    
+    
+    /*
+    *  helpers_get_dir
+    *
+    *  @description: calculates the directory (works for plugin / theme folders)
+    *  @since: 3.6
+    *  @created: 30/01/13
+    */
+    
+    function helpers_get_dir( $file )
+    {
+        $dir = trailingslashit(dirname($file));
+        $count = 0;
+        
+        
+        // sanitize for Win32 installs
+        $dir = str_replace('\\' ,'/', $dir); 
+        
+        
+        // if file is in plugins folder
+        $wp_plugin_dir = str_replace('\\' ,'/', WP_PLUGIN_DIR); 
+        $dir = str_replace($wp_plugin_dir, WP_PLUGIN_URL, $dir, $count);
+        
+        
+        if( $count < 1 )
+        {
+	        // if file is in wp-content folder
+	        $wp_content_dir = str_replace('\\' ,'/', WP_CONTENT_DIR); 
+	        $dir = str_replace($wp_content_dir, WP_CONTENT_URL, $dir, $count);
+        }
+        
+        
+        if( $count < 1 )
+        {
+	        // if file is in ??? folder
+	        $wp_dir = str_replace('\\' ,'/', ABSPATH); 
+	        $dir = str_replace($wp_dir, site_url('/'), $dir);
+        }
+        
+
+        return $dir;
+    }
 	
 	
 	/*
