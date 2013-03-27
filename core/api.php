@@ -391,7 +391,7 @@ function the_field( $field_name, $post_id = false )
 
 
 /*
-*  the_field()
+*  has_sub_field()
 *
 *  This function is used inside a while loop to return either true or false (loop again or stop).
 *  When using a repeater or flexible content field, it will loop through the rows until 
@@ -409,6 +409,7 @@ function the_field( $field_name, $post_id = false )
 
 function has_sub_field( $field_name, $post_id = false )
 {
+
 	// filter post_id
 	$post_id = acf_filter_post_id( $post_id );
 	
@@ -444,8 +445,20 @@ function has_sub_field( $field_name, $post_id = false )
 	// if ID has changed, this is a new repeater / flexible field!
 	if( $post_id != $id )
 	{
-		// reset
-		$GLOBALS['acf_field'] = array();
+		// vars
+		$f = get_field_object( $field_name, $post_id );
+		$v = $f['value'];
+		unset( $f['value'] );
+		
+		
+		$GLOBALS['acf_field'][] = array(
+			'name'	=>	$field_name,
+			'value'	=>	$v,
+			'field'	=>	$f,
+			'row'	=>	-1,
+			'post_id' => $post_id,
+		);
+		
 		return has_sub_field($field_name, $post_id);
 	}
 
@@ -505,6 +518,27 @@ function has_sub_field( $field_name, $post_id = false )
 
 	return false;
 	
+}
+
+
+/*
+*  has_sub_fields()
+*
+*  This function is a replica of 'has_sub_field'
+*
+*  @type	function
+*  @since	4.0.0
+*  @date	29/01/13
+*
+*  @param	string	$field_name: the name of the field - 'sub_heading'
+*  @param	mixed	$post_id: the post_id of which the value is saved against
+*
+*  @return	bool
+*/
+
+function has_sub_fields( $field_name, $post_id = false )
+{
+	return has_sub_field( $field_name, $post_id );
 }
 
 
