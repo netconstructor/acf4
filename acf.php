@@ -344,6 +344,7 @@ class Acf
 		include_once('core/fields/page_link.php');
 		include_once('core/fields/post_object.php');
 		include_once('core/fields/relationship.php');
+		include_once('core/fields/taxonomy.php');
 		include_once('core/fields/date_picker/date_picker.php');
 		include_once('core/fields/color_picker.php');
 		
@@ -620,12 +621,15 @@ class Acf
 			return false;
 		}
 		
-		
+
 		// loop through and save
 		if( $_POST['fields'] )
 		{
 			foreach( $_POST['fields'] as $key => $value )
 			{
+				// parse types
+				$value = apply_filters('acf/parse_types', $value);
+		
 				// get field
 				$field = apply_filters('acf/load_field', false, $key );
 				
