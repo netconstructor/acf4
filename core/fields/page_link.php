@@ -17,6 +17,7 @@ class acf_page_link extends acf_field
 		// vars
 		$this->name = 'page_link';
 		$this->label = __("Page Link",'acf');
+		$this->category = __("Relational",'acf');
 		
 		
 		// do not delete!

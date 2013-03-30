@@ -327,26 +327,32 @@ class Acf
 		// register fields
 		include_once('core/fields/_functions.php');
 		include_once('core/fields/_base.php');
-		include_once('core/fields/message.php');
-		include_once('core/fields/tab.php');
+		
 		include_once('core/fields/text.php');
 		include_once('core/fields/textarea.php');
-		include_once('core/fields/wysiwyg.php');
-		include_once('core/fields/image.php');
-		include_once('core/fields/file.php');
 		include_once('core/fields/number.php');
 		include_once('core/fields/email.php');
 		include_once('core/fields/password.php');
+		
+		include_once('core/fields/wysiwyg.php');
+		include_once('core/fields/image.php');
+		include_once('core/fields/file.php');
+		
 		include_once('core/fields/select.php');
 		include_once('core/fields/checkbox.php');
 		include_once('core/fields/radio.php');
 		include_once('core/fields/true_false.php');
+		
 		include_once('core/fields/page_link.php');
 		include_once('core/fields/post_object.php');
 		include_once('core/fields/relationship.php');
 		include_once('core/fields/taxonomy.php');
+		
 		include_once('core/fields/date_picker/date_picker.php');
 		include_once('core/fields/color_picker.php');
+		
+		include_once('core/fields/message.php');
+		include_once('core/fields/tab.php');
 		
 		
 		// register 3rd party fields

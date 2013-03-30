@@ -17,6 +17,7 @@ class acf_field_select extends acf_field
 		// vars
 		$this->name = 'select';
 		$this->label = __("Select",'acf');
+		$this->category = __("Choice",'acf');
 		
 		
 		// do not delete!

@@ -10,11 +10,7 @@
 
  
 // global
-global $post;
-
-
-// vars
-$fields_names = array();
+global $post, $field_types;
 
 
 // get fields
@@ -31,7 +27,24 @@ $fields[] = apply_filters('acf/load_field_defaults',  array(
 
 
 // get name of all fields for use in field type drop down
-$fields_names = apply_filters('acf/registered_fields', array());
+$field_types = apply_filters('acf/registered_fields', array());
+
+
+// helper function
+function field_type_exists( $name )
+{
+	global $field_types;
+
+	foreach( $field_types as $category )
+	{
+		if( isset( $category[ $name ] ) )
+		{
+			return $category[ $name ];
+		}
+	}
+	
+	return false;
+}
 
 
 // conditional logic dummy data
@@ -104,7 +117,7 @@ $error_field_type = '<b>' . __('Error', 'acf') . '</b> ' . __('Field type does n
 						</div>
 					</td>
 					<td class="field_name"><?php echo $field['name']; ?></td>
-					<td class="field_type"><?php if( isset($fields_names[ $field['type'] ]) ){ echo $fields_names[ $field['type'] ]; }else{ echo $error_field_type; } ?></td>
+					<td class="field_type"><?php $l = field_type_exists( $field['type'] ); if( $l ){ echo $l; }else{ echo $error_field_type; } ?></td>
 					<td class="field_key"><?php echo $field['key']; ?></td>
 				</tr>
 			</table>
@@ -149,12 +162,13 @@ $error_field_type = '<b>' . __('Error', 'acf') . '</b> ' . __('Field type does n
 						<tr class="field_type">
 							<td class="label"><label><span class="required">*</span><?php _e("Field Type",'acf'); ?></label></td>
 							<td>
-								<?php 
+								<?php
 								do_action('acf/create_field', array(
 									'type'		=>	'select',
 									'name'		=>	'fields[' .$fake_name . '][type]',
 									'value'		=>	$field['type'],
-									'choices' 	=>	$fields_names,
+									'choices' 	=>	$field_types,
+									'optgroup' 	=> 	true
 								));
 								?>
 							</td>

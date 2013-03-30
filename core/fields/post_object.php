@@ -17,6 +17,7 @@ class acf_post_object extends acf_field
 		// vars
 		$this->name = 'post_object';
 		$this->label = __("Post Object",'acf');
+		$this->category = __("Relational",'acf');
 		
 		
 		// do not delete!

@@ -17,6 +17,7 @@ class acf_field_wysiwyg extends acf_field
 		// vars
 		$this->name = 'wysiwyg';
 		$this->label = __("Wysiwyg Editor",'acf');
+		$this->category = __("Content",'acf');
 		
 		
 		// do not delete!

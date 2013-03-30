@@ -17,6 +17,7 @@ class acf_field_relationship extends acf_field
 		// vars
 		$this->name = 'relationship';
 		$this->label = __("Relationship",'acf');
+		$this->category = __("Relational",'acf');
 		
 		
 		// do not delete!

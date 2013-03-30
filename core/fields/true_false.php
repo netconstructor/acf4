@@ -17,6 +17,7 @@ class acf_field_true_false extends acf_field
 		// vars
 		$this->name = 'true_false';
 		$this->label = __("True / False",'acf');
+		$this->category = __("Choice",'acf');
 		
 		
 		// do not delete!

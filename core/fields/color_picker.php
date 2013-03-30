@@ -17,6 +17,7 @@ class acf_color_picker extends acf_field
 		// vars
 		$this->name = 'color_picker';
 		$this->label = __("Color Picker",'acf');
+		$this->category = __("jQuery",'acf');
 		
 		
 		// do not delete!

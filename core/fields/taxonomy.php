@@ -20,6 +20,7 @@ class acf_taxonomy_field extends acf_field
 		// vars
 		$this->name = 'taxonomy';
 		$this->label = __("Taxonomy",'acf');
+		$this->category = __("Relational",'acf');
 		
 		
 		// settings

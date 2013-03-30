@@ -17,6 +17,7 @@ class acf_date_picker extends acf_field
 		// vars
 		$this->name = 'date_picker';
 		$this->label = __("Date Picker",'acf');
+		$this->category = __("jQuery",'acf');
 		
 		
 		// do not delete!

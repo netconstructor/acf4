@@ -601,12 +601,12 @@ ul.checkbox_list li input {
 
 #acf_fields select optgroup,
 #acf_location select optgroup {
-	padding: 5px 2px;
+	padding: 5px 5px;
 	background: #fff;
 }
 
-#acf_fields select optgroup:first-child,
-#acf_location select optgroup:first-child {
+#acf_fields select optgroup option:first-child,
+#acf_location select optgroup option:first-child{
 	
 }
 
@@ -617,7 +617,7 @@ ul.checkbox_list li input {
 
 #acf_fields select optgroup option,
 #acf_location select optgroup option {
-	padding-left: 6px;
+	padding-left: 5px;
 }
 
 #acf_fields select optgroup:nth-child(2n),

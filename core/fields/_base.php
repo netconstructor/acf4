@@ -19,7 +19,8 @@ class acf_field
 	*/
 	
 	var $name,
-		$title;
+		$title,
+		$category;
 	
 	
 	/*
@@ -113,8 +114,18 @@ class acf_field
 	
 	function registered_fields( $fields )
 	{
-		$fields[ $this->name ] = $this->label;
+		// defaults
+		if( !$this->category )
+		{
+			$this->category = __('Basic', 'acf');
+		}
 		
+		
+		// add to array
+		$fields[ $this->category ][ $this->name ] = $this->label;
+		
+		
+		// return array
 		return $fields;
 	}
 	

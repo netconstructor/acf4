@@ -17,6 +17,7 @@ class acf_field_checkbox extends acf_field
 		// vars
 		$this->name = 'checkbox';
 		$this->label = __("Checkbox",'acf');
+		$this->category = __("Choice",'acf');
 		
 		
 		// do not delete!
