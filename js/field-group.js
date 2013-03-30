@@ -468,7 +468,7 @@ var acf = {
 		new_field.update_names();
 		
 		
-		// show (update_names will remove the field_clone field, but not for a few seconds)
+		// show
 		new_field.show();
 		
 		
@@ -484,11 +484,17 @@ var acf = {
 		
 		
 		// clear name
-		new_field.find('.field_form input[type="text"]').val('');
-		new_field.find('.field_form input[type="text"]').first().focus();
 		new_field.find('tr.field_type select').trigger('change');	
+		new_field.find('.field_form input[type="text"]').val('');
 		
 		
+		// focus after form has dropped down
+		// - this prevents a strange rendering bug in Firefox
+		setTimeout(function(){
+        	new_field.find('.field_form input[type="text"]').first().focus();
+        }, 500);
+        
+
 		// open up form
 		new_field.find('a.acf_edit_field').first().trigger('click');
 
@@ -547,13 +553,7 @@ var acf = {
 		var val = $(this).val();
 		var label = $(this).find('option[value="' + val + '"]').html();
 		
-		// update field type (if not a clone field)
-		/*
-if($(this).closest('.field_clone').length == 0)
-		{
-			$(this).closest('.field').find('td.field_type').first().html(label);
-		}
-*/
+		$(this).closest('.field').find('td.field_type').first().html(label);
 		
 	});
 	
