@@ -390,10 +390,18 @@ var acf = {
 		// vars
 		var a = $(this),
 			field = a.closest('.field'),
-			orig_type = field.attr('data-type'),
-			new_field = field.clone();
+			new_field = null;
 			
 			
+		// save select values
+		field.find('select').each(function(){
+			$(this).attr( 'data-val', $(this).val() );
+		});
+		
+		
+		// clone field
+		new_field = field.clone();
+		
 		
 		// update names
 		new_field.update_names();
@@ -419,14 +427,18 @@ var acf = {
 		
 		// update new_field label / name
 		var label = new_field.find('tr.field_label:first input[type="text"]'),
-			name = new_field.find('tr.field_name:first input[type="text"]'),
-			type = new_field.find('tr.field_type:first select');
+			name = new_field.find('tr.field_name:first input[type="text"]');
+					
+		
+		// set select values
+		new_field.find('select').each(function(){
+			$(this).val( $(this).attr('data-val') ).trigger('change');
+		});
 		
 		
 		name.val('');
 		label.val( label.val() + ' (' + acf.text.copy + ')' );
 		label.trigger('blur').trigger('keyup');
-		type.val( orig_type ).trigger('change');
 		
 		
 		// update order numbers
