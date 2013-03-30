@@ -742,10 +742,9 @@ function register_field_group( $array )
 }
 
 
-add_filter('acf/get_field_groups', 'api_acf_get_field_groups', 1, 1);
+add_filter('acf/get_field_groups', 'api_acf_get_field_groups', 2, 1);
 function api_acf_get_field_groups( $return )
 {
-
 	// validate
 	if( empty($GLOBALS['acf_register_field_group']) )
 	{
