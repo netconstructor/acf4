@@ -152,7 +152,7 @@ class acf_taxonomy_field extends acf_field
 		}
 		
 		?>
-<div id="taxonomy-<?php echo $field['key']; ?>" class="categorydiv">
+<div class="acf-taxonomy-field">
 	<input type="hidden" name="<?php echo $field['name']; ?>" value="" />
 	
 	<?php if( $field['field_type'] == 'select' ): ?>
@@ -163,7 +163,7 @@ class acf_taxonomy_field extends acf_field
 			<?php endif; ?>
 	
 	<?php else: ?>
-		
+		<div class="categorychecklist-holder">
 		<ul class="categorychecklist">
 			<?php if( $field['allow_null'] ): ?>
 				<li>
@@ -193,6 +193,7 @@ class acf_taxonomy_field extends acf_field
 	<?php else: ?>
 	
 		</ul>
+		</div>
 		
 	<?php endif; ?>
 

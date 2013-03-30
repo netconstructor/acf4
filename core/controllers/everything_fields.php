@@ -266,7 +266,7 @@ $(document).ready(function(){
 			{
 				if($this->data['page_action'] == "add")
 				{
-					echo "$('#createuser > table.form-table > tbody').append( html );";
+					echo "$('#createuser > p.submit').before( html );";
 				}
 				else
 				{
@@ -533,9 +533,15 @@ $(document).ready(function(){
 				
 				
 				// title 
-				if( $options['page_action'] == "edit" && !in_array($options['page_type'], array('media', 'shopp_category')) )
+				if( $options['page_action'] == "edit" && $options['page_type'] == 'user' )
 				{
 					echo '<h3>' .$acf['title'] . '</h3>';
+				}
+				
+				
+				// wrapper
+				if( $layout == 'tr' )
+				{
 					echo '<table class="form-table">';
 				}
 				elseif( $layout == 'metabox' )
@@ -618,15 +624,17 @@ $(document).ready(function(){
 				
 							
 				
-				// footer
-				if( $options['page_action'] == "edit" && $options['page_type'] != "media")
+				// wrapper
+				if( $layout == 'tr' )
 				{
 					echo '</table>';
 				}
-				elseif( $options['page_type'] == 'shopp_category' )
+				elseif( $layout == 'metabox' )
 				{
 					echo '</div></div>';
 				}
+				
+				
 			}
 			// foreach($acfs as $acf)
 		}
