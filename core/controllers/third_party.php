@@ -155,22 +155,25 @@ class acf_third_party
 		
 		// update keys
 		$metas = get_post_custom( $new_post_id );
-		
+
+
 		if( $metas )
 		{
 			foreach( $metas as $field_key => $field )
 			{
 				if( strpos($field_key, 'field_') !== false )
 				{
-					$field = maybe_unserialize($field[0]);
+					$field = $field[0];
+					$field = maybe_unserialize( $field );
+					$field = maybe_unserialize( $field ); // just to be sure!
 					
 					// delete old field
 					delete_post_meta($new_post_id, $field_key);
 
-					
+
 					// set new keys (recursive for sub fields)
-					$field = $this->create_new_field_keys( $field );
-					
+					$this->create_new_field_keys( $field );
+
 
 					// save it!
 					update_post_meta($new_post_id, $field['key'], $field);
@@ -193,23 +196,33 @@ class acf_third_party
 	*  @created: 9/10/12
 	*/
 	
-	function create_new_field_keys( $field )
+	function create_new_field_keys( &$field )
 	{
 		// update key
 		$field['key'] = 'field_' . uniqid();
 		
 		
-		// update sub field's keys
-		if( isset( $field['sub_fields'] ) )
+		if( isset($field['sub_fields']) && is_array($field['sub_fields']) )
 		{
-			foreach( $field['sub_fields'] as $k => $v )
+			foreach( $field['sub_fields'] as $f )
 			{
-				$field['sub_fields'][ $k ] = $this->create_new_field_keys( $v );
+				$this->create_new_field_keys( $f );
 			}
 		}
-		
-		
-		return $field;
+		elseif( isset($field['layouts']) && is_array($field['layouts']) )
+		{
+			foreach( $field['layouts'] as $layout )
+			{
+				if( isset($layout['sub_fields']) && is_array($layout['sub_fields']) )
+				{
+					foreach( $layout['sub_fields'] as $f )
+					{
+						$this->create_new_field_keys( $f );
+					}
+				}
+				
+			}
+		}
 	}
 	
 	
