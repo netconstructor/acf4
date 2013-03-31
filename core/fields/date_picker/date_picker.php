@@ -1,6 +1,6 @@
 <?php
 
-class acf_date_picker extends acf_field
+class acf_field_date_picker extends acf_field
 {
 	
 	/*
@@ -129,6 +129,6 @@ class acf_date_picker extends acf_field
 	
 }
 
-new acf_date_picker();
+new acf_field_date_picker();
 
 ?>

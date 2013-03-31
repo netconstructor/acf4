@@ -1,6 +1,6 @@
 <?php
 
-class acf_post_object extends acf_field
+class acf_field_post_object extends acf_field
 {
 	
 	/*
@@ -401,6 +401,6 @@ class acf_post_object extends acf_field
 	
 }
 
-new acf_post_object();
+new acf_field_post_object();
 
 ?>

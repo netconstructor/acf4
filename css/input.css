@@ -143,10 +143,11 @@
 	resize: none;
 }
 
+
+
 .acf_postbox .field select optgroup {
 	padding: 5px;
 	background: #fff;
-	border-top: #DFDFDF solid 1px;
 }
 
 .acf_postbox .field select option {
@@ -154,19 +155,11 @@
 }
 
 .acf_postbox .field select optgroup option {
-	padding-left: 6px;
+	padding-left: 5px;
 }
 
 .acf_postbox .field select optgroup:nth-child(2n) {
     background: #F9F9F9;
-}
-
-.acf_postbox .field select[multiple] {
-	padding: 0;
-}
-
-.acf_postbox .field select[multiple] > optgroup:first-child {
-	border-top: 0 none;
 }
 
 

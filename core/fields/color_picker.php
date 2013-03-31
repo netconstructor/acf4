@@ -1,6 +1,6 @@
 <?php
 
-class acf_color_picker extends acf_field
+class acf_field_color_picker extends acf_field
 {
 	
 	/*
@@ -89,6 +89,6 @@ class acf_color_picker extends acf_field
 	
 }
 
-new acf_color_picker();
+new acf_field_color_picker();
 
 ?>

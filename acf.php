@@ -347,6 +347,7 @@ class Acf
 		include_once('core/fields/post_object.php');
 		include_once('core/fields/relationship.php');
 		include_once('core/fields/taxonomy.php');
+		include_once('core/fields/user.php');
 		
 		include_once('core/fields/date_picker/date_picker.php');
 		include_once('core/fields/color_picker.php');

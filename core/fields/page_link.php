@@ -1,6 +1,6 @@
 <?php
 
-class acf_page_link extends acf_field
+class acf_field_page_link extends acf_field
 {
 	
 	/*
@@ -189,6 +189,6 @@ class acf_page_link extends acf_field
 	
 }
 
-new acf_page_link();
+new acf_field_page_link();
 
 ?>

@@ -1,6 +1,6 @@
 <?php
 
-class acf_taxonomy_field extends acf_field
+class acf_field_taxonomy extends acf_field
 {
 
 	var $defaults;
@@ -28,7 +28,6 @@ class acf_taxonomy_field extends acf_field
 			'taxonomy' 			=> 'all',
 			'field_type' 		=> 'checkbox',
 			'allow_null' 		=> 0,
-			'choices' 			=> array(),
 			'load_save_terms' 	=> 0,
 		);
 		
@@ -320,7 +319,7 @@ class acf_taxonomy_field extends acf_field
 		
 }
 
-new acf_taxonomy_field();
+new acf_field_taxonomy();
 
 
 class acf_taxonomy_field_walker extends Walker
