@@ -266,7 +266,7 @@ $(document).ready(function(){
 			{
 				if($this->data['page_action'] == "add")
 				{
-					echo "$('#createuser > p.submit').before( html );";
+					echo "$('#createuser > table.form-table > tbody').append( html );";
 				}
 				else
 				{
@@ -285,7 +285,7 @@ $(document).ready(function(){
 				}
 				else
 				{
-					echo "$('#edittag > p.submit').before( html );";
+					echo "$('#edittag > table.form-table > tbody').append( html );";
 				}
 			}
 			elseif($this->data['page_type'] == "media")
@@ -526,25 +526,28 @@ $(document).ready(function(){
 				{
 					continue;
 				}
-			    
-				
-				//nonce
-				echo '<input type="hidden" name="acf_nonce" value="' . wp_create_nonce( 'input' ) . '" />';
-				
-				
+
+
 				// title 
 				if( $options['page_action'] == "edit" && $options['page_type'] == 'user' )
 				{
-					echo '<h3>' .$acf['title'] . '</h3>';
+					echo '<h3>' .$acf['title'] . '</h3><table class="form-table"><tbody>';
 				}
 				
 				
 				// wrapper
 				if( $layout == 'tr' )
 				{
-					echo '<table class="form-table">';
+					//nonce
+					echo '<tr><td colspan="2"><input type="hidden" name="acf_nonce" value="' . wp_create_nonce( 'input' ) . '" /></td></tr>';
 				}
-				elseif( $layout == 'metabox' )
+				else
+				{
+					//nonce
+					echo '<input type="hidden" name="acf_nonce" value="' . wp_create_nonce( 'input' ) . '" />';
+				}
+				
+				if( $layout == 'metabox' )
 				{
 					echo '<div class="postbox acf_postbox" id="acf_'. $acf['id'] .'">';
 					echo '<div title="Click to toggle" class="handlediv"><br></div><h3 class="hndle"><span>' . $acf['title'] . '</span></h3>';
@@ -625,13 +628,16 @@ $(document).ready(function(){
 							
 				
 				// wrapper
-				if( $layout == 'tr' )
-				{
-					echo '</table>';
-				}
-				elseif( $layout == 'metabox' )
+				if( $layout == 'metabox' )
 				{
 					echo '</div></div>';
+				}
+				
+				
+				// title 
+				if( $options['page_action'] == "edit" && $options['page_type'] == 'user' )
+				{
+					echo '</tbody></table>';
 				}
 				
 				
