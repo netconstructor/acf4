@@ -131,7 +131,8 @@ class acf_field_taxonomy extends acf_field
 	{
 		// vars
 		$field = array_merge($this->defaults, $field);
-		
+		$single_name = $field['name'];
+			
 			
 		// multi select?
 		if( $field['field_type'] == 'multi_select' )
@@ -153,7 +154,7 @@ class acf_field_taxonomy extends acf_field
 		
 		?>
 <div class="acf-taxonomy-field">
-	<input type="hidden" name="<?php echo $field['name']; ?>" value="" />
+	<input type="hidden" name="<?php echo $single_name; ?>" value="" />
 	
 	<?php if( $field['field_type'] == 'select' ): ?>
 		
