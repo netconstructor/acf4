@@ -283,6 +283,13 @@ class acf_field_groups
 		
 		<h3><?php _e("Easier Development",'acf'); ?></h3>
 		
+		<h4><?php _e("New Field Types",'acf'); ?></h4>
+		<ul>
+			<li><?php _e("Taxonomy Field",'acf'); ?></li>
+			<li><?php _e("User Field",'acf'); ?></li>
+			<li><?php _e("Email Field",'acf'); ?></li>
+			<li><?php _e("Password Field",'acf'); ?></li>
+		</ul>
 		<h4><?php _e("Custom Field Types",'acf'); ?></h4>
 		<p><?php _e("Creating your own field type has never been easier! Unfortunately, version 3 field types are not compatible with version 4.",'acf'); ?><br />
 		<?php _e("Migrating your field types is easy, please",'acf'); ?> <a href="http://www.advancedcustomfields.com/docs/tutorials/creating-a-new-field-type/" target="_blank"><?php _e("follow this tutorial",'acf'); ?></a> <?php _e("to learn more.",'acf'); ?></p>
@@ -302,7 +309,10 @@ class acf_field_groups
 		
 		<h4><?php _e("Potential Issues",'acf'); ?></h4>
 		<p><?php _e("Do to the sizable changes surounding Add-ons, field types and action/filters, your website may not operate correctly. It is important that you read the full",'acf'); ?> <a href="http://www.advancedcustomfields.com/resources/getting-started/migrating-from-v3-to-v4/" target="_blank"><?php _e("Migrating from v3 to v4",'acf'); ?></a> <?php _e("guide to view the full list of changes.",'acf'); ?></p>
-		 <p><?php _e("If you have updated the ACF plugin without prior knowledge of such changes, I suggest that you roll back to the latest",'acf'); ?> <a href="http://wordpress.org/extend/plugins/advanced-custom-fields/developers/"><?php _e("version 3",'acf'); ?></a> <?php _e("of this plugin.",'acf'); ?></p>
+		
+		<div class="acf-alert">
+			<p><strong><?php _e("Really Important!",'acf'); ?></strong> <?php _e("If you updated the ACF plugin without prior knowledge of such changes, Please roll back to the latest",'acf'); ?> <a href="http://wordpress.org/extend/plugins/advanced-custom-fields/developers/"><?php _e("version 3",'acf'); ?></a> <?php _e("of this plugin.",'acf'); ?></p>
+		</div>
 		
 		<hr />
 		
