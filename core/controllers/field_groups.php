@@ -310,7 +310,7 @@ class acf_field_groups
 		<h4><?php _e("Potential Issues",'acf'); ?></h4>
 		<p><?php _e("Do to the sizable changes surounding Add-ons, field types and action/filters, your website may not operate correctly. It is important that you read the full",'acf'); ?> <a href="http://www.advancedcustomfields.com/resources/getting-started/migrating-from-v3-to-v4/" target="_blank"><?php _e("Migrating from v3 to v4",'acf'); ?></a> <?php _e("guide to view the full list of changes.",'acf'); ?></p>
 		
-		<div class="acf-alert">
+		<div class="acf-alert acf-alert-error">
 			<p><strong><?php _e("Really Important!",'acf'); ?></strong> <?php _e("If you updated the ACF plugin without prior knowledge of such changes, Please roll back to the latest",'acf'); ?> <a href="http://wordpress.org/extend/plugins/advanced-custom-fields/developers/"><?php _e("version 3",'acf'); ?></a> <?php _e("of this plugin.",'acf'); ?></p>
 		</div>
 		
