@@ -313,9 +313,19 @@ class acf_export
 
 <p><br /></p>
 
-<h3><?php _e("ACF Lite",'acf'); ?></h3>
-<p><?php _e("Advanced Custom Fields has a lite version to be included in premium themes. You can find out more on github",'acf'); ?> <a href="https://github.com/elliotcondon/acf/" target="_blank"><?php _e("here",'acf'); ?></a>.</p>
+<h3><?php _e("Include in theme",'acf'); ?></h3>
+<p><?php _e("The Advanced Custom Fields plugin can be included within a theme. To do so, move the ACF plugin inside your theme and add the following code to your functions.php file:",'acf'); ?></p>
 
+<pre>
+include_once('advanced-custom-fields/acf.php');
+</pre>
+
+<p><?php _e("To remove all visual interfaces from the ACF plugin, you can use a constant to enable lite mode. Add the following code to you functions.php file <b>before</b> the include_once code:",'acf'); ?></p>
+
+<pre>
+define( 'ACF_LITE', true );
+</pre>
+ 
 <p><br /></p>
 
 <p><a href="">&laquo; <?php _e("Back to export",'acf'); ?></a></p>

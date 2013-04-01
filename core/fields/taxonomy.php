@@ -25,10 +25,11 @@ class acf_field_taxonomy extends acf_field
 		
 		// settings
 		$this->defaults = array(
-			'taxonomy' 			=> 'all',
+			'taxonomy' 			=> 'category',
 			'field_type' 		=> 'checkbox',
 			'allow_null' 		=> 0,
 			'load_save_terms' 	=> 0,
+			'return_format'		=> 'id'
 		);
 		
 		
@@ -111,6 +112,59 @@ class acf_field_taxonomy extends acf_field
 		}
 		
 		
+		return $value;
+	}
+	
+	
+	/*
+	*  format_value_for_api()
+	*
+	*  This filter is appied to the $value after it is loaded from the db and before it is passed back to the api functions such as the_field
+	*
+	*  @type	filter
+	*  @since	3.6
+	*  @date	23/01/13
+	*
+	*  @param	$value	- the value which was loaded from the database
+	*  @param	$post_id - the $post_id from which the value was loaded
+	*  @param	$field	- the field array holding all the field options
+	*
+	*  @return	$value	- the modified value
+	*/
+	
+	function format_value_for_api( $value, $post_id, $field )
+	{
+		// defaults
+		$field = array_merge($this->defaults, $field);
+		
+		
+		// temp convert to array
+		$is_array = true;
+		
+		if( !is_array($value) )
+		{
+			$is_array = false;
+			$value = array( $value );
+		}
+		
+		
+		// format
+		if( $field['return_format'] == 'object' )
+		{
+			foreach( $value as $k => $v )
+			{
+				$value[ $k ] = get_term( $v, $field['taxonomy'] );
+			}
+		}
+		
+		
+		// de-convert from array
+		if( !$is_array && isset($value[0]) )
+		{
+			$value = $value[0];
+		}
+		
+		// Note: This function can be removed if not used
 		return $value;
 	}
 
@@ -231,7 +285,7 @@ class acf_field_taxonomy extends acf_field
 	<td>
 		<?php
 		
-		$choices = array('all' => __('All', 'acf'));
+		$choices = array();
 		$taxonomies = get_taxonomies( array('public' => true), 'objects' );
 		
 		foreach($taxonomies as $taxonomy)
@@ -309,6 +363,25 @@ class acf_field_taxonomy extends acf_field
 			'name'	=>	'fields['.$key.'][load_save_terms]',
 			'value'	=>	$field['load_save_terms'],
 			'message' => __("Load value based on the post's terms and update the post's terms on save",'acf')
+		));
+		?>
+	</td>
+</tr>
+<tr class="field_option field_option_<?php echo $this->name; ?>">
+	<td class="label">
+		<label><?php _e("Return Value",'acf'); ?></label>
+	</td>
+	<td>
+		<?php
+		do_action('acf/create_field', array(
+			'type'		=>	'radio',
+			'name'		=>	'fields['.$key.'][return_format]',
+			'value'		=>	$field['return_format'],
+			'layout'	=>	'horizontal',
+			'choices'	=> array(
+				'object'	=>	__("Term Object",'acf'),
+				'id'		=>	__("Term ID",'acf')
+			)
 		));
 		?>
 	</td>
