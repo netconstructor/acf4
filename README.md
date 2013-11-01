@@ -55,3 +55,6 @@ You can now download your purchased Add-ons here: http://www.advancedcustomfield
 
 ### Thank You
 A BIG THANK YOU to everyone who can help assist in this new version!
+
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/netconstructor/acf4/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+
